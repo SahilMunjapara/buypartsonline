@@ -91,6 +91,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextSpan(
                         text: Strings.forgotPassword + ' ',
                         style: size14PNregular(),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(context, Routes.forgotScreen);
+                          },
                       ),
                       TextSpan(
                         text: IconStrings.nextArrow,
@@ -115,7 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     onPressed: () {
-                      if (formKey!.currentState!.validate()) {}
+                      if (formKey!.currentState!.validate()) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, Routes.homeScreen, (route) => false);
+                      }
                     },
                     child: Padding(
                       padding: EdgeInsets.only(

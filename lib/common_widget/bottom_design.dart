@@ -15,7 +15,7 @@ class BottomDesignBox extends StatelessWidget {
         color: colorWhiteBackground,
         width: SizeUtils().screenWidth,
         child: Image.asset(
-          bottomDesign,
+          AssetStrings.bottomDesign,
           fit: BoxFit.cover,
         ),
       ),

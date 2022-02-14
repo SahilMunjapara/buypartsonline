@@ -29,7 +29,7 @@ Container loginSignupBar(String? title) {
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: EdgeInsets.only(right: SizeUtils().wp(5)),
-              child: Image.asset(bagLogo),
+              child: Image.asset(AssetStrings.bagLogo),
             ))
       ],
     ),

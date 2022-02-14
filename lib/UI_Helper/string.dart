@@ -24,6 +24,29 @@ class Strings {
   static const String alreadyHaveAccount = 'Already have an Account?';
   static const String dontHaveAccount = 'i don\'t have an account?';
   static const String loginNow = ' Login Now';
+  static const String resetPassword = 'Reset Password';
+  static const String goToLoginPage = 'Go to Login Page ';
+  static const String connectToCompare = 'Connect to Compare';
+  static const String searchByvehicle = 'Search By Vehicle';
+  static const String searchByVIN = 'Search By Vehicle';
+  static const String myOrders = 'My Orders';
+  static const String myProfile = 'My Profile';
+  static const String addresses = 'Addresses';
+  static const String billingGst = 'Billing/GST';
+  static const String cart = 'Cart';
+  static const String myGarage = 'My Garage';
+  static const String legalAndOthers = 'Legal & Others';
+  static const String logout = 'Logout';
+  static const String search = 'Search';
+  static const String searchHere = 'Search Here';
+  static const String searchByCategory = 'Search by Category';
+  static const String whyChooseProducts = 'Why Choose Aftermarket Products?';
+  static const String originalProduct = 'Original Products';
+  static const String originalProductDescription =
+      'Only reliable parts from trusted \naftermarket brands';
+  static const String maintenaceServiceParts = 'Maintenace\nService Parts';
+  static const String airConditioning = 'Air\nConditioning';
+  static const String searchParts = 'Search Parts';
 }
 
 class IconStrings {

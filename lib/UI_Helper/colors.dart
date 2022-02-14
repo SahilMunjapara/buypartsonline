@@ -10,6 +10,8 @@ const Color color333333 = Color(0XFF333333);
 const Color colorTransparent = Color(0X00000000);
 const Color colorGrey = Color(0XFF9B9B9B);
 const Color colorWhiteBackground = Color(0XFFF9F9F9);
+const Color colorPassiveIndicator = Color(0XFFB7B7B7);
+const Color colorSearch = Color(0XFFFF9A3D);
 
 Map<int, Color> color = {
   50: const Color.fromRGBO(253, 122, 1, .1),

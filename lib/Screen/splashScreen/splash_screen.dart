@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: AspectRatio(
           aspectRatio: 1,
-          child: Image.asset(splashLogo),
+          child: Image.asset(AssetStrings.splashLogo),
         ),
       ),
     );

@@ -26,6 +26,7 @@ class CustomTextField extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final List<TextInputFormatter>? inputFormatters;
   final int maxLength;
+  Color containerColor;
   bool passwordField = false;
 
   CustomTextField(
@@ -50,6 +51,7 @@ class CustomTextField extends StatefulWidget {
       this.margin,
       this.inputFormatters,
       this.maxLength = 255,
+      this.containerColor = colorWhite,
       this.passwordField = false});
 
   @override
@@ -76,7 +78,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           Container(
             height: SizeUtils().hp(7),
             decoration: BoxDecoration(
-                color: colorWhite, borderRadius: BorderRadius.circular(4)),
+                color: widget.containerColor,
+                borderRadius: BorderRadius.circular(4)),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 16),

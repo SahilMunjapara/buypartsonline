@@ -23,6 +23,15 @@ TextStyle size34PNregular(
         height: height,
         fontWeight: FontWeight.w600);
 
+TextStyle size23PNregular(
+        {Color? textColor, double? letterSpacing = 0.0, double? height}) =>
+    TextStyle(
+        color: textColor ?? colorBlack,
+        fontSize: SizeUtils().sp(18.4),
+        letterSpacing: letterSpacing,
+        height: height,
+        fontWeight: FontWeight.w500);
+
 TextStyle size14PNregular(
         {Color? textColor, double? letterSpacing = 0.0, double? height}) =>
     TextStyle(
