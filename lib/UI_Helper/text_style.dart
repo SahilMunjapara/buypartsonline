@@ -4,6 +4,26 @@ import 'package:flutter/material.dart';
 
 /// 1px = sp(1 * 0.8 = 0.8)
 
+TextStyle size06PNregular({
+  Color? textColor,
+  double? letterSpacing = 0.0,
+}) =>
+    TextStyle(
+        color: textColor ?? colorBlack,
+        fontSize: SizeUtils().sp(4.8),
+        letterSpacing: letterSpacing,
+        fontWeight: FontWeight.w600);
+
+TextStyle size07PNregular({
+  Color? textColor,
+  double? letterSpacing = 0.0,
+}) =>
+    TextStyle(
+        color: textColor ?? colorBlack,
+        fontSize: SizeUtils().sp(5.6),
+        letterSpacing: letterSpacing,
+        fontWeight: FontWeight.w600);
+
 TextStyle size16PNsemibold({
   Color? textColor,
   double? letterSpacing = 0.0,
@@ -214,7 +234,7 @@ TextStyle size10PNregular({Color? textColor, double? letterSpacing}) =>
         color: textColor ?? colorBlack,
         fontSize: SizeUtils().sp(8),
         letterSpacing: letterSpacing ?? 0.0,
-        fontWeight: FontWeight.w400);
+        fontWeight: FontWeight.w600);
 
 TextStyle size18PNmedium({Color? textColor, double? letterSpacing = 0.0}) =>
     TextStyle(
@@ -286,7 +306,7 @@ TextStyle size18PNregular({Color? textColor, double? letterSpacing = 0.0}) =>
         color: textColor ?? colorBlack,
         fontSize: SizeUtils().sp(14.4),
         letterSpacing: letterSpacing,
-        fontWeight: FontWeight.w400);
+        fontWeight: FontWeight.w600);
 
 TextStyle size08PNregular(
         {Color? textColor, double? letterSpacing = 0.0, double? height}) =>
@@ -295,7 +315,7 @@ TextStyle size08PNregular(
         fontSize: SizeUtils().sp(6.88),
         height: height,
         letterSpacing: letterSpacing,
-        fontWeight: FontWeight.w400);
+        fontWeight: FontWeight.w600);
 
 TextStyle size16PNregular({
   Color? textColor,
@@ -320,3 +340,11 @@ TextStyle size15PNbold({Color? textColor, double? letterSpacing = 0.0}) =>
         fontSize: SizeUtils().sp(12),
         letterSpacing: letterSpacing,
         fontWeight: FontWeight.w700);
+
+TextStyle size20PNRegular({Color? textColor, double? letterSpacing = 0.0}) =>
+    TextStyle(
+      color: textColor ?? colorBlack,
+      fontSize: SizeUtils().sp(16),
+      letterSpacing: letterSpacing,
+      fontWeight: FontWeight.w500,
+    );

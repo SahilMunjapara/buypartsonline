@@ -1,7 +1,10 @@
+import 'package:buypartsonline/Navigation/routes_key.dart';
+import 'package:buypartsonline/Screen/searchDialogScreen/presentation/search_dialog.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
+import 'package:buypartsonline/Utils/app_preferences/app_preferences.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
 import 'package:flutter/material.dart';
@@ -53,17 +56,30 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                     children: [
                       verticalSpace(34),
                       drawerList(
-                        image: AssetStrings.searchByVehicle,
-                        text: Strings.searchByvehicle,
+                        image: AssetStrings.notificationDrawer,
+                        text: Strings.notification,
                         ontap: () {},
                       ),
+                      // drawerList(
+                      //   image: AssetStrings.searchByVehicle,
+                      //   text: Strings.searchByvehicle,
+                      //   ontap: () {
+                      //     Navigator.pop(context);
+                      //     showDialog(
+                      //       context: context,
+                      //       builder: (BuildContext context) {
+                      //         return const SearchDialogBox();
+                      //       },
+                      //     );
+                      //   },
+                      // ),
                       verticalSpace(34),
-                      drawerList(
-                        image: AssetStrings.searchByVIN,
-                        text: Strings.searchByVIN,
-                        ontap: () {},
-                      ),
-                      verticalSpace(34),
+                      // drawerList(
+                      //   image: AssetStrings.searchByVIN,
+                      //   text: Strings.searchByVIN,
+                      //   ontap: () {},
+                      // ),
+                      // verticalSpace(34),
                       drawerList(
                         image: AssetStrings.myOrders,
                         text: Strings.myOrders,
@@ -73,7 +89,10 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                       drawerList(
                         image: AssetStrings.myProfile,
                         text: Strings.myProfile,
-                        ontap: () {},
+                        ontap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, Routes.profileScreen);
+                        },
                       ),
                       verticalSpace(34),
                       drawerList(
@@ -91,7 +110,10 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                       drawerList(
                         image: AssetStrings.cart,
                         text: Strings.cart,
-                        ontap: () {},
+                        ontap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, Routes.cartScreen);
+                        },
                       ),
                       verticalSpace(34),
                       drawerList(
@@ -109,7 +131,11 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                       drawerList(
                         image: AssetStrings.logout,
                         text: Strings.logout,
-                        ontap: () {},
+                        ontap: () async {
+                          await AppPreference().clearSharedPreferences();
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, Routes.loginScreen, (route) => false);
+                        },
                       ),
                       verticalSpace(34),
                     ],

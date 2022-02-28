@@ -23,4 +23,14 @@ class AssetStrings {
   static const String banner = 'assets/png/banner.png';
   static const String customerService = 'assets/png/customer-service.png';
   static const String airConditioner = 'assets/png/air-conditioner.png';
+  static const String cartAdd = 'assets/png/cartAdd.png';
+  static const String repairKit = 'assets/png/repairKit.png';
+  static const String assuredReturn = 'assets/png/assuredReturn.png';
+  static const String gstInvoice = 'assets/png/gstInvoice.png';
+  static const String installation = 'assets/png/installation.png';
+  static const String plus = 'assets/png/plus.png';
+  static const String minus = 'assets/png/minus.png';
+  static const String notificationDrawer = 'assets/png/notificationDrawer.png';
+  static const String noImage = 'assets/png/no_img.jpg';
+  static const String deleteCart = 'assets/png/deleteCart.png';
 }

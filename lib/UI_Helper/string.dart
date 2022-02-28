@@ -28,7 +28,12 @@ class Strings {
   static const String goToLoginPage = 'Go to Login Page ';
   static const String connectToCompare = 'Connect to Compare';
   static const String searchByvehicle = 'Search By Vehicle';
-  static const String searchByVIN = 'Search By Vehicle';
+  static const String vehicleMaker = 'Vehicle Maker';
+  static const String modelLine = 'Model Line';
+  static const String year = 'Year';
+  static const String modification = 'Modification';
+  static const String selectCategory = 'Select Category';
+  static const String searchByVIN = 'Search By VIN';
   static const String myOrders = 'My Orders';
   static const String myProfile = 'My Profile';
   static const String addresses = 'Addresses';
@@ -47,6 +52,30 @@ class Strings {
   static const String maintenaceServiceParts = 'Maintenace\nService Parts';
   static const String airConditioning = 'Air\nConditioning';
   static const String searchParts = 'Search Parts';
+  static const String myCart = 'My Cart';
+  static const String categoryDataNotAvailable =
+      'Category Data Not Available!!!';
+  static const String companyName = 'Company Name';
+  static const String updateProfile = 'Update Profile';
+  static const String notification = 'Notification';
+  static const String noPartsAvailable = 'No Parts Available';
+  static const String model = 'Model';
+  static const String perOff = '% off';
+  static const String addToCart = 'Add To Cart';
+  static const String noImage = 'no_img.jpg';
+  static const String partNumber = 'Part Number';
+  static const String origin = 'Origin';
+  static const String detailsPageClass = 'Class';
+  static const String oneToFivePieces = '1-5 Pieces';
+  static const String fiveOrMorePieces = '> 5 Pieces';
+  static const String returnText = '5 Days Assured Return';
+  static const String gstInvoice = 'GST Invoice';
+  static const String congratulationDiscountMSG =
+      'congratulations you get higher discount';
+  static const String emptyCartMSG = 'Cart Data Not Found!!!';
+  static const String totalAmount = 'Total Amount';
+  static const String totalSaving = 'Total Saving';
+  static const String placeOrder = 'Place Order';
 }
 
 class IconStrings {
@@ -82,3 +111,13 @@ class FirebaseParamStrings {}
 class FirebaseCollectionStrings {}
 
 const String poppins = 'Poppins';
+
+const String undefined = 'undefined';
+
+String getModelDetailEndUrl(
+    {String? customerId,
+    String? modelLineId,
+    String? categoryId,
+    String? pageNo}) {
+  return 'CustomerId=$customerId&modification3=$modelLineId&modification5=&Sub=undefined&Cat=$categoryId&SPHL=undefined&SPLH=undefined&SAZ=undefined&SZA=undefined&Size=20&Page=$pageNo';
+}

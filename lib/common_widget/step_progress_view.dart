@@ -66,17 +66,17 @@ class StepProgressView extends StatelessWidget {
 
       list.add(
         Container(
-          width: 30.0,
-          height: 30.0,
+          width: 40.0,
+          height: 40.0,
           padding: const EdgeInsets.all(0),
           child: Icon(
             icon,
             color: iconColor,
-            size: 15.0,
+            size: 25.0,
           ),
           decoration: BoxDecoration(
             color: circleColor,
-            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           ),
         ),
       );

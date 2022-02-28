@@ -1,3 +1,4 @@
+import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:flutter/material.dart';
 
 /// Usage:
@@ -88,7 +89,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
             height: widget.height,
             padding: const EdgeInsets.only(left: 10.0),
             decoration: ShapeDecoration(
-              color: Colors.white,
+              color: colorWhite,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                     width: 0.8, style: BorderStyle.solid, color: borderLine),

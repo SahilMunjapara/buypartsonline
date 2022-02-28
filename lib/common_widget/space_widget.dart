@@ -9,3 +9,6 @@ Widget divider({Color? color, double? height, double? thickness}) =>
 
 Widget verticalDivider({Color? color, double? width, double? thickness}) =>
     VerticalDivider(color: color, width: width, thickness: thickness);
+
+Widget horizontalDivider({Color? color, double? height, double? thickness}) =>
+    Divider(color: color, height: height, thickness: thickness);

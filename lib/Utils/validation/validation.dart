@@ -13,6 +13,16 @@ class Validator {
     }
   }
 
+  static String? companyNameValidationMsg(String? companyName) {
+    if (companyName?.isEmpty ?? true) {
+      return "Company Name is required";
+    } else if (!validCharacters.hasMatch(companyName!)) {
+      return "Special Characters are not allowed";
+    } else {
+      return null;
+    }
+  }
+
   static String? firstNameValidationMsg(String? username) {
     if (username?.isEmpty ?? true) {
       return "FirstName is required";

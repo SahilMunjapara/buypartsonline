@@ -12,6 +12,12 @@ const Color colorGrey = Color(0XFF9B9B9B);
 const Color colorWhiteBackground = Color(0XFFF9F9F9);
 const Color colorPassiveIndicator = Color(0XFFB7B7B7);
 const Color colorSearch = Color(0XFFFF9A3D);
+const Color colorDropdownText = Color(0XFFA4A4A4);
+const Color colorTextGrey = Color(0XFFA4A4A4);
+const Color colorBrandText = Color(0XFF3E3BFB);
+const Color colorGreen = Color(0XFF1AAE6F);
+const Color colorGreyPartText = Color(0XFF818181);
+const Color colorGreyDivider = Color(0XFFD1D1D1);
 
 Map<int, Color> color = {
   50: const Color.fromRGBO(253, 122, 1, .1),

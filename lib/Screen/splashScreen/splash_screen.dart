@@ -1,5 +1,7 @@
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
+import 'package:buypartsonline/Utils/app_preferences/app_preferences.dart';
+import 'package:buypartsonline/Utils/app_preferences/prefrences_key.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +33,17 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   timer(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          Routes.loginScreen, (Route<dynamic> route) => false);
-    });
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        if (AppPreference().getBoolData(PreferencesKey.isLogin) ?? false) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.homeScreen, (Route<dynamic> route) => false);
+        } else {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              Routes.loginScreen, (Route<dynamic> route) => false);
+        }
+      },
+    );
   }
 }
