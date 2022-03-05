@@ -10,6 +10,7 @@ import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/custom_textfield_widget.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
 import 'package:buypartsonline/common_widget/toast_msg.dart';
+import 'package:buypartsonline/service/exception/exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -78,7 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
-          'My Profile',
+          Strings.myProfile,
           style: size23PNregular(textColor: colorWhite),
         ),
         leading: GestureDetector(
@@ -114,6 +115,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (state is UpdateProfileState) {
             ShowToast.toastMsg(state.responseModel.message!);
           }
+          if (state is ProfileErrorState) {
+            AppException exception = state.exception;
+          ShowToast.toastMsg(exception.message);
+          }
         },
         child: BlocBuilder(
           bloc: profileBloc,
@@ -136,55 +141,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     isLoading
                         ? const Expanded(
                             child: Center(
-                            child: CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(primaryColor),
+                              child: CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(primaryColor),
+                              ),
                             ),
-                          ))
-                        : Form(
-                            key: formKey,
+                          )
+                        : Expanded(
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                verticalSpace(15),
-                                CustomTextField(
-                                  controller: companyNameController,
-                                  focusNode: companyNameFocusNode,
-                                  validator: Validator.companyNameValidationMsg,
-                                  labelText: Strings.companyName,
-                                  textInputType: TextInputType.text,
-                                  textInputAction: TextInputAction.next,
+                                Form(
+                                  key: formKey,
+                                  child: Column(
+                                    children: [
+                                      verticalSpace(15),
+                                      CustomTextField(
+                                        controller: companyNameController,
+                                        focusNode: companyNameFocusNode,
+                                        validator:
+                                            Validator.companyNameValidationMsg,
+                                        labelText: Strings.companyName,
+                                        textInputType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                      ),
+                                      verticalSpace(15),
+                                      CustomTextField(
+                                        maxLength: 30,
+                                        controller: nameController,
+                                        focusNode: nameFocusNode,
+                                        validator: Validator.nameValidationMsg,
+                                        labelText: Strings.name,
+                                        textInputType: TextInputType.text,
+                                        textInputAction: TextInputAction.next,
+                                      ),
+                                      verticalSpace(15),
+                                      CustomTextField(
+                                        maxLength: 10,
+                                        controller: mobileNumberController,
+                                        focusNode: mobileNumberFocusNode,
+                                        validator: Validator.phoneValidationMsg,
+                                        labelText: Strings.mobileNumber,
+                                        textInputType: TextInputType.number,
+                                        textInputAction: TextInputAction.next,
+                                        readOnly: true,
+                                      ),
+                                      verticalSpace(15),
+                                      CustomTextField(
+                                        maxLength: 45,
+                                        controller: emailController,
+                                        focusNode: emailFocusNode,
+                                        validator: Validator.emailValidationMsg,
+                                        labelText: Strings.email,
+                                        textInputType:
+                                            TextInputType.emailAddress,
+                                        textInputAction: TextInputAction.done,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                verticalSpace(15),
-                                CustomTextField(
-                                  maxLength: 30,
-                                  controller: nameController,
-                                  focusNode: nameFocusNode,
-                                  validator: Validator.nameValidationMsg,
-                                  labelText: Strings.name,
-                                  textInputType: TextInputType.text,
-                                  textInputAction: TextInputAction.next,
-                                ),
-                                verticalSpace(15),
-                                CustomTextField(
-                                  maxLength: 10,
-                                  controller: mobileNumberController,
-                                  focusNode: mobileNumberFocusNode,
-                                  validator: Validator.phoneValidationMsg,
-                                  labelText: Strings.mobileNumber,
-                                  textInputType: TextInputType.number,
-                                  textInputAction: TextInputAction.next,
-                                ),
-                                verticalSpace(15),
-                                CustomTextField(
-                                  maxLength: 45,
-                                  controller: emailController,
-                                  focusNode: emailFocusNode,
-                                  validator: Validator.emailValidationMsg,
-                                  labelText: Strings.email,
-                                  textInputType: TextInputType.emailAddress,
-                                  textInputAction: TextInputAction.done,
-                                ),
-                                verticalSpace(25),
                                 Padding(
                                   padding: const EdgeInsets.all(25.0),
                                   child: GestureDetector(

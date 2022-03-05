@@ -10,8 +10,12 @@ import 'package:buypartsonline/service/network/network_string.dart';
 import 'package:flutter/material.dart';
 
 class ModelViewCard extends StatelessWidget {
-  const ModelViewCard({this.modelViewData, Key? key}) : super(key: key);
+  const ModelViewCard(
+      {this.modelViewData, this.onOneCartAdd, this.onFiveCartAdd, Key? key})
+      : super(key: key);
   final ModelViewData? modelViewData;
+  final VoidCallback? onOneCartAdd;
+  final VoidCallback? onFiveCartAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -35,27 +39,30 @@ class ModelViewCard extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 width: SizeUtils().screenWidth,
                 height: SizeUtils().hp(17),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
+                  color: colorWhiteBackground,
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    modelViewData!.partImages == ""
-                        ? imageURL + Strings.noImage
-                        : imageURL + modelViewData!.partImages!,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, object, stackTrace) {
-                      return Image.asset(
-                        AssetStrings.noImage,
-                        fit: BoxFit.cover,
-                      );
-                    },
-                  ),
+                  child: modelViewData!.partImages == "" ||
+                          modelViewData!.partImages == Strings.noImage
+                      ? Image.asset(AssetStrings.noImage)
+                      : Image.network(
+                          imageURL + modelViewData!.partImages!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, object, stackTrace) {
+                            return Image.asset(
+                              AssetStrings.noImage,
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        ),
                 ),
               ),
               verticalSpace(6),
@@ -65,14 +72,14 @@ class ModelViewCard extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              verticalSpace(4),
+              verticalSpace(SizeUtils().hp(0.5)),
               Text(
                 modelViewData!.brandName!,
                 style: size08PNregular(
                   textColor: colorBrandText,
                 ),
               ),
-              verticalSpace(4),
+              verticalSpace(SizeUtils().hp(0.5)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -86,7 +93,7 @@ class ModelViewCard extends StatelessWidget {
                   ),
                 ],
               ),
-              verticalSpace(4),
+              verticalSpace(SizeUtils().hp(0.5)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -102,7 +109,7 @@ class ModelViewCard extends StatelessWidget {
                   ),
                 ],
               ),
-              verticalSpace(4),
+              verticalSpace(SizeUtils().hp(0.5)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -136,40 +143,47 @@ class ModelViewCard extends StatelessWidget {
                   ),
                 ],
               ),
-              verticalSpace(4),
+              verticalSpace(SizeUtils().hp(0.5)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4.0, horizontal: 10.0),
-                      child: Text(
-                        Strings.addToCart,
-                        style: size07PNregular(textColor: colorWhite),
+                  GestureDetector(
+                    onTap: onOneCartAdd,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 10.0),
+                        child: Text(
+                          Strings.addToCart,
+                          style: size07PNregular(textColor: colorWhite),
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 4.0, horizontal: 10.0),
-                      child: Text(
-                        Strings.addToCart,
-                        style: size07PNregular(textColor: colorWhite),
+                  GestureDetector(
+                    onTap: onFiveCartAdd,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4.0, horizontal: 10.0),
+                        child: Text(
+                          Strings.addToCart,
+                          style: size07PNregular(textColor: colorWhite),
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
+              verticalSpace(SizeUtils().hp(0.5)),
             ],
           ),
         ),

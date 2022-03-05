@@ -14,6 +14,16 @@ TextStyle size06PNregular({
         letterSpacing: letterSpacing,
         fontWeight: FontWeight.w600);
 
+TextStyle size25PNregular({
+  Color? textColor,
+  double? letterSpacing = 0.0,
+}) =>
+    TextStyle(
+        color: textColor ?? colorBlack,
+        fontSize: SizeUtils().sp(20),
+        letterSpacing: letterSpacing,
+        fontWeight: FontWeight.w600);
+
 TextStyle size07PNregular({
   Color? textColor,
   double? letterSpacing = 0.0,

@@ -31,6 +31,6 @@ class AssetStrings {
   static const String plus = 'assets/png/plus.png';
   static const String minus = 'assets/png/minus.png';
   static const String notificationDrawer = 'assets/png/notificationDrawer.png';
-  static const String noImage = 'assets/png/no_img.jpg';
+  static const String noImage = 'assets/png/no_img.png';
   static const String deleteCart = 'assets/png/deleteCart.png';
 }

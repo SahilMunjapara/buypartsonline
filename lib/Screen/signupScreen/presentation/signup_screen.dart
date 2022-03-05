@@ -143,6 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                           onPressed: () {
+                            Navigator.pushNamed(context, Routes.otpScreen);
                             if (formKey!.currentState!.validate()) {
                               signupBloc.add(
                                 SignupPerformSignupEvent(

@@ -8,4 +8,7 @@ class Routes {
   static const String modelDetailView = "/modelDetailView";
   static const String cartScreen = "/cartScreen";
   static const String profileScreen = "/profileScreen";
+  static const String otpScreen = "/otpScreen";
+  static const String addressScreen = "/addressScreen";
+  static const String notificationScreen = "/notificationScreen";
 }

@@ -19,3 +19,4 @@ const getProfileByCustomerId = 'getProfileByCustomerId';
 const updateProfile = 'updateProfile';
 const customModelURL =
     'FilterV3WithSortingTestingV3?/catlog?BrandId=[]&MinPrice=undefined&MaxPrice=undefined&';
+const addToCartURL = 'addToCartOld';

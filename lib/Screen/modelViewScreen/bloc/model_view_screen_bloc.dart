@@ -23,5 +23,18 @@ class ModelViewBloc extends Bloc<ModelViewScreenEvent, ModelViewScreenState> {
       }
       yield ModelViewIsLoadingEndState();
     }
+
+    if (event is ModelViewAddCartEvent) {
+      yield CartAddIsLoadingBeginState();
+      Resource resource = await _modelViewRepository.addCartPart(event);
+      if (resource.data != null) {
+        yield ModelViewCartAddedState(resource.data);
+      } else {
+        yield ModelViewErrorState(
+          AppException.decodeExceptionData(jsonString: resource.error ?? ''),
+        );
+      }
+      yield CartAddIsLoadingEndState();
+    }
   }
 }

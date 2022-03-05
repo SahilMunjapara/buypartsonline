@@ -1,20 +1,23 @@
-import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
-import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:flutter/material.dart';
 
-class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({Key? key}) : super(key: key);
+class AddressScreen extends StatefulWidget {
+  const AddressScreen({Key? key}) : super(key: key);
 
   @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
+  State<AddressScreen> createState() => _AddressScreenState();
 }
 
-class _NotificationScreenState extends State<NotificationScreen> {
+class _AddressScreenState extends State<AddressScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeUtils().init(context);
@@ -23,7 +26,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
-          Strings.myNotification,
+          Strings.addresses,
           style: size23PNregular(textColor: colorWhite),
         ),
         leading: GestureDetector(
@@ -36,17 +39,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
         ),
         elevation: 0,
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, Routes.cartScreen);
-            },
-            child: Image.asset(AssetStrings.cartAppbar),
-          ),
-        ],
       ),
       body: Stack(
-        children: [
+        children  : [
           const BottomDesignBox(),
           Column(
             children: [

@@ -15,6 +15,7 @@ import 'package:buypartsonline/common_widget/banner_carousel.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
 import 'package:buypartsonline/Screen/searchDialogScreen/presentation/search_dialog.dart';
+import 'package:buypartsonline/common_widget/shimmer.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +101,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.notificationScreen);
+            },
             child: Image.asset(AssetStrings.notification),
           ),
         ],
@@ -183,16 +187,26 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           verticalSpace(20),
                           isBannerLoading
-                              ? const AspectRatio(
+                              ? AspectRatio(
                                   aspectRatio: 2.4,
                                   child: SizedBox(
                                     child: Center(
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          primaryColor,
+                                      child: Shimmer.fromColors(
+                                        baseColor: const Color(0xFFE0E0E0),
+                                        highlightColor: const Color(0xFFF5F5F5),
+                                        enabled: true,
+                                        child: Container(
+                                          color: colorWhite,
+                                          height: SizeUtils().hp(20),
+                                          width: 1000,
                                         ),
                                       ),
+                                      // child: CircularProgressIndicator(
+                                      //   valueColor:
+                                      //       AlwaysStoppedAnimation<Color>(
+                                      //     primaryColor,
+                                      //   ),
+                                      // ),
                                     ),
                                   ),
                                 )
@@ -244,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .categoryData!.isEmpty
                                       ? Center(
                                           child: Text(
-                                            'Category Data Not Available',
+                                            Strings.categoryDataNotAvailable,
                                             style: size15PNmedium(),
                                           ),
                                         )
@@ -266,6 +280,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           category.categoryId ??
                                                               undefined,
                                                       modelLineId: undefined,
+                                                      category: category
+                                                              .categoryName ??
+                                                          undefined,
                                                       isFromSearchDialog: false,
                                                     ));
                                               },
@@ -317,11 +334,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             color:
                                                                 colorWhiteBackground,
                                                           ),
-                                                          child: Image.network(category
-                                                                      .categoryImage ==
-                                                                  ""
-                                                              ? '$imageURL${Strings.noImage}'
-                                                              : '$imageURL${category.categoryImage}'),
+                                                          child: category.categoryImage ==
+                                                                      "" ||
+                                                                  category.categoryImage ==
+                                                                      Strings
+                                                                          .noImage
+                                                              ? Image.asset(
+                                                                  AssetStrings
+                                                                      .noImage)
+                                                              : Image.network(
+                                                                  '$imageURL${category.categoryImage}'),
                                                         ),
                                                         Text(
                                                           category

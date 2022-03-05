@@ -17,3 +17,14 @@ class ModelViewDetailFetchEvent extends ModelViewScreenEvent {
   @override
   List<Object?> get props => [customerId, modelLineId, categoryId];
 }
+
+class ModelViewAddCartEvent extends ModelViewScreenEvent {
+  final String? customerId;
+  final String? partId;
+  final String? cartQuantity;
+
+  ModelViewAddCartEvent({this.customerId, this.partId, this.cartQuantity});
+
+  @override
+  List<Object?> get props => [customerId, partId, cartQuantity];
+}

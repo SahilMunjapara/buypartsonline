@@ -1,4 +1,5 @@
 import 'package:buypartsonline/Screen/modelViewScreen/bloc/bloc.dart';
+import 'package:buypartsonline/Screen/modelViewScreen/data/model/cart_add_response_model.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_response_model.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/service/network/model/resource_model.dart';
@@ -31,6 +32,32 @@ class ModelViewRepository {
 
       ModelViewResponseModel responseData =
           ModelViewResponseModel.fromJson(result);
+      resource = Resource(
+        data: responseData,
+        error: null,
+      );
+    } catch (e, stackTrace) {
+      resource = Resource(
+        error: e.toString(),
+        data: null,
+      );
+      print('ERROR: $e');
+      print('STACKTRACE: $stackTrace');
+    }
+    return resource;
+  }
+
+  Future addCartPart(ModelViewAddCartEvent event) async {
+    Resource? resource;
+    try {
+      var body = <String, dynamic>{};
+      body['CustomerId'] = event.customerId;
+      body['PartId'] = event.partId;
+      body['CartQuantity'] = event.cartQuantity;
+
+      var result = await NetworkAPICall().post(addToCartURL, body);
+
+      CartAddResponseModel responseData = CartAddResponseModel.fromJson(result);
       resource = Resource(
         data: responseData,
         error: null,

@@ -3,6 +3,7 @@ class Strings {
   static const String skip = 'Skip';
   static const String signUp = 'Signup';
   static const String login = 'Login';
+  static const String otpTitle = 'OTP';
   static const String signUpTitle = 'Create your account';
   static const String loginTitle = 'Login Your Account';
   static const String name = 'Name';
@@ -76,6 +77,12 @@ class Strings {
   static const String totalAmount = 'Total Amount';
   static const String totalSaving = 'Total Saving';
   static const String placeOrder = 'Place Order';
+  static const String otpVerification = 'OTP verification';
+  static const String otpVerificationDetail =
+      'We have send OTP on your Mobile Number.';
+  static const String verifyOtp = 'Verify OTP';
+  static const String address = 'Address';
+  static const String myNotification = 'My Notification';
 }
 
 class IconStrings {
@@ -88,6 +95,10 @@ class ToastString {
   static const String somethingWentWrong = 'Somthing Went Wrong!!!';
   static const String checkEmailForResetPassword =
       'Sent link in above Email for reset passsword.';
+  static const String alreadyAddedInCart =
+      'The part has already been added to your cart';
+  static const String requiredFieldSearchByVehicle =
+      'For a vehicle search, the first three options are required.';
 }
 
 class ValidatorStrings {
@@ -104,11 +115,6 @@ class ValidatorStrings {
 class LogTagString {}
 
 class LogMessageString {}
-
-/// FIREBASE
-class FirebaseParamStrings {}
-
-class FirebaseCollectionStrings {}
 
 const String poppins = 'Poppins';
 

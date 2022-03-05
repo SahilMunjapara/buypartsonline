@@ -58,7 +58,11 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                       drawerList(
                         image: AssetStrings.notificationDrawer,
                         text: Strings.notification,
-                        ontap: () {},
+                        ontap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(
+                              context, Routes.notificationScreen);
+                        },
                       ),
                       // drawerList(
                       //   image: AssetStrings.searchByVehicle,
@@ -98,7 +102,10 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                       drawerList(
                         image: AssetStrings.addresses,
                         text: Strings.addresses,
-                        ontap: () {},
+                        ontap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, Routes.addressScreen);
+                        },
                       ),
                       verticalSpace(34),
                       drawerList(

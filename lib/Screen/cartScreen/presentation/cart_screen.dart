@@ -1,7 +1,6 @@
 import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/widget/cart_item_card_widget.dart';
-import 'package:buypartsonline/Screen/homeScreen/presentation/page/home_screen.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';

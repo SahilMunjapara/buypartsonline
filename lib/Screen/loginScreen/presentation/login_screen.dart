@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     SizeUtils().init(context);
-    return Scaffold(
+    return Scaffold(  
       resizeToAvoidBottomInset: false,
       backgroundColor: colorWhiteBackground,
       body: BlocListener(
