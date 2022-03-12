@@ -4,6 +4,7 @@ import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// ignore: must_be_immutable
 class CustomTextField extends StatefulWidget {
   final bool? autoFocus;
   final ValueChanged<String>? onChange;
@@ -29,6 +30,7 @@ class CustomTextField extends StatefulWidget {
   Color containerColor;
   bool passwordField = false;
 
+  // ignore: use_key_in_widget_constructors
   CustomTextField(
       {this.autoFocus,
       this.onChange,

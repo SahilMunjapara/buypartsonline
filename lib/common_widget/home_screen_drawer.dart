@@ -1,5 +1,4 @@
 import 'package:buypartsonline/Navigation/routes_key.dart';
-import 'package:buypartsonline/Screen/searchDialogScreen/presentation/search_dialog.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
@@ -87,7 +86,11 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                       drawerList(
                         image: AssetStrings.myOrders,
                         text: Strings.myOrders,
-                        ontap: () {},
+                        ontap: () {
+                          Navigator.of(context).pop();
+                          Navigator.of(context)
+                              .pushNamed(Routes.myOrdersScreen);
+                        },
                       ),
                       verticalSpace(34),
                       drawerList(

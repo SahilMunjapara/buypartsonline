@@ -1,6 +1,10 @@
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter.bloc.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_event.dart';
+import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/widget/cart_item_card_widget.dart';
+import 'package:buypartsonline/Screen/cartScreen/presentation/widget/header_stepper_widget.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
@@ -11,7 +15,6 @@ import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
-import 'package:buypartsonline/common_widget/step_progress_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,8 +44,6 @@ class _CartScreenState extends State<CartScreen> {
     super.initState();
   }
 
-  int currentStep = 2;
-
   @override
   Widget build(BuildContext context) {
     SizeUtils().init(context);
@@ -70,6 +71,9 @@ class _CartScreenState extends State<CartScreen> {
             isLoading = true;
           }
           if (state is CartLoadingEndState) {
+            BlocProvider.of<CartCounterBloc>(context).add(CartCounterTotalEvent(
+              customerId: AppPreference().getStringData(PreferencesKey.userId),
+            ));
             isLoading = false;
           }
           if (state is CartTotalItemState) {
@@ -89,28 +93,7 @@ class _CartScreenState extends State<CartScreen> {
                 const BottomDesignBox(),
                 Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(SizeUtils().wp(10)),
-                        ),
-                      ),
-                      height: SizeUtils().hp(12),
-                      width: SizeUtils().screenWidth,
-                      child: StepProgressView(
-                        width: SizeUtils().screenWidth,
-                        icons: const [
-                          Icons.shopping_cart_outlined,
-                          Icons.location_on_outlined,
-                          Icons.calendar_today_outlined,
-                          Icons.credit_card,
-                        ],
-                        curStep: currentStep,
-                        activeColor: colorWhite,
-                        inactiveColor: colorSearch,
-                      ),
-                    ),
+                    const HeaderStepperWidget(currentStep: 2),
                     cartProductData.isEmpty && !isLoading
                         ? const Expanded(
                             child: Center(
@@ -229,8 +212,8 @@ class _CartScreenState extends State<CartScreen> {
                                   onTap: () {
                                     if (isLoading) {
                                     } else {
-                                      currentStep++;
-                                      setState(() {});
+                                      Navigator.pushReplacementNamed(
+                                          context, Routes.cartAddressScreen);
                                     }
                                   },
                                   child: Container(
@@ -242,7 +225,7 @@ class _CartScreenState extends State<CartScreen> {
                                     width: SizeUtils().screenWidth,
                                     child: Center(
                                       child: Text(
-                                        Strings.placeOrder,
+                                        Strings.proceedToCheckout,
                                         style: size18PNregular(
                                           textColor: colorWhite,
                                         ),

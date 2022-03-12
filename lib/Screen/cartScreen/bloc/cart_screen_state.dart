@@ -1,3 +1,6 @@
+import 'package:buypartsonline/Screen/addressScreen/data/model/add_address_response_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/cart_address_response_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/cart_default_address_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_remove_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_update_response_model.dart';
@@ -27,6 +30,22 @@ class CartItemRemoveState extends CartScreenState {
   CartRemoveResponseModel? responseModel;
 
   CartItemRemoveState(this.responseModel);
+}
+
+class CartAddressState extends CartScreenState {
+  CartAddressResponseModel? responseModel;
+
+  CartAddressState(this.responseModel);
+}
+
+class CartDefaultAddressState extends CartScreenState {
+  CartDefaultAddressResponseModel? responseModel;
+  CartDefaultAddressState(this.responseModel);
+}
+
+class AddcartAddressState extends CartScreenState {
+  AddAddressResponseModel? responseModel;
+  AddcartAddressState(this.responseModel);
 }
 
 class CartErrorState extends CartScreenState {

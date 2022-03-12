@@ -1,3 +1,7 @@
+import 'package:badges/badges.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter.bloc.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_event.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_state.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/bloc/model_view_screen_bloc.dart';
@@ -62,6 +66,9 @@ class _ModelDetailViewState extends State<ModelDetailView> {
           }
           if (state is ModelViewCartAddedState) {
             widget.modelPart.isCart = true;
+            BlocProvider.of<CartCounterBloc>(context).add(CartCounterTotalEvent(
+              customerId: AppPreference().getStringData(PreferencesKey.userId),
+            ));
             ShowToast.toastMsg(state.responseModel.message!);
           }
           if (state is ModelViewErrorState) {
@@ -162,18 +169,41 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                                         Navigator.pushNamed(
                                             context, Routes.cartScreen);
                                       },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 8),
-                                          child: Image.asset(
-                                              AssetStrings.cartAppbar),
-                                        ),
+                                      child: BlocBuilder<CartCounterBloc,
+                                          CartCounterTotalState>(
+                                        builder: (context, state) {
+                                          return Badge(
+                                            position: BadgePosition.topStart(
+                                                start: -5),
+                                            badgeColor: colorGreen,
+                                            animationDuration: const Duration(
+                                                milliseconds: 300),
+                                            animationType:
+                                                BadgeAnimationType.fade,
+                                            badgeContent: Text(
+                                              state.responseModel!
+                                                  .counterTotalData!.first
+                                                  .toString(),
+                                              style: size10PNsemibold(
+                                                  textColor: colorWhite),
+                                            ),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: primaryColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10,
+                                                        horizontal: 8),
+                                                child: Image.asset(
+                                                    AssetStrings.cartAppbar),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],

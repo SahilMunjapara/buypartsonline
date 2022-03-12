@@ -12,7 +12,7 @@ const getModelURL = 'get_a_data_join_parent_api_final/model/makers/';
 const getModelYearAndModificationURL =
     'get_a_data_join_parent_api_final/modification/model/';
 const getModelCategoryURL = 'CategoryPriority/all/';
-const getCartTotal = 'getCartTotal';
+const getCartDetailsURL = 'getCartTotal';
 const updateCartQty = 'updateCartQty';
 const removeCart = 'removeCart';
 const getProfileByCustomerId = 'getProfileByCustomerId';
@@ -20,3 +20,7 @@ const updateProfile = 'updateProfile';
 const customModelURL =
     'FilterV3WithSortingTestingV3?/catlog?BrandId=[]&MinPrice=undefined&MaxPrice=undefined&';
 const addToCartURL = 'addToCartOld';
+const addAddressURL = 'addAddressForBuyPart';
+const allAddressURL = 'getAddress';
+const setDefaultAddressURL = 'updateDefaultAddress';
+const getCartTotalURL = 'countCartDataByCustomerId';

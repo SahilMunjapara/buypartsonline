@@ -1,4 +1,6 @@
-import 'package:badges/badges.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter.bloc.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_event.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_state.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/homeScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/homeScreen/data/model/home_banner_response_model.dart';
@@ -15,6 +17,7 @@ import 'package:buypartsonline/common_widget/banner_carousel.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
 import 'package:buypartsonline/Screen/searchDialogScreen/presentation/search_dialog.dart';
+import 'package:buypartsonline/common_widget/notification_badge_widget.dart';
 import 'package:buypartsonline/common_widget/shimmer.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
@@ -33,6 +36,7 @@ int counter = 0;
 class _HomeScreenState extends State<HomeScreen> {
   late GlobalKey<ScaffoldState> _scaffoldKey;
   HomeBloc homeBloc = HomeBloc();
+  CartCounterBloc cartCounterBloc = CartCounterBloc();
 
   HomeBannerResponseModel homeBannerResponseModel = HomeBannerResponseModel(
       bannerData: [BannerData(banner: [], baseUrl: [])]);
@@ -40,12 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
       HomeCategoryResponseModel(categoryData: []);
   bool isBannerLoading = true;
   bool isCategoryLoading = true;
+  int cartCounter = 0;
 
   @override
   void initState() {
     _scaffoldKey = GlobalKey<ScaffoldState>();
-    homeBloc.add(HomeCartCountEvent(
-        userId: AppPreference().getStringData(PreferencesKey.userId)));
+    BlocProvider.of<CartCounterBloc>(context).add(CartCounterTotalEvent(
+        customerId: AppPreference().getStringData(PreferencesKey.userId)));
     homeBloc.add(HomeScreenBannerEvent());
     homeBloc.add(HomeScreenCategoryEvent());
     super.initState();
@@ -79,25 +84,12 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, Routes.cartScreen).then((value) {
-                homeBloc.add(
-                  HomeCartCountEvent(
-                    userId:
-                        AppPreference().getStringData(PreferencesKey.userId),
-                  ),
-                );
-              });
+              Navigator.pushNamed(context, Routes.cartScreen);
             },
-            child: Badge(
-              position: BadgePosition.topStart(),
-              badgeColor: colorGreen,
-              animationDuration: const Duration(milliseconds: 300),
-              animationType: BadgeAnimationType.fade,
-              badgeContent: Text(
-                counter.toString(),
-                style: size10PNsemibold(textColor: colorWhite),
-              ),
-              child: Image.asset(AssetStrings.cartAppbar),
+            child: BlocBuilder<CartCounterBloc, CartCounterTotalState>(
+              builder: (context, state) {
+                return NotificationBadge(state: state);
+              },
             ),
           ),
           GestureDetector(
@@ -128,10 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           if (state is HomeScreenCategoryState) {
             homeCategoryResponseModel = state.responseModel;
-          }
-          if (state is HomeCartCountState) {
-            setState(
-                () => counter = state.responseModel.cartData!.first.totalCart!);
           }
         },
         child: BlocBuilder(
@@ -201,39 +189,46 @@ class _HomeScreenState extends State<HomeScreen> {
                                           width: 1000,
                                         ),
                                       ),
-                                      // child: CircularProgressIndicator(
-                                      //   valueColor:
-                                      //       AlwaysStoppedAnimation<Color>(
-                                      //     primaryColor,
-                                      //   ),
-                                      // ),
                                     ),
                                   ),
                                 )
-                              : BannerCarousel(
-                                  autoPlay: true,
-                                  pagination: true,
-                                  passiveIndicator: colorPassiveIndicator,
-                                  activeIndicator: primaryColor,
-                                  viewportFraction: 1.0,
-                                  aspectRatio: 2,
-                                  items: homeBannerResponseModel
-                                      .bannerData!.first.banner!
-                                      .map((banner) {
-                                    return Container(
-                                      margin: const EdgeInsets.all(8.0),
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(5.0)),
-                                        child: Image.network(
-                                          '$imageURL${banner.bannerImage}',
-                                          fit: BoxFit.contain,
-                                          width: 1000.0,
+                              : homeBannerResponseModel
+                                      .bannerData!.first.banner!.isEmpty
+                                  ? AspectRatio(
+                                      aspectRatio: 2.4,
+                                      child: Center(
+                                        child: Text(
+                                          Strings.bannerDataNotAvailable,
+                                          style: size15PNmedium(),
                                         ),
                                       ),
-                                    );
-                                  }).toList(),
-                                ),
+                                    )
+                                  : BannerCarousel(
+                                      autoPlay: true,
+                                      pagination: true,
+                                      passiveIndicator: colorPassiveIndicator,
+                                      activeIndicator: primaryColor,
+                                      viewportFraction: 1.0,
+                                      aspectRatio: 2,
+                                      items: homeBannerResponseModel
+                                          .bannerData!.first.banner!
+                                          .map((banner) {
+                                        return Container(
+                                          margin: const EdgeInsets.all(8.0),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(5.0)),
+                                            child: Image.network(
+                                              '$imageURL${banner.bannerImage}',
+                                              fit: BoxFit.contain,
+                                              width: 1000.0,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+
                           verticalSpace(6),
                           Text(
                             Strings.searchByCategory,

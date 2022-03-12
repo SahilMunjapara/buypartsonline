@@ -1,4 +1,7 @@
 import 'package:buypartsonline/Screen/addressScreen/presentation/address_screen.dart';
+import 'package:buypartsonline/Screen/cartScreen/presentation/cart_address_screen.dart';
+import 'package:buypartsonline/Screen/cartScreen/presentation/cart_checkout_screen.dart';
+import 'package:buypartsonline/Screen/cartScreen/presentation/cart_payout_screen.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/cart_screen.dart';
 import 'package:buypartsonline/Screen/forgotScreen/forgot_screen.dart';
 import 'package:buypartsonline/Screen/homeScreen/presentation/page/home_screen.dart';
@@ -7,6 +10,7 @@ import 'package:buypartsonline/Screen/modelDetailView/presentation/model_detail_
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_response_model.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_screen_param.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/presentation/model_view_screen.dart';
+import 'package:buypartsonline/Screen/myOrderScreen/presentation/my_orders_screen.dart';
 import 'package:buypartsonline/Screen/notificationScreen/presentation/notification_screen.dart';
 import 'package:buypartsonline/Screen/otpScreen/presentation/otp_screen.dart';
 import 'package:buypartsonline/Screen/profileScreen/presentation/profile_screen.dart';
@@ -47,6 +51,27 @@ class RouteGenerator {
         );
       case Routes.cartScreen:
         return MaterialPageRoute(builder: (context) => const CartScreen());
+      case Routes.cartAddressScreen:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) =>
+              const CartAddressScreen(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        );
+      case Routes.cartCheckoutScreen:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) =>
+              const CartCheckoutScreen(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        );
+      case Routes.cartPayoutScreen:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation1, animation2) =>
+              const CartPayoutScreen(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        );
       case Routes.profileScreen:
         return MaterialPageRoute(builder: (context) => const ProfileScreen());
       case Routes.addressScreen:
@@ -54,6 +79,8 @@ class RouteGenerator {
       case Routes.notificationScreen:
         return MaterialPageRoute(
             builder: (context) => const NotificationScreen());
+      case Routes.myOrdersScreen:
+        return MaterialPageRoute(builder: (context) => const MyOrderScreen());
       default:
         return _errorRoute();
     }

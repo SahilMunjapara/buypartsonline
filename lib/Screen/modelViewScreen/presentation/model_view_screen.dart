@@ -1,3 +1,6 @@
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter.bloc.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_event.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_state.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_response_model.dart';
@@ -13,6 +16,7 @@ import 'package:buypartsonline/Utils/app_preferences/prefrences_key.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
+import 'package:buypartsonline/common_widget/notification_badge_widget.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
 import 'package:buypartsonline/common_widget/toast_msg.dart';
 import 'package:buypartsonline/service/exception/exception.dart';
@@ -95,7 +99,11 @@ class _ModelViewScreenState extends State<ModelViewScreen> {
             onTap: () {
               Navigator.pushNamed(context, Routes.cartScreen);
             },
-            child: Image.asset(AssetStrings.cartAppbar),
+            child: BlocBuilder<CartCounterBloc, CartCounterTotalState>(
+              builder: (context, state) {
+                return NotificationBadge(state: state);
+              },
+            ),
           ),
           GestureDetector(
             onTap: () {
@@ -138,6 +146,9 @@ class _ModelViewScreenState extends State<ModelViewScreen> {
                 e.isCart = true;
               }
             }).toList();
+            BlocProvider.of<CartCounterBloc>(context).add(CartCounterTotalEvent(
+                customerId:
+                    AppPreference().getStringData(PreferencesKey.userId)));
             ShowToast.toastMsg(state.responseModel.message!);
           }
           if (state is ModelViewErrorState) {

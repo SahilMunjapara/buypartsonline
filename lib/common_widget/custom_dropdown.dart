@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 // String toString() {
 //   return name;
 // }
+// ignore: must_be_immutable
 class CustomDropdown<T> extends StatefulWidget {
   CustomDropdown({
     Key? key,
@@ -56,6 +57,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
   /// current selected value
   late T _selectedValue;
 
+  // ignore: unused_field
   late String _hintText;
 
   @override

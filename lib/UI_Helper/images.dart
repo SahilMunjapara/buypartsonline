@@ -33,4 +33,6 @@ class AssetStrings {
   static const String notificationDrawer = 'assets/png/notificationDrawer.png';
   static const String noImage = 'assets/png/no_img.png';
   static const String deleteCart = 'assets/png/deleteCart.png';
+  static const String onRadio = 'assets/png/onradio.png';
+  static const String offRadio = 'assets/png/offradio.png';
 }

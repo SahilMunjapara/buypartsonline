@@ -117,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
           if (state is ProfileErrorState) {
             AppException exception = state.exception;
-          ShowToast.toastMsg(exception.message);
+            ShowToast.toastMsg(exception.message);
           }
         },
         child: BlocBuilder(
@@ -201,7 +201,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.all(25.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 25.0),
                                   child: GestureDetector(
                                     onTap: onUpdateTap,
                                     child: Container(

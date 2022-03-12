@@ -56,6 +56,7 @@ class Strings {
   static const String myCart = 'My Cart';
   static const String categoryDataNotAvailable =
       'Category Data Not Available!!!';
+  static const String bannerDataNotAvailable = 'Banner Data Not Available!!!';
   static const String companyName = 'Company Name';
   static const String updateProfile = 'Update Profile';
   static const String notification = 'Notification';
@@ -83,6 +84,25 @@ class Strings {
   static const String verifyOtp = 'Verify OTP';
   static const String address = 'Address';
   static const String myNotification = 'My Notification';
+  static const String pincode = 'Pincode';
+  static const String state = 'State';
+  static const String setDefaultAddress = 'Set Default Address';
+  static const String addNewAddress = 'Add New Address';
+  static const String shippingAddress = 'Shipping Address';
+  static const String procced = 'Procced';
+  static const String addressNotAvailable =
+      'Currently address not available!!!';
+  static const String proceedToCheckout = 'Proceed to Checkout';
+  static const String payout = 'Payout';
+  static const String checkout = 'Checkout';
+  static const String paymentMethod = 'Payment Method';
+  static const String cardPayment = 'Card';
+  static const String upiPayment = 'UPI';
+  static const String walletPayment = 'Wallets';
+  static const String inProgress = 'In progress';
+  static const String completed = 'Completed';
+  static const String returned = 'Returned';
+  static const String cancelled = 'Cancelled';
 }
 
 class IconStrings {
@@ -111,19 +131,15 @@ class ValidatorStrings {
       "Password and confirm password didn't matched";
 }
 
-//LOGS
-class LogTagString {}
-
-class LogMessageString {}
-
 const String poppins = 'Poppins';
 
 const String undefined = 'undefined';
 
-String getModelDetailEndUrl(
-    {String? customerId,
-    String? modelLineId,
-    String? categoryId,
-    String? pageNo}) {
+String getModelDetailEndUrl({
+  String? customerId,
+  String? modelLineId,
+  String? categoryId,
+  String? pageNo,
+}) {
   return 'CustomerId=$customerId&modification3=$modelLineId&modification5=&Sub=undefined&Cat=$categoryId&SPHL=undefined&SPLH=undefined&SAZ=undefined&SZA=undefined&Size=20&Page=$pageNo';
 }

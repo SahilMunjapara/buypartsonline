@@ -91,7 +91,7 @@ class CartItemCard extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              '₹ ${totalPrice.toString()}',
+                              '₹ ${totalPrice.toStringAsFixed(2)}',
                               style: size14PNregular(textColor: primaryColor),
                             ),
                             horizontalSpace(5),

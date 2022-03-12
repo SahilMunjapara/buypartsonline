@@ -53,7 +53,7 @@ class Validator {
 
   static String? mobileValidationMsg(String? value) {
     String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-    RegExp regExp = new RegExp(pattern);
+    RegExp regExp = RegExp(pattern);
     if ((value?.length ?? 0) == 0) {
       return 'Please enter mobile number';
     } else if (value!.length > 10) {
@@ -66,7 +66,7 @@ class Validator {
 
   static String? pincodeValidationMsg(String? value) {
     String pattern = "^[1-9]{1}[0-9]{2}[0-9]{3}\$";
-    RegExp regExp = new RegExp(pattern);
+    RegExp regExp = RegExp(pattern);
     if ((value?.length ?? 0) == 0) {
       return "Pincode is required";
     } else if (value!.length > 6) {
@@ -129,7 +129,7 @@ class Validator {
   }
 
   static String? stateValidator(String? value) {
-    if (value == null) {
+    if (value == null || value.isEmpty) {
       return 'State is required';
     }
     return null;
@@ -138,7 +138,7 @@ class Validator {
   static String? emailValidator(String? email) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern.toString());
+    RegExp regex = RegExp(pattern.toString());
     if (email?.isEmpty ?? true) {
       return "Email is required";
     } else if (!regex.hasMatch(email!)) {
@@ -183,21 +183,23 @@ class Validator {
       return "Password must be at least 8 characters";
     } else if (password.length > 24) {
       return "Password cannot be greater than 24 characters";
-    } else
+    } else {
       return null;
+    }
   }
 
   static String? commentValidationMsg(String? comment) {
     if ((comment?.length ?? 0) > 1000) {
       return "Comment cannot be greater than 1000 characters";
-    } else
+    } else {
       return null;
+    }
   }
 
   static bool isValidPincode(String pincode) {
     if (pincode.isNotEmpty) {
       Pattern pattern = "^[1-9]{1}[0-9]{2}[0-9]{3}\$";
-      RegExp regex = new RegExp(pattern.toString());
+      RegExp regex = RegExp(pattern.toString());
       return pincode.length == 6 && regex.hasMatch(pincode);
     } else {
       return false;
@@ -208,7 +210,7 @@ class Validator {
     if (email.isNotEmpty) {
       Pattern pattern =
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-      RegExp regex = new RegExp(pattern.toString());
+      RegExp regex = RegExp(pattern.toString());
       return email.length <= 45 && regex.hasMatch(email);
     } else {
       return false;
@@ -218,7 +220,7 @@ class Validator {
   static String? emailValidationMsg(String? email) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern.toString());
+    RegExp regex = RegExp(pattern.toString());
     if (email == null || email.isEmpty) {
       return "Email is required";
     } else if (!regex.hasMatch(email)) {

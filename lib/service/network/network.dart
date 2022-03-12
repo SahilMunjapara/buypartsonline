@@ -149,15 +149,19 @@ class NetworkAPICall {
   }
 
   dynamic checkResponse(http.Response response) {
+    RegExp _numeric = RegExp(r'^-?[0-9]+$');
     switch (response.statusCode) {
       case 200:
         try {
           var json = jsonDecode(response.body);
-          LogUtils.showLogs(message: '$json', tag: 'API RESPONSE');
+          // LogUtils.showLogs(message: '$json', tag: 'API RESPONSE');
           if (json['IsSuccess'] ?? false) {
-            if (json['Data'] == 1 || json['Data'] == '1') {
-              json['Data'] = [];
+            if (_numeric.hasMatch(json['Data'].toString())) {
+              json['Data'] = [json['Data']];
             }
+            // if (json['Data'] == 1 || json['Data'] == '1') {
+            //   json['Data'] = [json['Data']];
+            // }
             return json;
           } else {
             throw AppException(

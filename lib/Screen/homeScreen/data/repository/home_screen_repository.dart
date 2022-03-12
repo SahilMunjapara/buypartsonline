@@ -66,7 +66,7 @@ class HomeRepository {
       var body = <String, dynamic>{};
       body['CustomerId'] = event.userId;
 
-      var result = await NetworkAPICall().post(getCartTotal, body);
+      var result = await NetworkAPICall().post(getCartDetailsURL, body);
       CartDetailResponseModel responseData =
           CartDetailResponseModel.fromJson(result);
       resource = Resource(
