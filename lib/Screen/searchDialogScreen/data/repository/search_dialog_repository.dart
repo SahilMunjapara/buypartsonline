@@ -86,13 +86,35 @@ class SearchDialogRepository {
     return resource;
   }
 
-  Future getModelYearAndModification(
-      ModelYearAndModificationEvent event) async {
+  Future getModelModification(ModelModificationEvent event) async {
     Resource? resource;
     try {
       var body = <String, dynamic>{};
       var result = await NetworkAPICall()
-          .post(getModelYearAndModificationURL + event.modelLineId, body);
+          .post(getModelModificationURL + event.modelLineId, body);
+      ModelYearAndModificationResponseModel responseData =
+          ModelYearAndModificationResponseModel.fromJson(result);
+      resource = Resource(
+        data: responseData,
+        error: null,
+      );
+    } catch (e, stackTrace) {
+      resource = Resource(
+        error: e.toString(),
+        data: null,
+      );
+      print('ERROR: $e');
+      print('STACKTRACE: $stackTrace');
+    }
+    return resource;
+  }
+
+  Future getModelYear(ModelYearEvent event) async {
+    Resource? resource;
+    try {
+      var body = <String, dynamic>{};
+      var result = await NetworkAPICall()
+          .post(getModelYearURL + event.modelLineId, body);
       ModelYearAndModificationResponseModel responseData =
           ModelYearAndModificationResponseModel.fromJson(result);
       resource = Resource(

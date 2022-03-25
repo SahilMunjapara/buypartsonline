@@ -1,10 +1,13 @@
 import 'package:buypartsonline/Screen/addressScreen/data/model/add_address_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_address_response_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/cart_call_back_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_default_address_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_remove_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_update_response_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/default_address_detail_response_model.dart';
+import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
@@ -128,6 +131,64 @@ class CartReposiory {
       resource = Resource(
         error: null,
         data: responseData,
+      );
+    } catch (e, stackTrace) {
+      resource = Resource(
+        error: e.toString(),
+        data: null,
+      );
+      print('ERROR: $e');
+      print('STACKTRACE: $stackTrace');
+    }
+    return resource;
+  }
+
+  Future getCartDefaultAddress(GetDefaultAddresEvent event) async {
+    Resource? resource;
+    try {
+      var body = <String, dynamic>{};
+      body['CustomerId'] = event.customerId;
+
+      var result = await NetworkAPICall().post(getDefaultAddressURL, body);
+      DefaultAddressDetailResponseModel responseData =
+          DefaultAddressDetailResponseModel.fromJson(result);
+      resource = Resource(
+        error: null,
+        data: responseData,
+      );
+    } catch (e, stackTrace) {
+      resource = Resource(
+        error: e.toString(),
+        data: null,
+      );
+      print('ERROR: $e');
+      print('STACKTRACE: $stackTrace');
+    }
+    return resource;
+  }
+
+  Future callBackURL(CartCallBackEvent event) async {
+    Resource? resource;
+    try {
+      var body = <String, dynamic>{};
+      body['order_id'] = '';
+      body['razorpay_payment_id'] = event.razorPayId ?? '';
+      body['error'] = '';
+      String endURL = getCallBackEndUrl(
+        defaultAddressId: event.defaultAddressId,
+        customerId: event.customerId,
+        deliveryCharge: event.deliveryCharge,
+        courierId: event.courierId,
+        paymentType: event.paymentType,
+      );
+
+      var result =
+          await NetworkAPICall().post(endURL, body, isCallBackUrl: true);
+      CallBackResponseModel responseModel =
+          CallBackResponseModel.fromJson(result);
+      resource = Resource(
+        error: null,
+        data: responseModel,
       );
     } catch (e, stackTrace) {
       resource = Resource(

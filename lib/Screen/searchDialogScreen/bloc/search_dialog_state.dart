@@ -28,9 +28,14 @@ class ModelLineState extends SearchDialogState {
   ModelLineState(this.responseModel);
 }
 
-class ModelYearAndModificationState extends SearchDialogState {
+class ModelModificationState extends SearchDialogState {
   ModelYearAndModificationResponseModel responseModel;
-  ModelYearAndModificationState(this.responseModel);
+  ModelModificationState(this.responseModel);
+}
+
+class ModelYearState extends SearchDialogState {
+  ModelYearAndModificationResponseModel responseModel;
+  ModelYearState(this.responseModel);
 }
 
 class ModelCategoryState extends SearchDialogState {

@@ -24,6 +24,10 @@ class SignupRepository {
 
       var result = await NetworkAPICall().post(signupURL, body);
 
+      RegExp _numeric = RegExp(r'^-?[0-9]+$');
+      if (_numeric.hasMatch(result['Data'][0].toString())) {
+        result['Data'] = [];
+      }
       SignupResponseModel responseData = SignupResponseModel.fromJson(result);
 
       resource = Resource(

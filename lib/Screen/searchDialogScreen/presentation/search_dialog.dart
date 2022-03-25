@@ -87,13 +87,17 @@ class _SearchDialogBoxState extends State<SearchDialogBox> {
                   )))
               .toList();
         }
-        if (state is ModelYearAndModificationState) {
+        if (state is ModelModificationState) {
+          state.responseModel.modelYearModificationData!.map((e) {
+            modificationList!.add(
+              SearchData(id: e.modificationId, name: e.modificationName),
+            );
+          }).toList();
+        }
+        if (state is ModelYearState) {
           state.responseModel.modelYearModificationData!.map((e) {
             yearList!.add(
               SearchData(id: e.modelId, name: e.modificationStartYear),
-            );
-            modificationList!.add(
-              SearchData(id: e.modificationId, name: e.modificationName),
             );
           }).toList();
         }
@@ -249,8 +253,9 @@ class _SearchDialogBoxState extends State<SearchDialogBox> {
                                   _modelLineValue = modelLineValue;
                                 });
                                 searchDialogBloc.add(
-                                    ModelYearAndModificationEvent(
-                                        modelLineId: modelLineId!));
+                                    ModelYearEvent(modelLineId: modelLineId!));
+                                searchDialogBloc.add(ModelModificationEvent(
+                                    modelLineId: modelLineId!));
                                 searchDialogBloc.add(ModelCategoryEvent(
                                     modelLineName: _modelLineValue!));
                               },
@@ -298,29 +303,32 @@ class _SearchDialogBoxState extends State<SearchDialogBox> {
                       )),
                       verticalSpace(15),
                       GestureDetector(
-                        onTap: () {
-                          if (_searchByvalue == null ||
-                              _vehicleMakerValue == null ||
-                              _modelLineValue == null) {
-                            ShowToast.toastMsg(
-                                ToastString.requiredFieldSearchByVehicle);
-                          } else {
-                            Navigator.pop(context);
-                            Navigator.pushNamed(
-                              context,
-                              Routes.modelViewScreen,
-                              arguments: ModelViewScreenParam(
-                                categoryId: categoryId ?? undefined,
-                                modelLineId: modelLineId ?? undefined,
-                                vehicleMaker: _vehicleMakerValue ?? undefined,
-                                modelLine: _modelLineValue ?? undefined,
-                                year: _yearValue ?? undefined,
-                                category: _categoryValue ?? undefined,
-                                isFromSearchDialog: true,
-                              ),
-                            );
-                          }
-                        },
+                        onTap: isLoading!
+                            ? null
+                            : () {
+                                if (_searchByvalue == null ||
+                                    _vehicleMakerValue == null ||
+                                    _modelLineValue == null) {
+                                  ShowToast.toastMsg(
+                                      ToastString.requiredFieldSearchByVehicle);
+                                } else {
+                                  Navigator.pop(context);
+                                  Navigator.pushNamed(
+                                    context,
+                                    Routes.modelViewScreen,
+                                    arguments: ModelViewScreenParam(
+                                      categoryId: categoryId ?? undefined,
+                                      modelLineId: modelLineId ?? undefined,
+                                      vehicleMaker:
+                                          _vehicleMakerValue ?? undefined,
+                                      modelLine: _modelLineValue ?? undefined,
+                                      year: _yearValue ?? undefined,
+                                      category: _categoryValue ?? undefined,
+                                      isFromSearchDialog: true,
+                                    ),
+                                  );
+                                }
+                              },
                         child: Container(
                           padding: const EdgeInsets.only(left: 13, right: 13),
                           height: SizeUtils().hp(7),

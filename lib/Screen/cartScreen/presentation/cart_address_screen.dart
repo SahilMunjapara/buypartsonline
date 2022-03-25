@@ -258,9 +258,13 @@ class _CartAddressScreenState extends State<CartAddressScreen> {
                                     child: GestureDetector(
                                       onTap: () {
                                         if (!isLoading) {
-                                          Navigator.pushReplacementNamed(
-                                              context,
-                                              Routes.cartCheckoutScreen);
+                                          if (addressList.isNotEmpty) {
+                                            Navigator.pushReplacementNamed(
+                                                context,
+                                                Routes.cartCheckoutScreen);
+                                          } else {
+                                            ShowToast.toastMsg('');
+                                          }
                                         }
                                       },
                                       child: Container(

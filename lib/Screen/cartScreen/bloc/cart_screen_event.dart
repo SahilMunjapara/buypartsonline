@@ -74,3 +74,51 @@ class AddCartAddressEvent extends CartScreenEvent {
         addressState
       ];
 }
+
+class GetDefaultAddresEvent extends CartScreenEvent {
+  final String? customerId;
+
+  GetDefaultAddresEvent({this.customerId});
+
+  @override
+  List<Object?> get props => [customerId];
+}
+
+class CartCallBackEvent extends CartScreenEvent {
+  final int? defaultAddressId;
+  final int? customerId;
+  final double? deliveryCharge;
+  final int? courierId;
+  final int? paymentType;
+  final String? razorPayId;
+
+  CartCallBackEvent({
+    this.customerId,
+    this.defaultAddressId,
+    this.deliveryCharge,
+    this.courierId,
+    this.paymentType,
+    this.razorPayId,
+  });
+
+  @override
+  List<Object?> get props => [
+        customerId,
+        defaultAddressId,
+        deliveryCharge,
+        courierId,
+        paymentType,
+        razorPayId
+      ];
+}
+
+class PlaceOrderEvent extends CartScreenEvent {
+  final String? addressId;
+  final String? customerId;
+  final String? orderPaymentMethod;
+
+  PlaceOrderEvent({this.addressId, this.customerId, this.orderPaymentMethod});
+
+  @override
+  List<Object?> get props => [addressId, customerId, orderPaymentMethod];
+}

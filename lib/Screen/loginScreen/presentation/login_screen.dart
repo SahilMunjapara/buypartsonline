@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     SizeUtils().init(context);
-    return Scaffold(  
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: colorWhiteBackground,
       body: BlocListener(
@@ -159,16 +159,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () {
-                            if (formKey!.currentState!.validate()) {
-                              loginBloc.add(
-                                LoginPerformLoginEvent(
-                                  phoneNumber: mobileNumberController.text,
-                                  password: passwordController.text,
-                                ),
-                              );
-                            }
-                          },
+                          onPressed: isLoading
+                              ? null
+                              : () {
+                                  if (!isLoading) {
+                                    if (formKey!.currentState!.validate()) {
+                                      loginBloc.add(
+                                        LoginPerformLoginEvent(
+                                          phoneNumber:
+                                              mobileNumberController.text,
+                                          password: passwordController.text,
+                                        ),
+                                      );
+                                    }
+                                  }
+                                },
                           child: Padding(
                             padding: EdgeInsets.only(
                               top: SizeUtils().hp(2),

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/Utils/log_utils/log_util.dart';
 import 'package:buypartsonline/service/exception/exception.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
@@ -19,8 +20,13 @@ class NetworkAPICall {
 
   NetworkAPICall._internal();
 
-  Future<dynamic> post(String url, dynamic body,
-      {bool isBaseUrl = true, Map<String, String>? headers}) async {
+  Future<dynamic> post(
+    String url,
+    dynamic body, {
+    bool isBaseUrl = true,
+    Map<String, String>? headers,
+    bool isCallBackUrl = false,
+  }) async {
     var client = http.Client();
     try {
       late String fullURL;
@@ -44,7 +50,7 @@ class NetworkAPICall {
           .timeout(const Duration(seconds: 30));
       LogUtils.showLogs(
           message: response.statusCode.toString(), tag: 'Response statusCode');
-      return checkResponse(response);
+      return checkResponse(response, isCallBackUrl: isCallBackUrl);
     } catch (exception) {
       client.close();
       throw AppException.exceptionHandler(exception);
@@ -148,13 +154,16 @@ class NetworkAPICall {
     }
   }
 
-  dynamic checkResponse(http.Response response) {
+  dynamic checkResponse(http.Response response, {bool isCallBackUrl = false}) {
     RegExp _numeric = RegExp(r'^-?[0-9]+$');
     switch (response.statusCode) {
       case 200:
         try {
+          if (isCallBackUrl) {
+            return callBackUrlJson;
+          }
           var json = jsonDecode(response.body);
-          // LogUtils.showLogs(message: '$json', tag: 'API RESPONSE');
+          LogUtils.showLogs(message: '$json', tag: 'API RESPONSE');
           if (json['IsSuccess'] ?? false) {
             if (_numeric.hasMatch(json['Data'].toString())) {
               json['Data'] = [json['Data']];

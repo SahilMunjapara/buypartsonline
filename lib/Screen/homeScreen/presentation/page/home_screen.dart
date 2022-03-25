@@ -5,6 +5,7 @@ import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/homeScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/homeScreen/data/model/home_banner_response_model.dart';
 import 'package:buypartsonline/Screen/homeScreen/data/model/home_category_response_model.dart';
+import 'package:buypartsonline/Screen/homeScreen/presentation/widget/category_card_widget.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_screen_param.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
@@ -35,6 +36,7 @@ int counter = 0;
 
 class _HomeScreenState extends State<HomeScreen> {
   late GlobalKey<ScaffoldState> _scaffoldKey;
+  late ScrollController _scrollController;
   HomeBloc homeBloc = HomeBloc();
   CartCounterBloc cartCounterBloc = CartCounterBloc();
 
@@ -49,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _scaffoldKey = GlobalKey<ScaffoldState>();
+    _scrollController = ScrollController(initialScrollOffset: 100.0);
     BlocProvider.of<CartCounterBloc>(context).add(CartCounterTotalEvent(
         customerId: AppPreference().getStringData(PreferencesKey.userId)));
     homeBloc.add(HomeScreenBannerEvent());
@@ -228,7 +231,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         );
                                       }).toList(),
                                     ),
-
                           verticalSpace(6),
                           Text(
                             Strings.searchByCategory,
@@ -257,17 +259,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                             style: size15PNmedium(),
                                           ),
                                         )
-                                      : ListView.builder(
-                                          itemCount: homeCategoryResponseModel
-                                              .categoryData!.length,
-                                          scrollDirection: Axis.horizontal,
-                                          itemBuilder: (context, index) {
-                                            CategoryData category =
-                                                homeCategoryResponseModel
-                                                    .categoryData![index];
-                                            return GestureDetector(
-                                              onTap: () {
-                                                Navigator.pushNamed(context,
+                                      : RawScrollbar(
+                                          controller: _scrollController,
+                                          isAlwaysShown: true,
+                                          thumbColor: primaryColor,
+                                          radius: const Radius.circular(20),
+                                          thickness: 5,
+                                          child: ListView.builder(
+                                            controller: _scrollController,
+                                            itemCount: homeCategoryResponseModel
+                                                .categoryData!.length,
+                                            scrollDirection: Axis.horizontal,
+                                            itemBuilder: (context, index) {
+                                              CategoryData category =
+                                                  homeCategoryResponseModel
+                                                      .categoryData![index];
+                                              return CategoryCardWidget(
+                                                categoryData: category,
+                                                onCardTap: () {
+                                                  Navigator.pushNamed(
+                                                    context,
                                                     Routes.modelViewScreen,
                                                     arguments:
                                                         ModelViewScreenParam(
@@ -279,91 +290,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               .categoryName ??
                                                           undefined,
                                                       isFromSearchDialog: false,
-                                                    ));
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 10, bottom: 5),
-                                                child: Container(
-                                                  height: SizeUtils().hp(23),
-                                                  width: SizeUtils()
-                                                          .verticalBlockSize! *
-                                                      23,
-                                                  decoration: BoxDecoration(
-                                                    color: colorWhite,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: colorGrey
-                                                            .withOpacity(0.2),
-                                                        spreadRadius: 1,
-                                                        blurRadius: 3,
-                                                        offset:
-                                                            const Offset(0, 5),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 17,
-                                                            right: 17),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceEvenly,
-                                                      children: [
-                                                        Container(
-                                                          height: SizeUtils()
-                                                              .hp(18),
-                                                          width: SizeUtils()
-                                                              .wp(30),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20),
-                                                            color:
-                                                                colorWhiteBackground,
-                                                          ),
-                                                          child: category.categoryImage ==
-                                                                      "" ||
-                                                                  category.categoryImage ==
-                                                                      Strings
-                                                                          .noImage
-                                                              ? Image.asset(
-                                                                  AssetStrings
-                                                                      .noImage)
-                                                              : Image.network(
-                                                                  '$imageURL${category.categoryImage}'),
-                                                        ),
-                                                        Text(
-                                                          category
-                                                              .categoryName!,
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style:
-                                                              size14PNregular(),
-                                                        ),
-                                                      ],
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          ),
                                         ),
                                 ),
                           verticalSpace(8),
-                          // Text(
-                          //   Strings.whyChooseProducts,
-                          //   style: size16PNregular(textColor: primaryColor),
-                          // ),
-                          // verticalSpace(8),
-                          // originalProductContainer(),
                         ],
                       ),
                     ),

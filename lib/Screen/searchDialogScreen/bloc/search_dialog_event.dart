@@ -23,9 +23,17 @@ class ModelLineEvent extends SearchDialogEvent {
   List<Object?> get props => [modelId];
 }
 
-class ModelYearAndModificationEvent extends SearchDialogEvent {
+class ModelModificationEvent extends SearchDialogEvent {
   final String modelLineId;
-  ModelYearAndModificationEvent({required this.modelLineId});
+  ModelModificationEvent({required this.modelLineId});
+
+  @override
+  List<Object?> get props => [modelLineId];
+}
+
+class ModelYearEvent extends SearchDialogEvent {
+  final String modelLineId;
+  ModelYearEvent({required this.modelLineId});
 
   @override
   List<Object?> get props => [modelLineId];

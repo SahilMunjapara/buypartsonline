@@ -34,6 +34,8 @@ class ModelViewScreen extends StatefulWidget {
   _ModelViewScreenState createState() => _ModelViewScreenState();
 }
 
+List<ModelViewData> modelPartList = [];
+
 class _ModelViewScreenState extends State<ModelViewScreen> {
   late GlobalKey<ScaffoldState> _scaffoldKey;
   late RefreshController _refreshController;
@@ -41,7 +43,6 @@ class _ModelViewScreenState extends State<ModelViewScreen> {
   int pageNo = 1;
   bool isLoading = false;
   bool isAddCartLoading = false;
-  List<ModelViewData> modelPartList = [];
   int partListLength = 0;
 
   @override

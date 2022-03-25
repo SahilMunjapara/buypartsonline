@@ -5,6 +5,7 @@ import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/widget/cart_item_card_widget.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/widget/header_stepper_widget.dart';
+import 'package:buypartsonline/Screen/modelViewScreen/presentation/model_view_screen.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
@@ -15,6 +16,7 @@ import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
+import 'package:buypartsonline/common_widget/toast_msg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,10 +34,15 @@ class _CartScreenState extends State<CartScreen> {
   double totalSaving = 0;
   List<CartProductData> cartProductData = [];
   bool isLoading = false;
+  String? currentPartId;
 
   @override
   void initState() {
     _scaffoldKey = GlobalKey<ScaffoldState>();
+    cartBloc.add(
+      CartAddressEvent(
+          customerId: AppPreference().getStringData(PreferencesKey.userId)),
+    );
     cartBloc.add(
       CartTotalItemEvent(
         userId: AppPreference().getStringData(PreferencesKey.userId),
@@ -76,6 +83,18 @@ class _CartScreenState extends State<CartScreen> {
             ));
             isLoading = false;
           }
+          if (state is CartAddressState) {
+            if (state.responseModel!.cartAddressData!.isEmpty) {
+              ShowToast.toastMsg(state.responseModel!.message!);
+            }
+          }
+          if (state is CartItemRemoveState) {
+            for (var item in modelPartList) {
+              if (item.partId == currentPartId) {
+                item.isCart = false;
+              }
+            }
+          }
           if (state is CartTotalItemState) {
             totalAmount = double.parse(
                 state.responseModel!.cartData!.first.total!.toString());
@@ -111,6 +130,8 @@ class _CartScreenState extends State<CartScreen> {
                                   cartTotal: cartQty,
                                   onDeleteTap: () {
                                     if (!isLoading) {
+                                      currentPartId =
+                                          cartProductData[index].partId;
                                       cartBloc.add(
                                         CartItemRemoveEvent(
                                           cartId: cartProductData[index].cartId,
@@ -126,6 +147,12 @@ class _CartScreenState extends State<CartScreen> {
                                   },
                                   onPlusTap: () {
                                     if (!isLoading) {
+                                      if (int.parse(cartProductData[index]
+                                              .partQty!) ==
+                                          cartQty) {
+                                        ShowToast.toastMsg(cartQty.toString());
+                                        return;
+                                      }
                                       cartBloc.add(
                                         CartItemUpdateQtyEvent(
                                           cartId: cartProductData[index].cartId,
@@ -210,8 +237,7 @@ class _CartScreenState extends State<CartScreen> {
                                 verticalSpace(25),
                                 GestureDetector(
                                   onTap: () {
-                                    if (isLoading) {
-                                    } else {
+                                    if (!isLoading) {
                                       Navigator.pushReplacementNamed(
                                           context, Routes.cartAddressScreen);
                                     }

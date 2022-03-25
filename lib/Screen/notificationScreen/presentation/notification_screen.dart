@@ -2,6 +2,7 @@ import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter.bloc.dart';
 import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_state.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
+import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
@@ -68,6 +69,56 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
                 height: SizeUtils().hp(2),
                 width: SizeUtils().screenWidth,
+              ),
+              verticalSpace(20),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 15,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      child: Card(
+                        elevation: 1,
+                        child: Container(
+                          height: SizeUtils().hp(8),
+                          width: SizeUtils().screenWidth,
+                          color: colorWhite,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                height: SizeUtils().hp(6),
+                                width: SizeUtils().wp(12),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(5),
+                                  child: Image.asset(
+                                    AssetStrings.repairKit,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: SizeUtils().wp(50),
+                                child: Text(
+                                  'Order Placed, Arrived in 1 Day',
+                                  style: size13PNregular(),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Text(
+                                '10 min ago',
+                                style: size10PNregular(textColor: primaryColor),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),

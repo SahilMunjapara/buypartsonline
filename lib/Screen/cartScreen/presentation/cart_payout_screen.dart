@@ -1,32 +1,45 @@
+import 'package:buypartsonline/Global/key.dart';
+import 'package:buypartsonline/Navigation/routes_key.dart';
+import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_payment_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/cart_payout_screen_param.dart';
+import 'package:buypartsonline/Screen/cartScreen/presentation/widget/cart_payment_list_widget.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/widget/header_stepper_widget.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
-import 'package:buypartsonline/Utils/log_utils/log_util.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
 import 'package:buypartsonline/common_widget/toast_msg.dart';
+import 'package:buypartsonline/service/exception/exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class CartPayoutScreen extends StatefulWidget {
-  const CartPayoutScreen({Key? key}) : super(key: key);
+  const CartPayoutScreen({this.cartPayoutScreenParam, Key? key})
+      : super(key: key);
+  final CartPayoutScreenParam? cartPayoutScreenParam;
 
   @override
   State<CartPayoutScreen> createState() => _CartPayoutScreenState();
 }
 
 class _CartPayoutScreenState extends State<CartPayoutScreen> {
+  CartBloc cartBloc = CartBloc();
   static const platform = MethodChannel("razorpay_flutter");
   late GlobalKey<ScaffoldState> _scaffoldKey;
   late List<CartPaymentMethodModel> paymentMethodList;
 
   late Razorpay _razorpay;
+
+  bool isLoading = false;
+
+  bool isPaymentSucess = false;
 
   @override
   void initState() {
@@ -37,6 +50,13 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+
+    print(widget.cartPayoutScreenParam!.courierId);
+    print(widget.cartPayoutScreenParam!.customerId);
+    print(widget.cartPayoutScreenParam!.defaultAddressId);
+    print(widget.cartPayoutScreenParam!.deliveryCharge);
+    print(widget.cartPayoutScreenParam!.customerPhoneNumber);
+    print(widget.cartPayoutScreenParam!.totalPrice);
 
     super.initState();
   }
@@ -49,15 +69,17 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
 
   void openCheckout() async {
     var options = {
-      'key': 'rzp_test_4plaJ49kG8kCei',
-      'amount': 10000 * 100,
-      'name': 'Buy Parts Limited',
-      'description': 'Vehicle Parts',
+      'key': RazorpayKey.testKey,
+      'amount': (widget.cartPayoutScreenParam!.totalPrice! +
+              widget.cartPayoutScreenParam!.deliveryCharge!) *
+          100,
+      'name': Strings.buyPartsLimited,
+      'description': Strings.vehicleParts,
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,
       'prefill': {
-        'contact': '9876543210',
-        'email': 'test@test.com',
+        'contact': widget.cartPayoutScreenParam!.customerPhoneNumber,
+        'email': '',
       },
       "method": {
         "card": paymentMethodList[0].isSelected,
@@ -68,7 +90,7 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
         "paylater": false,
       },
       'external': {
-        'wallets': ['paytm', 'freecharge', 'mobikwik'],
+        'wallets': razorPayWalletList,
       }
     };
 
@@ -80,11 +102,26 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    ShowToast.toastMsg("SUCCESS: " + response.paymentId!);
+    print('=========================');
+    print(response.orderId);
+    print(response.paymentId);
+    print(response.signature);
+    print('=========================');
+    cartBloc.add(CartCallBackEvent(
+      defaultAddressId:
+          int.parse(widget.cartPayoutScreenParam!.defaultAddressId!),
+      customerId: int.parse(widget.cartPayoutScreenParam!.customerId!),
+      deliveryCharge: widget.cartPayoutScreenParam!.deliveryCharge,
+      courierId: widget.cartPayoutScreenParam!.courierId,
+      paymentType: 0,
+      razorPayId: response.paymentId,
+    ));
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     ShowToast.toastMsg(response.message!);
+    Navigator.pushNamedAndRemoveUntil(
+        context, Routes.homeScreen, (route) => false);
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -95,7 +132,7 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
   Widget build(BuildContext context) {
     SizeUtils().init(context);
     return Scaffold(
-      backgroundColor: colorWhiteBackground, 
+      backgroundColor: colorWhiteBackground,
       key: _scaffoldKey,
       drawer: const HomeScreenDrawer(),
       appBar: AppBar(
@@ -111,114 +148,150 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
           child: Image.asset(AssetStrings.menu),
         ),
       ),
-      body: Stack(
-        children: [
-          const BottomDesignBox(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const HeaderStepperWidget(currentStep: 5),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      verticalSpace(25),
-                      Text(
-                        Strings.paymentMethod,
-                        style: size16PNregular(),
+      body: BlocListener(
+        bloc: cartBloc,
+        listener: (context, state) {
+          if (state is CartLoadingBeginState) {
+            isLoading = true;
+          }
+          if (state is CartLoadingEndState) {
+            isLoading = false;
+          }
+          if (state is CartCallBackState) {
+            isPaymentSucess = true;
+            ShowToast.toastMsg(state.responseModel.message!);
+            Future.delayed(const Duration(seconds: 3), () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, Routes.homeScreen, (route) => false);
+            });
+          }
+          if (state is CartErrorState) {
+            AppException exception = state.exception;
+            ShowToast.toastMsg(exception.message);
+          }
+        },
+        child: BlocBuilder(
+          bloc: cartBloc,
+          builder: (context, state) {
+            return Stack(
+              children: [
+                const BottomDesignBox(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const HeaderStepperWidget(currentStep: 5),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            verticalSpace(25),
+                            Text(
+                              Strings.paymentMethod,
+                              style: size16PNregular(),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: paymentMethodList
+                                  .map((e) => CartPaymentListWidget(
+                                        cartPaymentMethod: e,
+                                        onRadioButtonTap: () {
+                                          if (!e.isSelected!) {
+                                            for (var item
+                                                in paymentMethodList) {
+                                              item.isSelected = false;
+                                            }
+                                            setState(() {
+                                              e.isSelected = !e.isSelected!;
+                                            });
+                                          }
+                                        },
+                                      ))
+                                  .toList(),
+                            ),
+                          ],
+                        ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: paymentMethodList
-                            .map((e) => Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  child: Container(
-                                    color: colorWhite,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(18),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            e.paymentType!,
-                                            style: size16PNregular(),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              if (!e.isSelected!) {
-                                                for (var item
-                                                    in paymentMethodList) {
-                                                  item.isSelected = false;
-                                                }
-                                                setState(() {
-                                                  e.isSelected = !e.isSelected!;
-                                                });
-                                              }
-                                            },
-                                            child: e.isSelected!
-                                                ? Image.asset(
-                                                    AssetStrings.onRadio)
-                                                : Image.asset(
-                                                    AssetStrings.offRadio),
-                                          ),
-                                        ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        width: SizeUtils().screenWidth,
+                        decoration: const BoxDecoration(
+                          color: colorWhite,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            children: [
+                              verticalSpace(20),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    Strings.totalPayoutAmount,
+                                    style: size15PNregular(
+                                        textColor: primaryColor),
+                                  ),
+                                  Text(
+                                    '₹ ${(widget.cartPayoutScreenParam!.totalPrice! + widget.cartPayoutScreenParam!.deliveryCharge!).toString()}',
+                                    style: size15PNregular(
+                                        textColor: primaryColor),
+                                  ),
+                                ],
+                              ),
+                              verticalSpace(20),
+                              GestureDetector(
+                                onTap: isLoading == false &&
+                                        isPaymentSucess == false
+                                    ? openCheckout
+                                    : null,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  height: SizeUtils().hp(7),
+                                  width: SizeUtils().screenWidth,
+                                  child: Center(
+                                    child: Text(
+                                      Strings.placeOrder,
+                                      style: size18PNregular(
+                                        textColor: colorWhite,
                                       ),
                                     ),
                                   ),
-                                ))
-                            .toList(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Container(
-                  width: SizeUtils().screenWidth,
-                  decoration: const BoxDecoration(
-                    color: colorWhite,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        verticalSpace(25),
-                        GestureDetector(
-                          onTap: openCheckout,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: primaryColor,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            height: SizeUtils().hp(7),
-                            width: SizeUtils().screenWidth,
-                            child: Center(
-                              child: Text(
-                                Strings.placeOrder,
-                                style: size18PNregular(
-                                  textColor: colorWhite,
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
-                      ],
+                      ),
+                    ),
+                  ],
+                ),
+                Visibility(
+                  visible: isLoading,
+                  child: SizedBox(
+                    height: SizeUtils().screenHeight,
+                    width: SizeUtils().screenWidth,
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          )
-        ],
+              ],
+            );
+          },
+        ),
       ),
     );
   }

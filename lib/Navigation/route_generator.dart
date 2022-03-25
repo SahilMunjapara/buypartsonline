@@ -1,4 +1,5 @@
 import 'package:buypartsonline/Screen/addressScreen/presentation/address_screen.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/cart_payout_screen_param.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/cart_address_screen.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/cart_checkout_screen.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/cart_payout_screen.dart';
@@ -10,6 +11,7 @@ import 'package:buypartsonline/Screen/modelDetailView/presentation/model_detail_
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_response_model.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_screen_param.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/presentation/model_view_screen.dart';
+import 'package:buypartsonline/Screen/myOrderScreen/presentation/my_orders_part_detail_screen.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/presentation/my_orders_screen.dart';
 import 'package:buypartsonline/Screen/notificationScreen/presentation/notification_screen.dart';
 import 'package:buypartsonline/Screen/otpScreen/presentation/otp_screen.dart';
@@ -32,7 +34,11 @@ class RouteGenerator {
       case Routes.signupScreen:
         return MaterialPageRoute(builder: (context) => const SignupScreen());
       case Routes.otpScreen:
-        return MaterialPageRoute(builder: (context) => const OtpScreen());
+        return MaterialPageRoute(
+          builder: (context) => OtpScreen(
+            customerId: args as String,
+          ),
+        );
       case Routes.forgotScreen:
         return MaterialPageRoute(builder: (context) => const ForgotScreen());
       case Routes.homeScreen:
@@ -67,8 +73,9 @@ class RouteGenerator {
         );
       case Routes.cartPayoutScreen:
         return PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) =>
-              const CartPayoutScreen(),
+          pageBuilder: (context, animation1, animation2) => CartPayoutScreen(
+            cartPayoutScreenParam: args as CartPayoutScreenParam,
+          ),
           transitionDuration: Duration.zero,
           reverseTransitionDuration: Duration.zero,
         );
@@ -81,6 +88,12 @@ class RouteGenerator {
             builder: (context) => const NotificationScreen());
       case Routes.myOrdersScreen:
         return MaterialPageRoute(builder: (context) => const MyOrderScreen());
+      case Routes.orderPartDetailScreen:
+        return MaterialPageRoute(
+          builder: (context) => MyOrdersPartDetailScreen(
+            orderId: args as String,
+          ),
+        );
       default:
         return _errorRoute();
     }

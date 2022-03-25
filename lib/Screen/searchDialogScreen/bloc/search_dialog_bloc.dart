@@ -48,12 +48,24 @@ class SearchDialogBloc extends Bloc<SearchDialogEvent, SearchDialogState> {
       }
       yield SearchDataIsLoadingEndState();
     }
-    if (event is ModelYearAndModificationEvent) {
+    if (event is ModelModificationEvent) {
       yield SearchDataIsLoadingState();
       Resource resource =
-          await _searchDialogRepository.getModelYearAndModification(event);
+          await _searchDialogRepository.getModelModification(event);
       if (resource.data != null) {
-        yield ModelYearAndModificationState(resource.data);
+        yield ModelModificationState(resource.data);
+      } else {
+        yield SearchDialogErrorState(
+          AppException.decodeExceptionData(jsonString: resource.error ?? ''),
+        );
+      }
+      yield SearchDataIsLoadingEndState();
+    }
+    if (event is ModelYearEvent) {
+      yield SearchDataIsLoadingState();
+      Resource resource = await _searchDialogRepository.getModelYear(event);
+      if (resource.data != null) {
+        yield ModelYearState(resource.data);
       } else {
         yield SearchDialogErrorState(
           AppException.decodeExceptionData(jsonString: resource.error ?? ''),

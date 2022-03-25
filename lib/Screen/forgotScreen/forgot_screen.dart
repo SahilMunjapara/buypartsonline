@@ -19,16 +19,16 @@ class ForgotScreen extends StatefulWidget {
 }
 
 class _ForgotScreenState extends State<ForgotScreen> {
-  late TextEditingController emailIdController;
+  late TextEditingController mobileNumberController;
 
-  late FocusNode emailIdFocusNode;
+  late FocusNode mobileNumberFocusNode;
   GlobalKey<FormState>? formKey;
 
   @override
   void initState() {
     formKey = GlobalKey<FormState>();
-    emailIdController = TextEditingController();
-    emailIdFocusNode = FocusNode();
+    mobileNumberController = TextEditingController();
+    mobileNumberFocusNode = FocusNode();
     super.initState();
   }
 
@@ -36,8 +36,8 @@ class _ForgotScreenState extends State<ForgotScreen> {
   void dispose() {
     super.dispose();
     formKey = null;
-    emailIdController.dispose();
-    emailIdFocusNode.dispose();
+    mobileNumberController.dispose();
+    mobileNumberFocusNode.dispose();
   }
 
   @override
@@ -54,15 +54,15 @@ class _ForgotScreenState extends State<ForgotScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                loginSignupBar('Forgot'),
+                loginSignupBar(Strings.forgot),
                 verticalSpace(36),
                 CustomTextField(
                   maxLength: 45,
-                  controller: emailIdController,
-                  focusNode: emailIdFocusNode,
-                  validator: Validator.emailValidationMsg,
-                  labelText: Strings.email,
-                  textInputType: TextInputType.emailAddress,
+                  controller: mobileNumberController,
+                  focusNode: mobileNumberFocusNode,
+                  validator: Validator.phoneValidationMsg,
+                  labelText: Strings.mobileNumber,
+                  textInputType: TextInputType.number,
                   textInputAction: TextInputAction.done,
                 ),
                 verticalSpace(34),

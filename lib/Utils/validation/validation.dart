@@ -289,4 +289,6 @@ class Validator {
   }
 
   static final validCharacters = RegExp(r'^[a-zA-Z0-9 \-,\.]+$');
+
+  static final validOtp = RegExp('^([0-9]{4})\$');
 }

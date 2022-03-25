@@ -1,5 +1,6 @@
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/signupScreen/bloc/bloc.dart';
+import 'package:buypartsonline/Screen/signupScreen/data/model/signup_response_model.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
@@ -8,7 +9,10 @@ import 'package:buypartsonline/Utils/validation/validation.dart';
 import 'package:buypartsonline/common_widget/appbar.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/custom_textfield_widget.dart';
+import 'package:buypartsonline/common_widget/progress_bar_round.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
+import 'package:buypartsonline/common_widget/toast_msg.dart';
+import 'package:buypartsonline/service/exception/exception.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +37,8 @@ class _SignupScreenState extends State<SignupScreen> {
   late FocusNode passwordFocusNode;
 
   GlobalKey<FormState>? formKey;
+
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -73,7 +79,27 @@ class _SignupScreenState extends State<SignupScreen> {
       backgroundColor: colorWhiteBackground,
       body: BlocListener(
         bloc: signupBloc,
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is SignupLoadingBeginState) {
+            isLoading = true;
+          }
+          if (state is SignupLoadingEndState) {
+            isLoading = false;
+          }
+          if (state is SignupFormSubmitted) {
+            SignupResponseModel responseModel = state.responseModel;
+            if (responseModel.signupData!.isNotEmpty) {
+              Navigator.pushNamed(context, Routes.otpScreen,
+                  arguments: responseModel.signupData!.first.customerId);
+            } else {
+              ShowToast.toastMsg(responseModel.message!);
+            }
+          }
+          if (state is SignupErrorState) {
+            AppException exception = state.exception;
+            ShowToast.toastMsg(exception.message);
+          }
+        },
         child: BlocBuilder(
           bloc: signupBloc,
           builder: (context, state) {
@@ -142,19 +168,23 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () {
-                            Navigator.pushNamed(context, Routes.otpScreen);
-                            if (formKey!.currentState!.validate()) {
-                              signupBloc.add(
-                                SignupPerformSignupEvent(
-                                  name: nameController.text,
-                                  email: emailIdController.text,
-                                  phoneNumber: mobileNumberController.text,
-                                  password: passwordController.text,
-                                ),
-                              );
-                            }
-                          },
+                          onPressed: isLoading
+                              ? null
+                              : () {
+                                  if (!isLoading) {
+                                    if (formKey!.currentState!.validate()) {
+                                      signupBloc.add(
+                                        SignupPerformSignupEvent(
+                                          name: nameController.text,
+                                          email: emailIdController.text,
+                                          phoneNumber:
+                                              mobileNumberController.text,
+                                          password: passwordController.text,
+                                        ),
+                                      );
+                                    }
+                                  }
+                                },
                           child: Padding(
                             padding: EdgeInsets.only(
                               top: SizeUtils().hp(2),
@@ -194,6 +224,10 @@ class _SignupScreenState extends State<SignupScreen> {
                       verticalSpace(20)
                     ],
                   ),
+                ),
+                Container(
+                  margin: const EdgeInsets.all(100),
+                  child: ProgressBarRound(isLoading: isLoading),
                 ),
               ],
             );

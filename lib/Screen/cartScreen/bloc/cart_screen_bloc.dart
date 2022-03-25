@@ -1,5 +1,6 @@
 import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/repository/cart_screen_repository.dart';
+import 'package:buypartsonline/Screen/modelViewScreen/presentation/model_view_screen.dart';
 import 'package:buypartsonline/service/exception/exception.dart';
 import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -85,6 +86,30 @@ class CartBloc extends Bloc<CartScreenEvent, CartScreenState> {
         yield CartErrorState(
           AppException.decodeExceptionData(jsonString: resource.error ?? ''),
         );
+      }
+      yield CartLoadingEndState();
+    }
+
+    if (event is GetDefaultAddresEvent) {
+      yield CartLoadingBeginState();
+      Resource resource = await _cartReposiory.getCartDefaultAddress(event);
+      if (resource.data != null) {
+        yield DefaultAddressDetailState(resource.data);
+      } else {
+        yield CartErrorState(
+            AppException.decodeExceptionData(jsonString: resource.error ?? ''));
+      }
+      yield CartLoadingEndState();
+    }
+
+    if (event is CartCallBackEvent) {
+      yield CartLoadingBeginState();
+      Resource resource = await _cartReposiory.callBackURL(event);
+      if (resource.data != null) {
+        yield CartCallBackState(resource.data);
+      } else {
+        yield CartErrorState(
+            AppException.decodeExceptionData(jsonString: resource.error ?? ''));
       }
       yield CartLoadingEndState();
     }

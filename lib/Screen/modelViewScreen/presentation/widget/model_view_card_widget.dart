@@ -80,6 +80,11 @@ class ModelViewCard extends StatelessWidget {
                 ),
               ),
               verticalSpace(SizeUtils().hp(0.5)),
+              Text(
+                modelViewData!.partNumber!,
+                style: size08PNregular(),
+              ),
+              verticalSpace(SizeUtils().hp(0.5)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -175,7 +180,7 @@ class ModelViewCard extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 4.0, horizontal: 10.0),
                         child: Text(
-                          Strings.addToCart,
+                          Strings.add5ToCart,
                           style: size07PNregular(textColor: colorWhite),
                         ),
                       ),

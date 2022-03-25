@@ -30,29 +30,32 @@ class CartData {
     this.save,
     this.deliverycharge,
     this.total,
-    this.totalWeiht,
+    this.totalWeight,
     this.totalCart,
     this.totalCartQty,
     this.cartProductData,
+    this.courierId,
   });
 
-  int? subTotal;
-  int? save;
-  int? deliverycharge;
-  int? total;
-  double? totalWeiht;
+  double? subTotal;
+  double? save;
+  double? deliverycharge;
+  double? total;
+  String? totalWeight;
   int? totalCart;
   int? totalCartQty;
   List<CartProductData>? cartProductData;
+  int? courierId;
 
   factory CartData.fromJson(Map<String, dynamic> json) => CartData(
-        subTotal: json["SubTotal"],
-        save: json["Save"],
-        deliverycharge: json["Deliverycharge"],
-        total: json["Total"],
-        totalWeiht: json["TotalWeiht"].toDouble(),
+        subTotal: double.parse((json["SubTotal"].toString())),
+        save: double.parse((json["Save"].toString())),
+        deliverycharge: double.parse((json["Deliverycharge"].toString())),
+        total: double.parse((json["Total"].toString())),
+        totalWeight: json["TotalWeiht"],
         totalCart: json["TotalCart"],
         totalCartQty: json["TotalCartQty"],
+        courierId: json["CourierId"],
         cartProductData: List<CartProductData>.from(
             json["ProductData"].map((x) => CartProductData.fromJson(x))),
       );
@@ -62,9 +65,10 @@ class CartData {
         "Save": save,
         "Deliverycharge": deliverycharge,
         "Total": total,
-        "TotalWeiht": totalWeiht,
+        "TotalWeiht": totalWeight,
         "TotalCart": totalCart,
         "TotalCartQty": totalCartQty,
+        "CourierId": courierId,
         "ProductData":
             List<dynamic>.from(cartProductData!.map((x) => x.toJson())),
       };

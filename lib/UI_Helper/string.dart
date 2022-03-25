@@ -1,5 +1,5 @@
 class Strings {
-  static const String roleDoctor = 'Doctor';
+  static const String appName = 'Buy Parts Online';
   static const String skip = 'Skip';
   static const String signUp = 'Signup';
   static const String login = 'Login';
@@ -64,6 +64,7 @@ class Strings {
   static const String model = 'Model';
   static const String perOff = '% off';
   static const String addToCart = 'Add To Cart';
+  static const String add5ToCart = 'Add 5 To Cart';
   static const String noImage = 'no_img.jpg';
   static const String partNumber = 'Part Number';
   static const String origin = 'Origin';
@@ -103,7 +104,38 @@ class Strings {
   static const String completed = 'Completed';
   static const String returned = 'Returned';
   static const String cancelled = 'Cancelled';
+  static const String forgot = 'Forgot';
+  static const String continueShopping = 'Continue Shopping';
+  static const String noAddressFound = 'Address Not Found';
+  static const String quantity = 'Quantity :- ';
+  static const String items = 'Items:';
+  static const String deliveryCharge = 'Delivery Charge:';
+  static const String summary = 'Summary:';
+  static const String totalPayoutAmount = 'Total Amount :';
+  static const String buyPartsLimited = 'Buy Parts Limited';
+  static const String vehicleParts = 'Vehicle Parts';
+  static const String aboutUs = 'About Us';
+  static const String details = 'Details';
+  static const String trackingNumber = 'Tracking Nunmber :- ';
+  static const String orderNumber = 'Order No :- ';
+  static const String orderTotalAmount = 'Total Amount :- ';
+  static const String noInProgressOrders = 'No In Progress Orders';
+  static const String noCompletedOrders = 'No Completed Orders';
+  static const String noReturnedOrders = 'No Returned Orders';
+  static const String noCancelledOrders = 'No Cancelled Orders';
+  static const String orderPartDetails = 'Order Part Detail';
+  static const String noPartDetailAvailable = 'No Part Detail Available';
+  static const String part5PerDiscountText = '5% off';
+  static const String part10PerDiscountText = '10% off';
+  static const String orderSubTotal = 'Subtotal :';
+  static const String orderAddress = 'Address : ';
 }
+
+List<String> razorPayWalletList = [
+  'paytm',
+  'freecharge',
+  'mobikwik',
+];
 
 class IconStrings {
   static const String nextArrow = '➜'; // → ➜ 🠪 ⇾
@@ -119,6 +151,9 @@ class ToastString {
       'The part has already been added to your cart';
   static const String requiredFieldSearchByVehicle =
       'For a vehicle search, the first three options are required.';
+  static const String enterValidOtp = 'Enter Valid Otp';
+  static const String addressNotAvailableAddNew =
+      'Address Not Available Please add New Address';
 }
 
 class ValidatorStrings {
@@ -143,3 +178,37 @@ String getModelDetailEndUrl({
 }) {
   return 'CustomerId=$customerId&modification3=$modelLineId&modification5=&Sub=undefined&Cat=$categoryId&SPHL=undefined&SPLH=undefined&SAZ=undefined&SZA=undefined&Size=20&Page=$pageNo';
 }
+
+String getCallBackEndUrl({
+  int? defaultAddressId,
+  int? customerId,
+  double? deliveryCharge,
+  int? courierId,
+  int? paymentType,
+}) {
+  return 'UpdateplaceOrderForBuyPartV2/$defaultAddressId/$customerId/online/$deliveryCharge/$courierId/$paymentType';
+}
+
+String getOrderDate(DateTime? orderDate) {
+  return orderDate!.day.toString() +
+      '/' +
+      orderDate.month.toString() +
+      '/' +
+      orderDate.year.toString();
+}
+
+dynamic callBackUrlJson = {
+  "Data": "0",
+  "IsSuccess": true,
+  "Message": "Cart Payment Successfull"
+};
+
+const String contactUsText = '''
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+
+It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. 
+''';

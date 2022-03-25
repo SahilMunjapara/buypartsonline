@@ -510,7 +510,7 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                                                         vertical: 6,
                                                         horizontal: 25),
                                                 child: Text(
-                                                  Strings.addToCart,
+                                                  Strings.add5ToCart,
                                                   style: size10PNregular(
                                                       textColor: colorWhite),
                                                 ),

@@ -1,4 +1,5 @@
 import 'package:buypartsonline/Navigation/routes_key.dart';
+import 'package:buypartsonline/Screen/aboutUsScreen/aboutUs_screen.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
@@ -43,7 +44,7 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                       child: Image.asset(AssetStrings.drawerBag),
                     ),
                     Text(
-                      Strings.connectToCompare,
+                      Strings.appName,
                       style: size16PNregular(textColor: colorWhite),
                     ),
                   ],
@@ -113,8 +114,16 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                       verticalSpace(34),
                       drawerList(
                         image: AssetStrings.billingGst,
-                        text: Strings.billingGst,
-                        ontap: () {},
+                        // text: Strings.billingGst,
+                        text: Strings.aboutUs,
+                        ontap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AboutUsScreen()),
+                          );
+                        },
                       ),
                       verticalSpace(34),
                       drawerList(

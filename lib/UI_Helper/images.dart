@@ -35,4 +35,5 @@ class AssetStrings {
   static const String deleteCart = 'assets/png/deleteCart.png';
   static const String onRadio = 'assets/png/onradio.png';
   static const String offRadio = 'assets/png/offradio.png';
+  static const String contactUs = 'assets/png/contactus.png';
 }
