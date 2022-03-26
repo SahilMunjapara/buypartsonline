@@ -1,10 +1,8 @@
 import 'package:buypartsonline/UI_Helper/colors.dart';
-import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
-import 'package:buypartsonline/common_widget/bottom_design.dart';
-import 'package:buypartsonline/common_widget/space_widget.dart';
+import 'package:buypartsonline/service/network/network_string.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -20,12 +18,28 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   @override
   Widget build(BuildContext context) {
     SizeUtils().init(context);
-    return SafeArea(
-      child: Stack(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          Strings.aboutUs,
+          style: size23PNregular(textColor: colorWhite),
+        ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back_ios_rounded,
+            color: colorWhite,
+          ),
+        ),
+        elevation: 0,
+      ),
+      body: Stack(
         children: [
           WebView(
-            initialUrl: 'http://buypartsonline.in/#/about',
-            javascriptMode: JavascriptMode.unrestricted,  
+            initialUrl: aboutUsPageURL,
+            javascriptMode: JavascriptMode.unrestricted,
             onPageStarted: (url) {
               setState(() {
                 loadingPercentage = 0;

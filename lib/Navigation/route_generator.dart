@@ -4,7 +4,8 @@ import 'package:buypartsonline/Screen/cartScreen/presentation/cart_address_scree
 import 'package:buypartsonline/Screen/cartScreen/presentation/cart_checkout_screen.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/cart_payout_screen.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/cart_screen.dart';
-import 'package:buypartsonline/Screen/forgotScreen/forgot_screen.dart';
+import 'package:buypartsonline/Screen/forgotScreen/presentation/change_password_screen.dart';
+import 'package:buypartsonline/Screen/forgotScreen/presentation/forgot_screen.dart';
 import 'package:buypartsonline/Screen/homeScreen/presentation/page/home_screen.dart';
 import 'package:buypartsonline/Screen/loginScreen/presentation/login_screen.dart';
 import 'package:buypartsonline/Screen/modelDetailView/presentation/model_detail_view.dart';
@@ -14,6 +15,7 @@ import 'package:buypartsonline/Screen/modelViewScreen/presentation/model_view_sc
 import 'package:buypartsonline/Screen/myOrderScreen/presentation/my_orders_part_detail_screen.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/presentation/my_orders_screen.dart';
 import 'package:buypartsonline/Screen/notificationScreen/presentation/notification_screen.dart';
+import 'package:buypartsonline/Screen/otpScreen/data/model/otp_screen_param_model.dart';
 import 'package:buypartsonline/Screen/otpScreen/presentation/otp_screen.dart';
 import 'package:buypartsonline/Screen/profileScreen/presentation/profile_screen.dart';
 import 'package:buypartsonline/Screen/signupScreen/presentation/signup_screen.dart';
@@ -36,11 +38,17 @@ class RouteGenerator {
       case Routes.otpScreen:
         return MaterialPageRoute(
           builder: (context) => OtpScreen(
-            customerId: args as String,
+            otpScreenParam: args as OtpScreenParam,
           ),
         );
       case Routes.forgotScreen:
         return MaterialPageRoute(builder: (context) => const ForgotScreen());
+      case Routes.changePasswordScreen:
+        return MaterialPageRoute(
+          builder: (context) => ChangePasswordScreen(
+            mobileNumber: args as String,
+          ),
+        );
       case Routes.homeScreen:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
       case Routes.modelViewScreen:

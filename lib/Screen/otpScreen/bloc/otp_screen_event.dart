@@ -14,3 +14,13 @@ class OtpVerifyEvent extends OtpScreenEvent {
   @override
   List<Object?> get props => [otp, customerId];
 }
+
+class ForgotOtpVerifyEvent extends OtpScreenEvent {
+  final String? otp;
+  final String? mobileNumber;
+
+  ForgotOtpVerifyEvent({this.otp, this.mobileNumber});
+
+  @override
+  List<Object?> get props => [otp, mobileNumber];
+}

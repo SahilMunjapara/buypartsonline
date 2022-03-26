@@ -129,6 +129,8 @@ class Strings {
   static const String part10PerDiscountText = '10% off';
   static const String orderSubTotal = 'Subtotal :';
   static const String orderAddress = 'Address : ';
+  static const String changePassword = 'Change Password';
+  static const String updatePassword = 'Update Password';
 }
 
 List<String> razorPayWalletList = [

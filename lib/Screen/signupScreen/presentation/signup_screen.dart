@@ -1,4 +1,5 @@
 import 'package:buypartsonline/Navigation/routes_key.dart';
+import 'package:buypartsonline/Screen/otpScreen/data/model/otp_screen_param_model.dart';
 import 'package:buypartsonline/Screen/signupScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/signupScreen/data/model/signup_response_model.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
@@ -89,8 +90,12 @@ class _SignupScreenState extends State<SignupScreen> {
           if (state is SignupFormSubmitted) {
             SignupResponseModel responseModel = state.responseModel;
             if (responseModel.signupData!.isNotEmpty) {
-              Navigator.pushNamed(context, Routes.otpScreen,
-                  arguments: responseModel.signupData!.first.customerId);
+              Navigator.pushNamed(
+                context,
+                Routes.otpScreen,
+                arguments: OtpScreenParam(
+                    customerId: responseModel.signupData!.first.customerId!),
+              );
             } else {
               ShowToast.toastMsg(responseModel.message!);
             }

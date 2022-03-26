@@ -1,5 +1,6 @@
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/otpScreen/bloc/bloc.dart';
+import 'package:buypartsonline/Screen/otpScreen/data/model/otp_screen_param_model.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
@@ -19,8 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({this.customerId, Key? key}) : super(key: key);
-  final String? customerId;
+  const OtpScreen({this.otpScreenParam, Key? key}) : super(key: key);
+  final OtpScreenParam? otpScreenParam;
 
   @override
   _OtpScreenState createState() => _OtpScreenState();
@@ -49,10 +50,21 @@ class _OtpScreenState extends State<OtpScreen> {
           if (state is OtpVerfiedState) {
             if (state.responseModel.otpData!.first == 1) {
               await AppPreference().setBoolData(PreferencesKey.isLogin, true);
-              await AppPreference()
-                  .setStringData(PreferencesKey.userId, widget.customerId!);
+              await AppPreference().setStringData(
+                  PreferencesKey.userId, widget.otpScreenParam!.customerId);
               Navigator.pushNamedAndRemoveUntil(
                   context, Routes.homeScreen, (route) => false);
+            } else {
+              ShowToast.toastMsg(state.responseModel.message!);
+            }
+          }
+          if (state is ForgotOtpVerifyState) {
+            if (state.responseModel.forgotOtpVerifyData!.first == 1) {
+              Navigator.pushNamed(
+                context,
+                Routes.changePasswordScreen,
+                arguments: widget.otpScreenParam!.mobileNumber,
+              );
             } else {
               ShowToast.toastMsg(state.responseModel.message!);
             }
@@ -121,10 +133,23 @@ class _OtpScreenState extends State<OtpScreen> {
                                 ? null
                                 : () {
                                     if (Validator.validOtp.hasMatch(otpValue)) {
-                                      otpBloc.add(OtpVerifyEvent(
-                                        customerId: widget.customerId,
-                                        otp: otpValue,
-                                      ));
+                                      if (widget.otpScreenParam!.isFromForgot) {
+                                        otpBloc.add(
+                                          ForgotOtpVerifyEvent(
+                                            mobileNumber: widget
+                                                .otpScreenParam!.mobileNumber,
+                                            otp: otpValue,
+                                          ),
+                                        );
+                                      } else {
+                                        otpBloc.add(
+                                          OtpVerifyEvent(
+                                            customerId: widget
+                                                .otpScreenParam!.customerId,
+                                            otp: otpValue,
+                                          ),
+                                        );
+                                      }
                                     } else {
                                       ShowToast.toastMsg(
                                           ToastString.enterValidOtp);

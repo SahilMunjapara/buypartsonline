@@ -22,5 +22,17 @@ class OtpBloc extends Bloc<OtpScreenEvent, OtpScreenState> {
       }
       yield OtpLoadingEndState();
     }
+    if (event is ForgotOtpVerifyEvent) {
+      yield OtpLoadingBeginState();
+      Resource resource = await otpScreenRepository.verifyForgotOtp(event);
+      if (resource.data != null) {
+        yield ForgotOtpVerifyState(resource.data);
+      } else {
+        yield OtpErrorState(
+          AppException.decodeExceptionData(jsonString: resource.error ?? ''),
+        );
+      }
+      yield OtpLoadingEndState();
+    }
   }
 }
