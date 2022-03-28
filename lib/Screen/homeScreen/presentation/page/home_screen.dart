@@ -95,12 +95,13 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, Routes.notificationScreen);
-            },
-            child: Image.asset(AssetStrings.notification),
-          ),
+          horizontalSpace(10),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.pushNamed(context, Routes.notificationScreen);
+          //   },
+          //   child: Image.asset(AssetStrings.notification),
+          // ),
         ],
       ),
       body: BlocListener(

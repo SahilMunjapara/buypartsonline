@@ -89,6 +89,7 @@ class Strings {
   static const String state = 'State';
   static const String setDefaultAddress = 'Set Default Address';
   static const String addNewAddress = 'Add New Address';
+  static const String updateAddress = 'Update Address';
   static const String shippingAddress = 'Shipping Address';
   static const String procced = 'Procced';
   static const String addressNotAvailable =
@@ -131,6 +132,8 @@ class Strings {
   static const String orderAddress = 'Address : ';
   static const String changePassword = 'Change Password';
   static const String updatePassword = 'Update Password';
+  static const String edit = 'EDIT';
+  static const String delete = 'DELETE';
 }
 
 List<String> razorPayWalletList = [
@@ -138,6 +141,11 @@ List<String> razorPayWalletList = [
   'freecharge',
   'mobikwik',
 ];
+
+class DigitString {
+  static const String one = '1';
+  static const String two = '2';
+}
 
 class IconStrings {
   static const String nextArrow = '➜'; // → ➜ 🠪 ⇾

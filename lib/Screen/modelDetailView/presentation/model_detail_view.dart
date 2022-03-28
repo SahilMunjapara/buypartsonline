@@ -144,25 +144,25 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                                       ),
                                     ),
                                     const Spacer(),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamed(
-                                            context, Routes.notificationScreen);
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: primaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 10, horizontal: 8),
-                                          child: Image.asset(
-                                              AssetStrings.notification),
-                                        ),
-                                      ),
-                                    ),
+                                    // GestureDetector(
+                                    //   onTap: () {
+                                    //     Navigator.pushNamed(
+                                    //         context, Routes.notificationScreen);
+                                    //   },
+                                    //   child: Container(
+                                    //     decoration: BoxDecoration(
+                                    //       color: primaryColor,
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(8),
+                                    //     ),
+                                    //     child: Padding(
+                                    //       padding: const EdgeInsets.symmetric(
+                                    //           vertical: 10, horizontal: 8),
+                                    //       child: Image.asset(
+                                    //           AssetStrings.notification),
+                                    //     ),
+                                    //   ),
+                                    // ),
                                     horizontalSpace(8),
                                     GestureDetector(
                                       onTap: () {

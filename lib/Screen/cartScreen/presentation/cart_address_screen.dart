@@ -347,7 +347,7 @@ class _CartAddressScreenState extends State<CartAddressScreen> {
 
   void onRadioButtonTap(CartAddressData cartAddressData) {
     if (!isLoading) {
-      if (cartAddressData.addressDefault != '1') {
+      if (cartAddressData.addressDefault != DigitString.one) {
         cartBloc.add(
           CartDefaultSAddressEvent(
             customerId: AppPreference().getStringData(PreferencesKey.userId),

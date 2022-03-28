@@ -1,5 +1,6 @@
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/aboutUsScreen/aboutUs_screen.dart';
+import 'package:buypartsonline/Screen/legalAndOtherScreen/legal_and_other_screen.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
@@ -55,15 +56,15 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                   child: Column(
                     children: [
                       verticalSpace(34),
-                      drawerList(
-                        image: AssetStrings.notificationDrawer,
-                        text: Strings.notification,
-                        ontap: () {
-                          Navigator.pop(context);
-                          Navigator.pushNamed(
-                              context, Routes.notificationScreen);
-                        },
-                      ),
+                      // drawerList(
+                      //   image: AssetStrings.notificationDrawer,
+                      //   text: Strings.notification,
+                      //   ontap: () {
+                      //     Navigator.pop(context);
+                      //     Navigator.pushNamed(
+                      //         context, Routes.notificationScreen);
+                      //   },
+                      // ),
                       // drawerList(
                       //   image: AssetStrings.searchByVehicle,
                       //   text: Strings.searchByvehicle,
@@ -77,7 +78,7 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                       //     );
                       //   },
                       // ),
-                      verticalSpace(34),
+                      // verticalSpace(34),
                       // drawerList(
                       //   image: AssetStrings.searchByVIN,
                       //   text: Strings.searchByVIN,
@@ -134,17 +135,25 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                           Navigator.pushNamed(context, Routes.cartScreen);
                         },
                       ),
-                      verticalSpace(34),
-                      drawerList(
-                        image: AssetStrings.myGarage,
-                        text: Strings.myGarage,
-                        ontap: () {},
-                      ),
+                      // verticalSpace(34),
+                      // drawerList(
+                      //   image: AssetStrings.myGarage,
+                      //   text: Strings.myGarage,
+                      //   ontap: () {},
+                      // ),
                       verticalSpace(34),
                       drawerList(
                         image: AssetStrings.legalAndOthers,
                         text: Strings.legalAndOthers,
-                        ontap: () {},
+                        ontap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LegalAndOtherScreen(),
+                            ),
+                          );
+                        },
                       ),
                       verticalSpace(34),
                       drawerList(

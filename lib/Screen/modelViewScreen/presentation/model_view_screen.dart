@@ -106,12 +106,13 @@ class _ModelViewScreenState extends State<ModelViewScreen> {
               },
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, Routes.notificationScreen);
-            },
-            child: Image.asset(AssetStrings.notification),
-          ),
+          horizontalSpace(10),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.pushNamed(context, Routes.notificationScreen);
+          //   },
+          //   child: Image.asset(AssetStrings.notification),
+          // ),
         ],
       ),
       body: BlocListener(

@@ -51,13 +51,6 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
 
-    print(widget.cartPayoutScreenParam!.courierId);
-    print(widget.cartPayoutScreenParam!.customerId);
-    print(widget.cartPayoutScreenParam!.defaultAddressId);
-    print(widget.cartPayoutScreenParam!.deliveryCharge);
-    print(widget.cartPayoutScreenParam!.customerPhoneNumber);
-    print(widget.cartPayoutScreenParam!.totalPrice);
-
     super.initState();
   }
 
@@ -69,7 +62,7 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
 
   void openCheckout() async {
     var options = {
-      'key': RazorpayKey.testKey,
+      'key': RazorpayKey.liveKey,
       'amount': (widget.cartPayoutScreenParam!.totalPrice! +
               widget.cartPayoutScreenParam!.deliveryCharge!) *
           100,
@@ -102,11 +95,6 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    print('=========================');
-    print(response.orderId);
-    print(response.paymentId);
-    print(response.signature);
-    print('=========================');
     cartBloc.add(CartCallBackEvent(
       defaultAddressId:
           int.parse(widget.cartPayoutScreenParam!.defaultAddressId!),
@@ -168,6 +156,10 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
           if (state is CartErrorState) {
             AppException exception = state.exception;
             ShowToast.toastMsg(exception.message);
+            Future.delayed(const Duration(seconds: 3), () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, Routes.homeScreen, (route) => false);
+            });
           }
         },
         child: BlocBuilder(

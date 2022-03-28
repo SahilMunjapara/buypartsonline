@@ -1,4 +1,6 @@
 import 'package:buypartsonline/Screen/addressScreen/bloc/bloc.dart';
+import 'package:buypartsonline/Screen/addressScreen/presentation/widget/edit_address_card_widget.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/cart_address_response_model.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
@@ -39,6 +41,10 @@ class _AddressScreenState extends State<AddressScreen> {
   GlobalKey<FormState>? formKey;
 
   bool isLoading = false;
+  bool isAddressUpdate = false;
+  String currentAddressId = '';
+
+  List<CartAddressData> addressList = [];
 
   @override
   void initState() {
@@ -56,6 +62,11 @@ class _AddressScreenState extends State<AddressScreen> {
     stateFocusNode = FocusNode();
 
     formKey = GlobalKey<FormState>();
+
+    addressBloc.add(
+      GetAddressEvent(
+          customerId: AppPreference().getStringData(PreferencesKey.userId)),
+    );
   }
 
   @override
@@ -94,20 +105,62 @@ class _AddressScreenState extends State<AddressScreen> {
             color: colorWhite,
           ),
         ),
+        actions: [
+          if (isAddressUpdate)
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isAddressUpdate = false;
+                  removeControllerData();
+                });
+              },
+              child: const Icon(
+                Icons.close,
+                color: colorWhite,
+                textDirection: TextDirection.rtl,
+                size: 26,
+              ),
+            ),
+          horizontalSpace(10)
+        ],
         elevation: 0,
       ),
       body: BlocListener(
         bloc: addressBloc,
         listener: (context, state) {
-          if (state is AddAddressLoadingBeginState) {
+          if (state is AddressLoadingBeginState) {
             isLoading = true;
           }
-          if (state is AddAddressLoadingEndState) {
+          if (state is AddressLoadingEndState) {
             isLoading = false;
           }
           if (state is AddAddressState) {
             removeControllerData();
             ShowToast.toastMsg(state.responseModel!.message!);
+          }
+          if (state is GetAddressState) {
+            addressList = state.responseModel!.cartAddressData!;
+          }
+          if (state is SetDefaultAddressState) {
+            ShowToast.toastMsg(state.responseModel!.message!);
+          }
+          if (state is UpdateAddressState) {
+            if (state.responseModel!.updateAddressData!.first == 1) {
+              setState(() {
+                isAddressUpdate = false;
+                removeControllerData();
+              });
+              ShowToast.toastMsg(state.responseModel!.message!);
+            } else {
+              ShowToast.toastMsg(state.responseModel!.message!);
+            }
+          }
+          if (state is DeleteAddressState) {
+            if (state.responseModel!.deleteAddressData!.first == 1) {
+              ShowToast.toastMsg(state.responseModel!.message!);
+            } else {
+              ShowToast.toastMsg(state.responseModel!.message!);
+            }
           }
           if (state is AddressErrorState) {
             AppException exception = state.exception;
@@ -134,114 +187,114 @@ class _AddressScreenState extends State<AddressScreen> {
                       width: SizeUtils().screenWidth,
                     ),
                     Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Form(
-                            key: formKey,
-                            child: Column(
-                              children: [
-                                verticalSpace(15),
-                                CustomTextField(
-                                  maxLength: 30,
-                                  controller: nameController,
-                                  focusNode: nameFocusNode,
-                                  validator: Validator.nameValidationMsg,
-                                  labelText: Strings.name,
-                                  textInputType: TextInputType.text,
-                                  textInputAction: TextInputAction.next,
-                                ),
-                                verticalSpace(15),
-                                CustomTextField(
-                                  maxLength: 10,
-                                  controller: mobileNumberController,
-                                  focusNode: mobileNumberFocusNode,
-                                  validator: Validator.phoneValidationMsg,
-                                  labelText: Strings.mobileNumber,
-                                  textInputType: TextInputType.number,
-                                  textInputAction: TextInputAction.next,
-                                ),
-                                verticalSpace(15),
-                                CustomTextField(
-                                  maxLength: 100,
-                                  controller: addressController,
-                                  focusNode: addressFocusNode,
-                                  validator: Validator.addressValidator,
-                                  labelText: Strings.address,
-                                  textInputType: TextInputType.text,
-                                  textInputAction: TextInputAction.next,
-                                ),
-                                verticalSpace(15),
-                                CustomTextField(
-                                  maxLength: 6,
-                                  controller: pincodeController,
-                                  focusNode: pincodeFocusNode,
-                                  validator: Validator.pincodeValidationMsg,
-                                  labelText: Strings.pincode,
-                                  textInputType: TextInputType.number,
-                                  textInputAction: TextInputAction.next,
-                                ),
-                                verticalSpace(15),
-                                CustomTextField(
-                                  controller: stateController,
-                                  focusNode: stateFocusNode,
-                                  validator: Validator.stateValidator,
-                                  labelText: Strings.state,
-                                  textInputType: TextInputType.text,
-                                  textInputAction: TextInputAction.done,
-                                ),
-                              ],
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Form(
+                              key: formKey,
+                              child: Column(
+                                children: [
+                                  verticalSpace(15),
+                                  CustomTextField(
+                                    maxLength: 30,
+                                    controller: nameController,
+                                    focusNode: nameFocusNode,
+                                    validator: Validator.nameValidationMsg,
+                                    labelText: Strings.name,
+                                    textInputType: TextInputType.text,
+                                    textInputAction: TextInputAction.next,
+                                  ),
+                                  verticalSpace(15),
+                                  CustomTextField(
+                                    maxLength: 10,
+                                    controller: mobileNumberController,
+                                    focusNode: mobileNumberFocusNode,
+                                    validator: Validator.phoneValidationMsg,
+                                    labelText: Strings.mobileNumber,
+                                    textInputType: TextInputType.number,
+                                    textInputAction: TextInputAction.next,
+                                  ),
+                                  verticalSpace(15),
+                                  CustomTextField(
+                                    maxLength: 100,
+                                    controller: addressController,
+                                    focusNode: addressFocusNode,
+                                    validator: Validator.addressValidator,
+                                    labelText: Strings.address,
+                                    textInputType: TextInputType.text,
+                                    textInputAction: TextInputAction.next,
+                                  ),
+                                  verticalSpace(15),
+                                  CustomTextField(
+                                    maxLength: 6,
+                                    controller: pincodeController,
+                                    focusNode: pincodeFocusNode,
+                                    validator: Validator.pincodeValidationMsg,
+                                    labelText: Strings.pincode,
+                                    textInputType: TextInputType.number,
+                                    textInputAction: TextInputAction.next,
+                                  ),
+                                  verticalSpace(15),
+                                  CustomTextField(
+                                    controller: stateController,
+                                    focusNode: stateFocusNode,
+                                    validator: Validator.stateValidator,
+                                    labelText: Strings.state,
+                                    textInputType: TextInputType.text,
+                                    textInputAction: TextInputAction.done,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 25.0),
-                                child: GestureDetector(
-                                  onTap: onTapSetDefaultAddress,
-                                  child: Container(
-                                    height: SizeUtils().hp(7),
-                                    width: SizeUtils().screenWidth,
-                                    decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        Strings.setDefaultAddress,
-                                        style: size20PNRegular(
-                                            textColor: colorWhite),
-                                      ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 25.0),
+                              child: GestureDetector(
+                                onTap: onTapAddNewAddress,
+                                child: Container(
+                                  height: SizeUtils().hp(7),
+                                  width: SizeUtils().screenWidth,
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      isAddressUpdate
+                                          ? Strings.updateAddress
+                                          : Strings.addNewAddress,
+                                      style: size20PNRegular(
+                                          textColor: colorWhite),
                                     ),
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 25.0),
-                                child: GestureDetector(
-                                  onTap: onTapAddNewAddress,
-                                  child: Container(
-                                    height: SizeUtils().hp(7),
-                                    width: SizeUtils().screenWidth,
-                                    decoration: BoxDecoration(
-                                      color: primaryColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        Strings.addNewAddress,
-                                        style: size20PNRegular(
-                                            textColor: colorWhite),
-                                      ),
-                                    ),
+                            ),
+                            verticalSpace(12),
+                            addressList.isEmpty && !isLoading
+                                ? const Text(
+                                    Strings.addressNotAvailable,
+                                  )
+                                : Column(
+                                    children: addressList.map((addressData) {
+                                      return EditAddressCardWidget(
+                                        cartAddressData: addressData,
+                                        onRadioTap: () {
+                                          onRadioButtonTap(addressData);
+                                        },
+                                        onEditTap: () {
+                                          onEditButtonTap(addressData);
+                                        },
+                                        onDeleteTap: () {
+                                          onDeleteButtonTap(addressData);
+                                        },
+                                      );
+                                    }).toList(),
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                            verticalSpace(12),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -266,34 +319,36 @@ class _AddressScreenState extends State<AddressScreen> {
     );
   }
 
-  void onTapSetDefaultAddress() {
-    if (!isLoading) {
-      if (formKey!.currentState!.validate()) {
-        addressBloc.add(
-          AddAddressEvent(
-            customerId: AppPreference().getStringData(PreferencesKey.userId),
-            customerName: nameController.text,
-            customerPhone: mobileNumberController.text,
-            customerAddress: addressController.text,
-            addressPincode: pincodeController.text,
-            addressState: stateController.text,
-          ),
-        );
-      }
-    }
-  }
-
   void onTapAddNewAddress() {
     if (!isLoading) {
       if (formKey!.currentState!.validate()) {
+        if (isAddressUpdate) {
+          addressBloc.add(
+            UpdateAddressEvent(
+              addressId: currentAddressId,
+              customerName: nameController.text,
+              customerPhone: mobileNumberController.text,
+              customerAddress: addressController.text,
+              addressPincode: pincodeController.text,
+              addressState: stateController.text,
+            ),
+          );
+        } else {
+          addressBloc.add(
+            AddAddressEvent(
+              customerId: AppPreference().getStringData(PreferencesKey.userId),
+              customerName: nameController.text,
+              customerPhone: mobileNumberController.text,
+              customerAddress: addressController.text,
+              addressPincode: pincodeController.text,
+              addressState: stateController.text,
+            ),
+          );
+        }
+
         addressBloc.add(
-          AddAddressEvent(
+          GetAddressEvent(
             customerId: AppPreference().getStringData(PreferencesKey.userId),
-            customerName: nameController.text,
-            customerPhone: mobileNumberController.text,
-            customerAddress: addressController.text,
-            addressPincode: pincodeController.text,
-            addressState: stateController.text,
           ),
         );
       }
@@ -306,5 +361,56 @@ class _AddressScreenState extends State<AddressScreen> {
     addressController.clear();
     pincodeController.clear();
     stateController.clear();
+  }
+
+  void onEditButtonTap(CartAddressData cartAddressData) {
+    if (!isLoading) {
+      if (isAddressUpdate != true) {
+        setState(() {
+          currentAddressId = cartAddressData.addressId!;
+          isAddressUpdate = true;
+          nameController.text = cartAddressData.addressForName!;
+          mobileNumberController.text = cartAddressData.addressPhoneNo!;
+          addressController.text = cartAddressData.addressName!;
+          pincodeController.text = cartAddressData.addressPincode!;
+          stateController.text = cartAddressData.addressState!;
+        });
+      }
+    }
+  }
+
+  void onDeleteButtonTap(CartAddressData cartAddressData) {
+    if (!isLoading) {
+      removeControllerData();
+      setState(() {
+        isAddressUpdate = false;
+      });
+      addressBloc.add(
+        DeleteAddressEvent(addressId: cartAddressData.addressId),
+      );
+      addressBloc.add(
+        GetAddressEvent(
+          customerId: AppPreference().getStringData(PreferencesKey.userId),
+        ),
+      );
+    }
+  }
+
+  void onRadioButtonTap(CartAddressData cartAddressData) {
+    if (!isLoading) {
+      if (cartAddressData.addressDefault != DigitString.one) {
+        addressBloc.add(
+          SetDefaultAddressEvent(
+            customerId: AppPreference().getStringData(PreferencesKey.userId),
+            addressId: cartAddressData.addressId,
+          ),
+        );
+        addressBloc.add(
+          GetAddressEvent(
+            customerId: AppPreference().getStringData(PreferencesKey.userId),
+          ),
+        );
+      }
+    }
   }
 }

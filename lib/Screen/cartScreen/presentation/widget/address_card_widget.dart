@@ -1,6 +1,7 @@
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_address_response_model.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
+import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
@@ -30,7 +31,7 @@ class AddressCardWidget extends StatelessWidget {
             InkWell(
               onTap: onRadioTap,
               child: Image.asset(
-                cartAddressData!.addressDefault == '1'
+                cartAddressData!.addressDefault == DigitString.one
                     ? AssetStrings.onRadio
                     : AssetStrings.offRadio,
               ),

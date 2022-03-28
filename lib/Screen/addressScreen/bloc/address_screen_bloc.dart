@@ -12,7 +12,7 @@ class AddressBloc extends Bloc<AddressScreenEvent, AddressScreenState> {
   @override
   Stream<AddressScreenState> mapEventToState(AddressScreenEvent event) async* {
     if (event is AddAddressEvent) {
-      yield AddAddressLoadingBeginState();
+      yield AddressLoadingBeginState();
       Resource resource = await addressRepository.addAddress(event);
       if (resource.data != null) {
         yield AddAddressState(resource.data);
@@ -21,7 +21,55 @@ class AddressBloc extends Bloc<AddressScreenEvent, AddressScreenState> {
           AppException.decodeExceptionData(jsonString: resource.error ?? ''),
         );
       }
-      yield AddAddressLoadingEndState();
+      yield AddressLoadingEndState();
+    }
+    if (event is GetAddressEvent) {
+      yield AddressLoadingBeginState();
+      Resource resource = await addressRepository.getAddressList(event);
+      if (resource.data != null) {
+        yield GetAddressState(resource.data);
+      } else {
+        yield AddressErrorState(
+          AppException.decodeExceptionData(jsonString: resource.error ?? ''),
+        );
+      }
+      yield AddressLoadingEndState();
+    }
+    if (event is SetDefaultAddressEvent) {
+      yield AddressLoadingBeginState();
+      Resource resource = await addressRepository.setDefaultAddress(event);
+      if (resource.data != null) {
+        yield SetDefaultAddressState(resource.data);
+      } else {
+        yield AddressErrorState(
+          AppException.decodeExceptionData(jsonString: resource.error ?? ''),
+        );
+      }
+      yield AddressLoadingEndState();
+    }
+    if (event is UpdateAddressEvent) {
+      yield AddressLoadingBeginState();
+      Resource resource = await addressRepository.updateAddress(event);
+      if (resource.data != null) {
+        yield UpdateAddressState(resource.data);
+      } else {
+        yield AddressErrorState(
+          AppException.decodeExceptionData(jsonString: resource.error ?? ''),
+        );
+      }
+      yield AddressLoadingEndState();
+    }
+    if (event is DeleteAddressEvent) {
+      yield AddressLoadingBeginState();
+      Resource resource = await addressRepository.deleteAddress(event);
+      if (resource.data != null) {
+        yield DeleteAddressState(resource.data);
+      } else {
+        yield AddressErrorState(
+          AppException.decodeExceptionData(jsonString: resource.error ?? ''),
+        );
+      }
+      yield AddressLoadingEndState();
     }
   }
 }
