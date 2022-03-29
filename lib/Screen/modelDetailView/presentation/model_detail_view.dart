@@ -346,7 +346,8 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 5, bottom: 5),
                                           child: Text(
-                                            Strings.oneToFivePieces,
+                                            betweenPartMoq(
+                                                widget.modelPart.partMoq),
                                             style: size12PNregular(),
                                           ),
                                         ),
@@ -442,7 +443,8 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                                           padding: const EdgeInsets.only(
                                               top: 10, left: 5, bottom: 5),
                                           child: Text(
-                                            Strings.fiveOrMorePieces,
+                                            greaterThanPartMoq(
+                                                widget.modelPart.partMoq),
                                             style: size12PNregular(),
                                           ),
                                         ),
@@ -510,7 +512,8 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                                                         vertical: 6,
                                                         horizontal: 25),
                                                 child: Text(
-                                                  Strings.add5ToCart,
+                                                  getCartMoq(widget
+                                                      .modelPart.partMoq!),
                                                   style: size10PNregular(
                                                       textColor: colorWhite),
                                                 ),

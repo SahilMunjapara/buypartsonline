@@ -6,6 +6,6 @@ double getPriceWithDiscount(int itemPrice, int itemDiscount) {
   return itemPrice - (itemPrice * (itemDiscount / 100));
 }
 
-String getQtyOfferString(int itemQuantity) {
-  return 'Buy More ${(5 - itemQuantity).toString()} part to you get 10% Discount';
+String getQtyOfferString(int itemQuantity, int itemMoq, int itemDiscount) {
+  return 'Buy More ${(itemMoq - itemQuantity).toString()} part to you get $itemDiscount% Discount';
 }

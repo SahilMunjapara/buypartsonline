@@ -13,4 +13,8 @@ class ShowToast {
       fontSize: 16.0,
     );
   }
+
+  static cancleToast() {
+    Fluttertoast.cancel();
+  }
 }

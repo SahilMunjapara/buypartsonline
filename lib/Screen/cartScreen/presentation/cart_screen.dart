@@ -155,7 +155,8 @@ class _CartScreenState extends State<CartScreen> {
                                       if (int.parse(cartProductData[index]
                                               .partQty!) ==
                                           cartQty) {
-                                        ShowToast.toastMsg(cartQty.toString());
+                                        ShowToast.toastMsg(quantityErrorMsg(
+                                            cartQty.toString()));
                                         return;
                                       }
                                       cartBloc.add(

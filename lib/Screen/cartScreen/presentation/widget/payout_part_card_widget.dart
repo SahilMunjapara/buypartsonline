@@ -18,14 +18,16 @@ class PayoutPartCardWidget extends StatelessWidget {
     SizeUtils().init(context);
     double totalPrice = getTotalPrice(
       int.parse(cartProductData!.partMrp!),
-      int.parse(cartProductData!.cartQuantity!) < 5
+      int.parse(cartProductData!.cartQuantity!) <
+              int.parse(cartProductData!.partMoq!)
           ? int.parse(cartProductData!.partLessMoqDiscount!)
           : int.parse(cartProductData!.partMoreMoqDiscount!),
       int.parse(cartProductData!.cartQuantity!),
     );
     double partPrice = getPriceWithDiscount(
       int.parse(cartProductData!.partMrp!),
-      int.parse(cartProductData!.cartQuantity!) < 5
+      int.parse(cartProductData!.cartQuantity!) <
+              int.parse(cartProductData!.partMoq!)
           ? int.parse(cartProductData!.partLessMoqDiscount!)
           : int.parse(cartProductData!.partMoreMoqDiscount!),
     );

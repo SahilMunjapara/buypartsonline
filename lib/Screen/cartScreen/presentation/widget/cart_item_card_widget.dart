@@ -28,18 +28,23 @@ class CartItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double totalPrice = getTotalPrice(
       int.parse(cartProductData!.partMrp!),
-      cartTotal! < 5
+      cartTotal! < int.parse(cartProductData!.partMoq!)
           ? int.parse(cartProductData!.partLessMoqDiscount!)
           : int.parse(cartProductData!.partMoreMoqDiscount!),
       cartTotal!,
     );
     double partPrice = getPriceWithDiscount(
       int.parse(cartProductData!.partMrp!),
-      cartTotal! < 5
+      cartTotal! < int.parse(cartProductData!.partMoq!)
           ? int.parse(cartProductData!.partLessMoqDiscount!)
           : int.parse(cartProductData!.partMoreMoqDiscount!),
     );
-    String getDiscountOffer = getQtyOfferString(cartTotal!);
+    String getDiscountOffer = getQtyOfferString(
+      cartTotal!,
+      int.parse(cartProductData!.partMoq!),
+      int.parse(cartProductData!.partMoreMoqDiscount!),
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 15),
       child: Card(
@@ -157,7 +162,7 @@ class CartItemCard extends StatelessWidget {
                     ],
                   ),
                   horizontalSpace(20),
-                  cartTotal! < 5
+                  cartTotal! < int.parse(cartProductData!.partMoq!)
                       ? Expanded(
                           child: Text(
                             getDiscountOffer,

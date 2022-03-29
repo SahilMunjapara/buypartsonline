@@ -41,3 +41,14 @@ const updateCustomerPasswordURL = 'updateCustomerPassword';
 const updateAddressURL = 'updateAddress';
 const deleteAddressURL = 'deleteAddress';
 const cancelOrderURL = 'cancelOrder';
+
+class NetworkConstants {
+  static const String errorMessage4xx =
+      "Please try logging out and logging back in";
+  static const String errorTitle4xx = "Invalid Credentials";
+  static const String errorTitle5xx = "Server Error";
+  static const String errorMessage5xx =
+      "The server was unable to process your request";
+  static const String errorTitle = 'Error';
+  static const String errorUnknownError = 'Unknown error';
+}

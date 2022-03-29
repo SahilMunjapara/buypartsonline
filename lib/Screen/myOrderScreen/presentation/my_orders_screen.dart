@@ -109,12 +109,22 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
             isLoading = false;
           }
           if (state is GetMyOrderStatusState) {
+            progressOrderList.clear();
+            cancleOrderList.clear();
+            completeOrderList.clear();
+            returnOrderList.clear();
             state.responseModel.orderStatusData!.map((e) {
-              if (e.orderStageDropDown == 'Processing') {
+              if (e.orderStageDropDown == OrderStatusString.processing) {
                 progressOrderList.add(e);
               }
-              if (e.orderStageDropDown == 'Cancel') {
+              if (e.orderStageDropDown == OrderStatusString.cancle) {
                 cancleOrderList.add(e);
+              }
+              if (e.orderStageDropDown == OrderStatusString.completed) {
+                completeOrderList.add(e);
+              }
+              if (e.orderStageDropDown == OrderStatusString.returned) {
+                returnOrderList.add(e);
               }
             }).toList();
           }
@@ -208,6 +218,11 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                                 itemBuilder: (context, index) {
                                   return OrderDetailStatusWidget(
                                     orderStatusData: progressOrderList[index],
+                                    onCancleOrderTap: () {
+                                      // onCancleOrderButtonTap(
+                                      //   progressOrderList[index],
+                                      // );
+                                    },
                                   );
                                 },
                               ),
@@ -281,7 +296,9 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                           vertical: 12.0, horizontal: 25.0),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          if (!isLoading) {
+                            Navigator.pop(context);
+                          }
                         },
                         child: Container(
                           height: SizeUtils().hp(7),
@@ -318,5 +335,16 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
         ),
       ),
     );
+  }
+
+  void onCancleOrderButtonTap(OrderStatusData orderStatusData) {
+    if (!isLoading) {
+      myOrderBloc.add(CancleMyOrderEvent(
+        customerId: orderStatusData.customerId,
+        orderId: orderStatusData.orderId,
+      ));
+      myOrderBloc
+          .add(GetMyOrderStatusEvent(customerId: orderStatusData.customerId));
+    }
   }
 }

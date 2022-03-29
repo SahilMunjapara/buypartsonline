@@ -180,7 +180,7 @@ class ModelViewCard extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 4.0, horizontal: 10.0),
                         child: Text(
-                          Strings.add5ToCart,
+                          getCartMoq(modelViewData!.partMoq!),
                           style: size07PNregular(textColor: colorWhite),
                         ),
                       ),

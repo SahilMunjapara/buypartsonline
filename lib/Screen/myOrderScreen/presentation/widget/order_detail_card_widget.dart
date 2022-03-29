@@ -7,9 +7,11 @@ import 'package:buypartsonline/common_widget/space_widget.dart';
 import 'package:flutter/material.dart';
 
 class OrderDetailStatusWidget extends StatelessWidget {
-  const OrderDetailStatusWidget({this.orderStatusData, Key? key})
+  const OrderDetailStatusWidget(
+      {this.orderStatusData, this.onCancleOrderTap, Key? key})
       : super(key: key);
   final OrderStatusData? orderStatusData;
+  final VoidCallback? onCancleOrderTap;
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +122,34 @@ class OrderDetailStatusWidget extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+              Visibility(
+                visible: orderStatusData!.orderStageDropDown ==
+                    OrderStatusString.processing,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    verticalSpace(12),
+                    GestureDetector(
+                      onTap: onCancleOrderTap,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Center(
+                            child: Text(
+                              Strings.cancleOrder,
+                              style: size13PNregular(textColor: colorWhite),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

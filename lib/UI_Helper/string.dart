@@ -135,6 +135,7 @@ class Strings {
   static const String edit = 'EDIT';
   static const String delete = 'DELETE';
   static const String returnPolicy = 'Return Policy';
+  static const String cancleOrder = 'Cancle Order';
 }
 
 List<String> razorPayWalletList = [
@@ -146,6 +147,13 @@ List<String> razorPayWalletList = [
 class DigitString {
   static const String one = '1';
   static const String two = '2';
+}
+
+class OrderStatusString {
+  static const String processing = 'Processing';
+  static const String cancle = 'Cancel';
+  static const String completed = 'Completed';
+  static const String returned = 'Return';
 }
 
 class IconStrings {
@@ -169,6 +177,7 @@ class ToastString {
       'Please Select One Product For Checkout';
   static const String pleaseSelectDefaultAddress =
       'Please Select One Default Address';
+  static const String pressBackAgainToExit = 'Press back again to exit';
 }
 
 class ValidatorStrings {
@@ -210,6 +219,22 @@ String getOrderDate(DateTime? orderDate) {
       orderDate.month.toString() +
       '/' +
       orderDate.year.toString();
+}
+
+String greaterThanPartMoq(String? moq) {
+  return '> $moq Pieces';
+}
+
+String betweenPartMoq(String? moq) {
+  return '1-$moq Pieces';
+}
+
+String getCartMoq(String? moq) {
+  return 'Add $moq To Cart';
+}
+
+String quantityErrorMsg(String? quantity) {
+  return 'You cannot add more than $quantity quantities of the product';
 }
 
 dynamic callBackUrlJson = {
