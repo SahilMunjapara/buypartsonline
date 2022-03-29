@@ -1,6 +1,5 @@
 import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/repository/cart_screen_repository.dart';
-import 'package:buypartsonline/Screen/modelViewScreen/presentation/model_view_screen.dart';
 import 'package:buypartsonline/service/exception/exception.dart';
 import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CartBloc extends Bloc<CartScreenEvent, CartScreenState> {
   CartBloc() : super(CartInitialState());
 
-  final CartReposiory _cartReposiory = CartReposiory();
+  final CartRepository _cartReposiory = CartRepository();
 
   @override
   Stream<CartScreenState> mapEventToState(CartScreenEvent event) async* {

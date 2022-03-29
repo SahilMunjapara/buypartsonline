@@ -12,15 +12,34 @@ import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
 
-class CartReposiory {
-  static final CartReposiory _cartReposiory = CartReposiory._init();
+abstract class ICartRepository {
+  Future getCartDetail(CartTotalItemEvent event);
 
-  factory CartReposiory() {
+  Future updateCartDetail(CartItemUpdateQtyEvent event);
+
+  Future removeCartItem(CartItemRemoveEvent event);
+
+  Future getCartAddress(CartAddressEvent event);
+
+  Future setCartDefaultAddress(CartDefaultSAddressEvent event);
+
+  Future getCartDefaultAddress(GetDefaultAddresEvent event);
+
+  Future callBackURL(CartCallBackEvent event);
+
+  Future addCartAddress(AddCartAddressEvent event);
+}
+
+class CartRepository implements ICartRepository {
+  static final CartRepository _cartReposiory = CartRepository._init();
+
+  factory CartRepository() {
     return _cartReposiory;
   }
 
-  CartReposiory._init();
+  CartRepository._init();
 
+  @override
   Future getCartDetail(CartTotalItemEvent event) async {
     Resource? resource;
     try {
@@ -45,6 +64,7 @@ class CartReposiory {
     return resource;
   }
 
+  @override
   Future updateCartDetail(CartItemUpdateQtyEvent event) async {
     Resource? resource;
     try {
@@ -70,6 +90,7 @@ class CartReposiory {
     return resource;
   }
 
+  @override
   Future removeCartItem(CartItemRemoveEvent event) async {
     Resource? resource;
     try {
@@ -94,6 +115,7 @@ class CartReposiory {
     return resource;
   }
 
+  @override
   Future getCartAddress(CartAddressEvent event) async {
     Resource? resource;
     try {
@@ -118,6 +140,7 @@ class CartReposiory {
     return resource;
   }
 
+  @override
   Future setCartDefaultAddress(CartDefaultSAddressEvent event) async {
     Resource? resource;
     try {
@@ -143,6 +166,7 @@ class CartReposiory {
     return resource;
   }
 
+  @override
   Future getCartDefaultAddress(GetDefaultAddresEvent event) async {
     Resource? resource;
     try {
@@ -167,6 +191,7 @@ class CartReposiory {
     return resource;
   }
 
+  @override
   Future callBackURL(CartCallBackEvent event) async {
     Resource? resource;
     try {
@@ -201,6 +226,7 @@ class CartReposiory {
     return resource;
   }
 
+  @override
   Future addCartAddress(AddCartAddressEvent event) async {
     Resource? resource;
     try {

@@ -8,7 +8,21 @@ import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
 
-class SearchDialogRepository {
+abstract class ISearchDialogRepository {
+  Future getSearchByVehicleData();
+
+  Future getMakerData(VehicleMakerEvent event);
+
+  Future getModelLineData(ModelLineEvent event);
+
+  Future getModelModification(ModelModificationEvent event);
+
+  Future getModelYear(ModelYearEvent event);
+
+  Future getModelCategory(ModelCategoryEvent event);
+}
+
+class SearchDialogRepository implements ISearchDialogRepository {
   static final SearchDialogRepository _searchDialogRepository =
       SearchDialogRepository._init();
 
@@ -18,6 +32,7 @@ class SearchDialogRepository {
 
   SearchDialogRepository._init();
 
+  @override
   Future getSearchByVehicleData() async {
     Resource? resource;
     try {
@@ -40,6 +55,7 @@ class SearchDialogRepository {
     return resource;
   }
 
+  @override
   Future getMakerData(VehicleMakerEvent event) async {
     Resource? resource;
     try {
@@ -63,6 +79,7 @@ class SearchDialogRepository {
     return resource;
   }
 
+  @override
   Future getModelLineData(ModelLineEvent event) async {
     Resource? resource;
     try {
@@ -86,6 +103,7 @@ class SearchDialogRepository {
     return resource;
   }
 
+  @override
   Future getModelModification(ModelModificationEvent event) async {
     Resource? resource;
     try {
@@ -109,6 +127,7 @@ class SearchDialogRepository {
     return resource;
   }
 
+  @override
   Future getModelYear(ModelYearEvent event) async {
     Resource? resource;
     try {
@@ -132,6 +151,7 @@ class SearchDialogRepository {
     return resource;
   }
 
+  @override
   Future getModelCategory(ModelCategoryEvent event) async {
     Resource? resource;
     try {

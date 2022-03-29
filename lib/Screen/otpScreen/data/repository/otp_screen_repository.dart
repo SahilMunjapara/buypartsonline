@@ -5,7 +5,13 @@ import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
 
-class OtpScreenRepository {
+abstract class IOtpScreenRepository {
+  Future verifyOtp(OtpVerifyEvent event);
+
+  Future verifyForgotOtp(ForgotOtpVerifyEvent event);
+}
+
+class OtpScreenRepository implements IOtpScreenRepository {
   static final OtpScreenRepository _otpScreenRepository =
       OtpScreenRepository._init();
 
@@ -15,6 +21,7 @@ class OtpScreenRepository {
 
   OtpScreenRepository._init();
 
+  @override
   Future verifyOtp(OtpVerifyEvent event) async {
     Resource? resource;
     try {
@@ -42,6 +49,7 @@ class OtpScreenRepository {
     return resource;
   }
 
+  @override
   Future verifyForgotOtp(ForgotOtpVerifyEvent event) async {
     Resource? resource;
     try {

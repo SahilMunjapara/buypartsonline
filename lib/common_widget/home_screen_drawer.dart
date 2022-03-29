@@ -119,11 +119,7 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                         text: Strings.aboutUs,
                         ontap: () {
                           Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AboutUsScreen()),
-                          );
+                          Navigator.pushNamed(context, Routes.aboutUsScreen);
                         },
                       ),
                       verticalSpace(34),
@@ -147,12 +143,18 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                         text: Strings.legalAndOthers,
                         ontap: () {
                           Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LegalAndOtherScreen(),
-                            ),
-                          );
+                          Navigator.pushNamed(
+                              context, Routes.legalAndOtherScreen);
+                        },
+                      ),
+                      verticalSpace(34),
+                      drawerList(
+                        image: AssetStrings.assuredReturn,
+                        text: Strings.returnPolicy,
+                        ontap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(
+                              context, Routes.returnPolicyScreen);
                         },
                       ),
                       verticalSpace(34),

@@ -2,6 +2,7 @@ const String baseURL = 'http://buypartsonline.in/AdminSide/Admin/Ajax/';
 const String imageURL = 'https://buypartsonline.in/AdminSide/resources/images/';
 const String aboutUsPageURL = 'http://buypartsonline.in/#/about';
 const String privacyPolicyURL = 'http://buypartsonline.in/#/privacypolicy';
+const String returnPolicyURL = 'http://buypartsonline.in/#/return-policy';
 
 const loginURL = 'login_api';
 const signupURL = 'RegisterCustomer';
@@ -39,3 +40,4 @@ const verifyOTPForForgotPasswordURL = 'verifyOTPForForgotPassword';
 const updateCustomerPasswordURL = 'updateCustomerPassword';
 const updateAddressURL = 'updateAddress';
 const deleteAddressURL = 'deleteAddress';
+const cancelOrderURL = 'cancelOrder';

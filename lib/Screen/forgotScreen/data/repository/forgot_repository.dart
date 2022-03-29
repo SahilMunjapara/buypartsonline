@@ -5,7 +5,13 @@ import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
 
-class ForgotRepository {
+abstract class IForgotRepository {
+  Future sendOtpForForgot(OtpForForgotPasswordEvent event);
+
+  Future updatePassword(UpdatePasswordEvent event);
+}
+
+class ForgotRepository implements IForgotRepository {
   static final ForgotRepository _forgotRepository = ForgotRepository._init();
 
   factory ForgotRepository() {
@@ -14,6 +20,7 @@ class ForgotRepository {
 
   ForgotRepository._init();
 
+  @override
   Future sendOtpForForgot(OtpForForgotPasswordEvent event) async {
     Resource? resource;
     try {
@@ -38,6 +45,7 @@ class ForgotRepository {
     return resource;
   }
 
+  @override
   Future updatePassword(UpdatePasswordEvent event) async {
     Resource? resource;
     try {

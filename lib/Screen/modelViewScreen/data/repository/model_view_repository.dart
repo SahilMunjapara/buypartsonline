@@ -6,7 +6,13 @@ import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
 
-class ModelViewRepository {
+abstract class IModelViewRepository {
+  Future fetchModelView(ModelViewDetailFetchEvent event);
+
+  Future addCartPart(ModelViewAddCartEvent event);
+}
+
+class ModelViewRepository implements IModelViewRepository {
   static final ModelViewRepository _modelViewRepository =
       ModelViewRepository._init();
 
@@ -16,6 +22,7 @@ class ModelViewRepository {
 
   ModelViewRepository._init();
 
+  @override
   Future fetchModelView(ModelViewDetailFetchEvent event) async {
     Resource? resource;
     try {
@@ -47,6 +54,7 @@ class ModelViewRepository {
     return resource;
   }
 
+  @override
   Future addCartPart(ModelViewAddCartEvent event) async {
     Resource? resource;
     try {

@@ -1,3 +1,5 @@
+import 'package:buypartsonline/Screen/ReturnPolicyScreen/return_policy_screen.dart';
+import 'package:buypartsonline/Screen/aboutUsScreen/aboutUs_screen.dart';
 import 'package:buypartsonline/Screen/addressScreen/presentation/address_screen.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_payout_screen_param.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/cart_address_screen.dart';
@@ -7,6 +9,7 @@ import 'package:buypartsonline/Screen/cartScreen/presentation/cart_screen.dart';
 import 'package:buypartsonline/Screen/forgotScreen/presentation/change_password_screen.dart';
 import 'package:buypartsonline/Screen/forgotScreen/presentation/forgot_screen.dart';
 import 'package:buypartsonline/Screen/homeScreen/presentation/page/home_screen.dart';
+import 'package:buypartsonline/Screen/legalAndOtherScreen/legal_and_other_screen.dart';
 import 'package:buypartsonline/Screen/loginScreen/presentation/login_screen.dart';
 import 'package:buypartsonline/Screen/modelDetailView/presentation/model_detail_view.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_response_model.dart';
@@ -102,6 +105,14 @@ class RouteGenerator {
             orderId: args as String,
           ),
         );
+      case Routes.aboutUsScreen:
+        return MaterialPageRoute(builder: (context) => const AboutUsScreen());
+      case Routes.legalAndOtherScreen:
+        return MaterialPageRoute(
+            builder: (context) => const LegalAndOtherScreen());
+      case Routes.returnPolicyScreen:
+        return MaterialPageRoute(
+            builder: (context) => const ReturnPolicyScreen());
       default:
         return _errorRoute();
     }

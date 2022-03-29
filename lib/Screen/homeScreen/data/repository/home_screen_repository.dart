@@ -6,7 +6,15 @@ import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
 
-class HomeRepository {
+abstract class IHomeRepository {
+  Future fetchBannerData();
+
+  Future fetchCategoryData();
+
+  Future fetchCartCount(HomeCartCountEvent event);
+}
+
+class HomeRepository implements IHomeRepository {
   static final HomeRepository _homeRepository = HomeRepository._init();
 
   factory HomeRepository() {
@@ -14,6 +22,7 @@ class HomeRepository {
   }
   HomeRepository._init();
 
+  @override
   Future fetchBannerData() async {
     Resource? resource;
     try {
@@ -37,6 +46,7 @@ class HomeRepository {
     return resource;
   }
 
+  @override
   Future fetchCategoryData() async {
     Resource? resource;
     try {
@@ -60,6 +70,7 @@ class HomeRepository {
     return resource;
   }
 
+  @override
   Future fetchCartCount(HomeCartCountEvent event) async {
     Resource? resource;
     try {

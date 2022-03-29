@@ -60,5 +60,17 @@ class MyOrderBloc extends Bloc<MyOrderScreenEvent, MyOrderScreenState> {
       }
       yield MyOrderLoadingEndState();
     }
+    if (event is CancleMyOrderEvent) {
+      yield MyOrderLoadingBeginState();
+      Resource resource = await _myOrderRepository.cancleOrder(event);
+      if (resource.data != null) {
+        yield CancleMyOrderState(resource.data);
+      } else {
+        yield MyOrderErrorState(
+          AppException.decodeExceptionData(jsonString: resource.error ?? ''),
+        );
+      }
+      yield MyOrderLoadingEndState();
+    }
   }
 }

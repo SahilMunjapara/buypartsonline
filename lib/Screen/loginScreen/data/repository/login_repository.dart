@@ -4,7 +4,11 @@ import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
 
-class LoginRepository {
+abstract class ILoginRepository {
+  Future performLogin(LoginPerformLoginEvent event);
+}
+
+class LoginRepository implements ILoginRepository {
   static final LoginRepository _homeRepository = LoginRepository._init();
 
   factory LoginRepository() {
@@ -13,6 +17,7 @@ class LoginRepository {
 
   LoginRepository._init();
 
+  @override
   Future performLogin(LoginPerformLoginEvent event) async {
     Resource? resource;
     try {

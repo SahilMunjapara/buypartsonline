@@ -33,3 +33,13 @@ class GetMyOrderAddressEvent extends MyOrderScreenEvent {
 }
 
 class GetMyOrderBrandEvent extends MyOrderScreenEvent {}
+
+class CancleMyOrderEvent extends MyOrderScreenEvent {
+  final String? orderId;
+  final String? customerId;
+
+  CancleMyOrderEvent({this.orderId, this.customerId});
+
+  @override
+  List<Object?> get props => [orderId, customerId];
+}

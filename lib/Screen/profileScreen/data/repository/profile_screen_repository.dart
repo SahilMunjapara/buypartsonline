@@ -5,7 +5,13 @@ import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
 
-class ProfileRepository {
+abstract class IProfileRepository {
+  Future getProfileDetail(GetProfileDetailEvent event);
+
+  Future updateProfileDetail(UpdateProfileEvent event);
+}
+
+class ProfileRepository implements IProfileRepository {
   static final ProfileRepository _profileRepository = ProfileRepository._init();
 
   factory ProfileRepository() {
@@ -14,6 +20,7 @@ class ProfileRepository {
 
   ProfileRepository._init();
 
+  @override
   Future getProfileDetail(GetProfileDetailEvent event) async {
     Resource? resource;
     try {
@@ -40,6 +47,7 @@ class ProfileRepository {
     return resource;
   }
 
+  @override
   Future updateProfileDetail(UpdateProfileEvent event) async {
     Resource? resource;
     try {

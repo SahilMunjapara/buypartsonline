@@ -134,6 +134,7 @@ class Strings {
   static const String updatePassword = 'Update Password';
   static const String edit = 'EDIT';
   static const String delete = 'DELETE';
+  static const String returnPolicy = 'Return Policy';
 }
 
 List<String> razorPayWalletList = [
@@ -164,6 +165,10 @@ class ToastString {
   static const String enterValidOtp = 'Enter Valid Otp';
   static const String addressNotAvailableAddNew =
       'Address Not Available Please add New Address';
+  static const String pleaseSelectOneProductForCheckout =
+      'Please Select One Product For Checkout';
+  static const String pleaseSelectDefaultAddress =
+      'Please Select One Default Address';
 }
 
 class ValidatorStrings {

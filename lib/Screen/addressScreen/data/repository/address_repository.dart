@@ -8,7 +8,19 @@ import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
 import 'package:buypartsonline/service/network/network_string.dart';
 
-class AddressRepository {
+abstract class IAddressRepository {
+  Future addAddress(AddAddressEvent event);
+
+  Future getAddressList(GetAddressEvent event);
+
+  Future setDefaultAddress(SetDefaultAddressEvent event);
+
+  Future updateAddress(UpdateAddressEvent event);
+
+  Future deleteAddress(DeleteAddressEvent event);
+}
+
+class AddressRepository implements IAddressRepository {
   static final AddressRepository _addressRepository = AddressRepository._init();
 
   factory AddressRepository() {
@@ -17,6 +29,7 @@ class AddressRepository {
 
   AddressRepository._init();
 
+  @override
   Future addAddress(AddAddressEvent event) async {
     Resource? resource;
     try {
@@ -50,6 +63,7 @@ class AddressRepository {
     return resource;
   }
 
+  @override
   Future getAddressList(GetAddressEvent event) async {
     Resource? resource;
     try {
@@ -74,6 +88,7 @@ class AddressRepository {
     return resource;
   }
 
+  @override
   Future setDefaultAddress(SetDefaultAddressEvent event) async {
     Resource? resource;
     try {
@@ -99,6 +114,7 @@ class AddressRepository {
     return resource;
   }
 
+  @override
   Future updateAddress(UpdateAddressEvent event) async {
     Resource? resource;
     try {
@@ -132,6 +148,7 @@ class AddressRepository {
     return resource;
   }
 
+  @override
   Future deleteAddress(DeleteAddressEvent event) async {
     Resource? resource;
     try {

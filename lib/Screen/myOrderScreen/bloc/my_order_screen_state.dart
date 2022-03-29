@@ -1,5 +1,6 @@
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_address_response_model.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/data/model/brand_response_model.dart';
+import 'package:buypartsonline/Screen/myOrderScreen/data/model/cancle_order_response_model.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/data/model/order_part_detail_response_model.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/data/model/order_status_response_model.dart';
 import 'package:buypartsonline/service/exception/exception.dart';
@@ -32,6 +33,11 @@ class GetMyOrderAddressState extends MyOrderScreenState {
 class GetMyOrderBrandState extends MyOrderScreenState {
   BrandResponseModel responseModel;
   GetMyOrderBrandState(this.responseModel);
+}
+
+class CancleMyOrderState extends MyOrderScreenState {
+  CancleOrderResponseModel? responseModel;
+  CancleMyOrderState(this.responseModel);
 }
 
 class MyOrderErrorState extends MyOrderScreenState {

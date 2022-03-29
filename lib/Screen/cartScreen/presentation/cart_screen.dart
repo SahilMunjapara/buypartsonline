@@ -17,6 +17,7 @@ import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
 import 'package:buypartsonline/common_widget/toast_msg.dart';
+import 'package:buypartsonline/service/exception/exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -102,6 +103,10 @@ class _CartScreenState extends State<CartScreen> {
                 state.responseModel!.cartData!.first.save!.toString());
             cartProductData =
                 state.responseModel!.cartData!.first.cartProductData!;
+          }
+          if (state is CartErrorState) {
+            AppException exception = state.exception;
+            ShowToast.toastMsg(exception.message);
           }
         },
         child: BlocBuilder(

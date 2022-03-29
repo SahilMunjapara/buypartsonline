@@ -16,6 +16,7 @@ import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
+import 'package:buypartsonline/common_widget/toast_msg.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -241,23 +242,36 @@ class _CartCheckoutScreenState extends State<CartCheckoutScreen> {
                                   GestureDetector(
                                     onTap: () {
                                       if (!isLoading) {
-                                        Navigator.pushReplacementNamed(
-                                          context,
-                                          Routes.cartPayoutScreen,
-                                          arguments: CartPayoutScreenParam(
-                                            courierId: courierId,
-                                            customerId: AppPreference()
-                                                .getStringData(
-                                                    PreferencesKey.userId),
-                                            defaultAddressId: defaultAddressData
-                                                .first.addressId,
-                                            deliveryCharge: deliveryCharge,
-                                            totalPrice: totalAmount,
-                                            customerPhoneNumber:
-                                                defaultAddressData
-                                                    .first.addressPhoneNo,
-                                          ),
-                                        );
+                                        if (cartProductData.isNotEmpty &&
+                                            defaultAddressData.isNotEmpty) {
+                                          Navigator.pushReplacementNamed(
+                                            context,
+                                            Routes.cartPayoutScreen,
+                                            arguments: CartPayoutScreenParam(
+                                              courierId: courierId,
+                                              customerId: AppPreference()
+                                                  .getStringData(
+                                                      PreferencesKey.userId),
+                                              defaultAddressId:
+                                                  defaultAddressData
+                                                      .first.addressId,
+                                              deliveryCharge: deliveryCharge,
+                                              totalPrice: totalAmount,
+                                              customerPhoneNumber:
+                                                  defaultAddressData
+                                                      .first.addressPhoneNo,
+                                            ),
+                                          );
+                                        } else {
+                                          if (cartProductData.isNotEmpty) {
+                                            ShowToast.toastMsg(ToastString
+                                                .pleaseSelectOneProductForCheckout);
+                                          }
+                                          if (defaultAddressData.isNotEmpty) {
+                                            ShowToast.toastMsg(ToastString
+                                                .pleaseSelectDefaultAddress);
+                                          }
+                                        }
                                       }
                                     },
                                     child: Container(
