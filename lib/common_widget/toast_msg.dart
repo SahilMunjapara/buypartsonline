@@ -14,7 +14,7 @@ class ShowToast {
     );
   }
 
-  static cancleToast() {
+  static cancelToast() {
     Fluttertoast.cancel();
   }
 }

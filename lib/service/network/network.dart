@@ -185,14 +185,14 @@ class NetworkAPICall {
       case 500:
       case 502:
         throw AppException(
-            message: "Looks like our server is down for maintenance," +
-                r'''\n\n''' +
+            message: "Looks like our server is down for maintenance,"
+                r'''\n\n'''
                 "Please try again later.",
             errorCode: response.statusCode);
       default:
         throw AppException(
-            message: "Unable to communicate with the server at the moment." +
-                r'''\n\n''' +
+            message: "Unable to communicate with the server at the moment."
+                r'''\n\n'''
                 "Please try again later",
             errorCode: response.statusCode);
     }

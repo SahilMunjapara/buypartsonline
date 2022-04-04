@@ -54,13 +54,14 @@ class CartItemCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: SizeUtils().hp(10),
-                    width: SizeUtils().wp(20),
+                    height: SizeUtils().hp(12),
+                    width: SizeUtils().wp(24),
                     decoration: BoxDecoration(
                       color: colorWhiteBackground,
                       borderRadius: BorderRadius.circular(10),
@@ -75,7 +76,7 @@ class CartItemCard extends StatelessWidget {
                   ),
                   horizontalSpace(10),
                   SizedBox(
-                    height: SizeUtils().hp(10),
+                    height: SizeUtils().hp(12),
                     width: SizeUtils().wp(50),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -84,8 +85,7 @@ class CartItemCard extends StatelessWidget {
                         Text(
                           cartProductData!.partName!,
                           style: size14PNregular(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
                         Text(
                           cartProductData!.brandName!,
@@ -103,7 +103,27 @@ class CartItemCard extends StatelessWidget {
                             Text(
                               '₹ ${partPrice.toString()}',
                               style: size12PNregular(),
-                            )
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: primaryColor.withOpacity(0.1),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 1),
+                                child: Text(
+                                  cartTotal! >=
+                                          int.parse(cartProductData!.partMoq!)
+                                      ? cartProductData!.partMoreMoqDiscount! +
+                                          '% off'
+                                      : cartProductData!.partLessMoqDiscount! +
+                                          '% off',
+                                  style:
+                                      size09PNsemibold(textColor: primaryColor),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -124,6 +144,15 @@ class CartItemCard extends StatelessWidget {
                   ),
                 ],
               ),
+              verticalSpace(8),
+              Text.rich(TextSpan(children: [
+                TextSpan(
+                    text: Strings.partNumber + ' :- ',
+                    style: size12PNregular(textColor: colorTextGrey)),
+                TextSpan(
+                    text: cartProductData!.partNumber!,
+                    style: size12PNregular(textColor: primaryColor)),
+              ])),
               verticalSpace(8),
               Row(
                 children: [

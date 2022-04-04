@@ -31,6 +31,7 @@ class CartPayoutScreen extends StatefulWidget {
 
 class _CartPayoutScreenState extends State<CartPayoutScreen> {
   CartBloc cartBloc = CartBloc();
+  // ignore: unused_field
   static const platform = MethodChannel("razorpay_flutter");
   late GlobalKey<ScaffoldState> _scaffoldKey;
   late List<CartPaymentMethodModel> paymentMethodList;

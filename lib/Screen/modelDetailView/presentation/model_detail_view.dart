@@ -4,8 +4,6 @@ import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_event.dart';
 import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_state.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/bloc/bloc.dart';
-import 'package:buypartsonline/Screen/modelViewScreen/bloc/model_view_screen_bloc.dart';
-import 'package:buypartsonline/Screen/modelViewScreen/bloc/model_view_screen_state.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_response_model.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
@@ -280,9 +278,10 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                               ),
                               verticalSpace(12),
                               horizontalDivider(
-                                  color: colorGreyDivider,
-                                  height: 1,
-                                  thickness: 1),
+                                color: colorGreyDivider,
+                                height: 1,
+                                thickness: 1,
+                              ),
                               verticalSpace(12),
                               Row(
                                 mainAxisAlignment:
@@ -295,7 +294,8 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                                   Text(
                                     widget.modelPart.modificationModelNo!,
                                     style: size12PNregular(
-                                        textColor: primaryColor),
+                                      textColor: primaryColor,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -316,7 +316,8 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                                   Text(
                                     widget.modelPart.partOrigin!,
                                     style: size12PNregular(
-                                        textColor: primaryColor),
+                                      textColor: primaryColor,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -344,10 +345,14 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(
-                                              top: 10, left: 5, bottom: 5),
+                                            top: 10,
+                                            left: 5,
+                                            bottom: 5,
+                                          ),
                                           child: Text(
                                             betweenPartMoq(
-                                                widget.modelPart.partMoq),
+                                              widget.modelPart.partMoq,
+                                            ),
                                             style: size12PNregular(),
                                           ),
                                         ),
@@ -412,8 +417,9 @@ class _ModelDetailViewState extends State<ModelDetailView> {
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        vertical: 6,
-                                                        horizontal: 25),
+                                                  vertical: 6,
+                                                  horizontal: 25,
+                                                ),
                                                 child: Text(
                                                   Strings.addToCart,
                                                   style: size10PNregular(

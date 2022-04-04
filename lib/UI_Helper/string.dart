@@ -108,7 +108,7 @@ class Strings {
   static const String forgot = 'Forgot';
   static const String continueShopping = 'Continue Shopping';
   static const String noAddressFound = 'Address Not Found';
-  static const String quantity = 'Quantity :- ';
+  static const String quantity = 'Qty:- ';
   static const String items = 'Items:';
   static const String deliveryCharge = 'Delivery Charge:';
   static const String summary = 'Summary:';
@@ -135,7 +135,8 @@ class Strings {
   static const String edit = 'EDIT';
   static const String delete = 'DELETE';
   static const String returnPolicy = 'Return Policy';
-  static const String cancleOrder = 'Cancle Order';
+  static const String cancelOrder = 'Cancel Order';
+  static const String trackOrder = 'Track Order';
 }
 
 List<String> razorPayWalletList = [
@@ -151,7 +152,8 @@ class DigitString {
 
 class OrderStatusString {
   static const String processing = 'Processing';
-  static const String cancle = 'Cancel';
+  static const String readyToShip = 'ReadyToShip';
+  static const String cancel = 'Cancel';
   static const String completed = 'Completed';
   static const String returned = 'Return';
 }

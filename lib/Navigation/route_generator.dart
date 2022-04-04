@@ -23,6 +23,7 @@ import 'package:buypartsonline/Screen/otpScreen/presentation/otp_screen.dart';
 import 'package:buypartsonline/Screen/profileScreen/presentation/profile_screen.dart';
 import 'package:buypartsonline/Screen/signupScreen/presentation/signup_screen.dart';
 import 'package:buypartsonline/Screen/splashScreen/splash_screen.dart';
+import 'package:buypartsonline/Screen/trackOrderScreen/track_order_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'routes_key.dart';
@@ -113,6 +114,10 @@ class RouteGenerator {
       case Routes.returnPolicyScreen:
         return MaterialPageRoute(
             builder: (context) => const ReturnPolicyScreen());
+      case Routes.trackOrderScreen:
+        return MaterialPageRoute(
+          builder: (context) => TrackOrderScreen(trackOrderUrl: args as String),
+        );
       default:
         return _errorRoute();
     }

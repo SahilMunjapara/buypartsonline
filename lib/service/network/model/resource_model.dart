@@ -37,8 +37,8 @@ class ApiResponse<T> {
 
   ApiResponse.failure(this.statusCode, [this.model]) {
     String serverMsg = "";
-    if (this.model != null) {
-      serverMsg = (this.model as http.Response).body;
+    if (model != null) {
+      serverMsg = (model as http.Response).body;
     }
     switch (statusCode) {
       default:

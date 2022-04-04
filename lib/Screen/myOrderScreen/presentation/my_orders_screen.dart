@@ -36,7 +36,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
   List<OrderStatusData> progressOrderList = [];
   List<OrderStatusData> completeOrderList = [];
   List<OrderStatusData> returnOrderList = [];
-  List<OrderStatusData> cancleOrderList = [];
+  List<OrderStatusData> cancelOrderList = [];
 
   @override
   void initState() {
@@ -110,15 +110,16 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
           }
           if (state is GetMyOrderStatusState) {
             progressOrderList.clear();
-            cancleOrderList.clear();
+            cancelOrderList.clear();
             completeOrderList.clear();
             returnOrderList.clear();
             state.responseModel.orderStatusData!.map((e) {
-              if (e.orderStageDropDown == OrderStatusString.processing) {
+              if (e.orderStageDropDown == OrderStatusString.processing ||
+                  e.orderStageDropDown == OrderStatusString.readyToShip) {
                 progressOrderList.add(e);
               }
-              if (e.orderStageDropDown == OrderStatusString.cancle) {
-                cancleOrderList.add(e);
+              if (e.orderStageDropDown == OrderStatusString.cancel) {
+                cancelOrderList.add(e);
               }
               if (e.orderStageDropDown == OrderStatusString.completed) {
                 completeOrderList.add(e);
@@ -218,10 +219,18 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                                 itemBuilder: (context, index) {
                                   return OrderDetailStatusWidget(
                                     orderStatusData: progressOrderList[index],
-                                    onCancleOrderTap: () {
-                                      // onCancleOrderButtonTap(
-                                      //   progressOrderList[index],
-                                      // );
+                                    onTrackOrderTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        Routes.trackOrderScreen,
+                                        arguments:
+                                            progressOrderList[index].orderTrack,
+                                      );
+                                    },
+                                    onCancelOrderTap: () {
+                                      onCancelOrderButtonTap(
+                                        progressOrderList[index],
+                                      );
                                     },
                                   );
                                 },
@@ -273,7 +282,7 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                     Visibility(
                       visible: tabIndex == 4,
                       child: Expanded(
-                        child: cancleOrderList.isEmpty && !isLoading
+                        child: cancelOrderList.isEmpty && !isLoading
                             ? Center(
                                 child: Text(
                                   Strings.noCancelledOrders,
@@ -282,10 +291,10 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                                 ),
                               )
                             : ListView.builder(
-                                itemCount: cancleOrderList.length,
+                                itemCount: cancelOrderList.length,
                                 itemBuilder: (context, index) {
                                   return OrderDetailStatusWidget(
-                                    orderStatusData: cancleOrderList[index],
+                                    orderStatusData: cancelOrderList[index],
                                   );
                                 },
                               ),
@@ -337,9 +346,9 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     );
   }
 
-  void onCancleOrderButtonTap(OrderStatusData orderStatusData) {
+  void onCancelOrderButtonTap(OrderStatusData orderStatusData) {
     if (!isLoading) {
-      myOrderBloc.add(CancleMyOrderEvent(
+      myOrderBloc.add(CancelMyOrderEvent(
         customerId: orderStatusData.customerId,
         orderId: orderStatusData.orderId,
       ));

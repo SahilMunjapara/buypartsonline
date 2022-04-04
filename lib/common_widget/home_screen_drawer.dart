@@ -1,6 +1,4 @@
 import 'package:buypartsonline/Navigation/routes_key.dart';
-import 'package:buypartsonline/Screen/aboutUsScreen/aboutUs_screen.dart';
-import 'package:buypartsonline/Screen/legalAndOtherScreen/legal_and_other_screen.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';

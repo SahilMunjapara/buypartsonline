@@ -1,7 +1,7 @@
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_address_response_model.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/bloc/my_order_screen_event.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/data/model/brand_response_model.dart';
-import 'package:buypartsonline/Screen/myOrderScreen/data/model/cancle_order_response_model.dart';
+import 'package:buypartsonline/Screen/myOrderScreen/data/model/cancel_order_response_model.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/data/model/order_part_detail_response_model.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/data/model/order_status_response_model.dart';
 import 'package:buypartsonline/service/network/model/resource_model.dart';
@@ -17,7 +17,7 @@ abstract class IMyOrderRepository {
 
   Future getOrderBrand(GetMyOrderBrandEvent event);
 
-  Future cancleOrder(CancleMyOrderEvent event);
+  Future cancelOrder(CancelMyOrderEvent event);
 }
 
 class MyOrderRepository implements IMyOrderRepository {
@@ -125,7 +125,7 @@ class MyOrderRepository implements IMyOrderRepository {
   }
 
   @override
-  Future cancleOrder(CancleMyOrderEvent event) async {
+  Future cancelOrder(CancelMyOrderEvent event) async {
     Resource? resource;
     try {
       var body = <String, dynamic>{};
@@ -133,8 +133,8 @@ class MyOrderRepository implements IMyOrderRepository {
       body['CustomerId'] = event.customerId;
 
       var result = await NetworkAPICall().post(cancelOrderURL, body);
-      CancleOrderResponseModel responseData =
-          CancleOrderResponseModel.fromJson(result);
+      CancelOrderResponseModel responseData =
+          CancelOrderResponseModel.fromJson(result);
       resource = Resource(
         error: null,
         data: responseData,

@@ -8,10 +8,14 @@ import 'package:flutter/material.dart';
 
 class OrderDetailStatusWidget extends StatelessWidget {
   const OrderDetailStatusWidget(
-      {this.orderStatusData, this.onCancleOrderTap, Key? key})
+      {this.orderStatusData,
+      this.onCancelOrderTap,
+      this.onTrackOrderTap,
+      Key? key})
       : super(key: key);
   final OrderStatusData? orderStatusData;
-  final VoidCallback? onCancleOrderTap;
+  final VoidCallback? onCancelOrderTap;
+  final VoidCallback? onTrackOrderTap;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class OrderDetailStatusWidget extends StatelessWidget {
                           style: size14PNregular(),
                         ),
                         TextSpan(
-                          text: '#${orderStatusData!.orderShipmentCode}',
+                          text: '#${orderStatusData!.orderId}',
                           style: size14PNregular(textColor: primaryColor),
                         ),
                       ],
@@ -61,7 +65,7 @@ class OrderDetailStatusWidget extends StatelessWidget {
                           style: size12PNregular(textColor: colorGreyText),
                         ),
                         TextSpan(
-                          text: 'IW3412544115',
+                          text: orderStatusData!.orderAwbNumber!,
                           style: size12PNregular(textColor: primaryColor),
                         ),
                       ],
@@ -125,24 +129,54 @@ class OrderDetailStatusWidget extends StatelessWidget {
               ),
               Visibility(
                 visible: orderStatusData!.orderStageDropDown ==
-                    OrderStatusString.processing,
+                        OrderStatusString.processing ||
+                    orderStatusData!.orderStageDropDown ==
+                        OrderStatusString.readyToShip,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     verticalSpace(12),
-                    GestureDetector(
-                      onTap: onCancleOrderTap,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(10),
+                    Visibility(
+                      visible: orderStatusData!.orderStageDropDown ==
+                          OrderStatusString.readyToShip,
+                      child: GestureDetector(
+                        onTap: onTrackOrderTap,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 33),
+                            child: Center(
+                              child: Text(
+                                Strings.trackOrder,
+                                style: size13PNregular(textColor: colorWhite),
+                              ),
+                            ),
+                          ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Center(
-                            child: Text(
-                              Strings.cancleOrder,
-                              style: size13PNregular(textColor: colorWhite),
+                      ),
+                    ),
+                    Visibility(
+                      visible: orderStatusData!.orderStageDropDown ==
+                          OrderStatusString.processing,
+                      child: GestureDetector(
+                        onTap: onCancelOrderTap,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 33),
+                            child: Center(
+                              child: Text(
+                                Strings.cancelOrder,
+                                style: size13PNregular(textColor: colorWhite),
+                              ),
                             ),
                           ),
                         ),

@@ -1,5 +1,4 @@
 import 'package:buypartsonline/Screen/addressScreen/data/model/add_address_response_model.dart';
-import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_address_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_call_back_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_default_address_response_model.dart';
@@ -57,7 +56,7 @@ class DefaultAddressDetailState extends CartScreenState {
 }
 
 class CartCallBackState extends CartScreenState {
-  CallBackResponseModel  responseModel;
+  CallBackResponseModel responseModel;
   CartCallBackState(this.responseModel);
 }
 

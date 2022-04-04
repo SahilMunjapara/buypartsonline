@@ -330,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ShowToast.toastMsg(ToastString.pressBackAgainToExit);
       return false;
     } else {
-      ShowToast.cancleToast();
+      ShowToast.cancelToast();
       return true;
     }
   }

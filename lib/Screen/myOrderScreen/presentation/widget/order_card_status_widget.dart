@@ -57,7 +57,6 @@ class OrderCardStatusWidget extends StatelessWidget {
                       children: [
                         Text(
                           orderData!.partName!,
-                          overflow: TextOverflow.ellipsis,
                           style: size15PNregular(),
                         ),
                         Text(brandData!.brandName!,
@@ -107,10 +106,18 @@ class OrderCardStatusWidget extends StatelessWidget {
               verticalSpace(12),
               Text.rich(TextSpan(children: [
                 TextSpan(
+                    text: Strings.partNumber + ' :- ',
+                    style: size12PNregular(textColor: colorTextGrey)),
+                TextSpan(
+                    text: orderData!.partNumber!,
+                    style: size12PNregular(textColor: primaryColor)),
+              ])),
+              Text.rich(TextSpan(children: [
+                TextSpan(
                     text: Strings.orderNumber,
                     style: size12PNregular(textColor: colorTextGrey)),
                 TextSpan(
-                    text: '#0780103521542',
+                    text: orderData!.orderIdReference!,
                     style: size12PNregular(textColor: primaryColor)),
               ])),
               verticalSpace(10),

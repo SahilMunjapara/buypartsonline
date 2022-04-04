@@ -1,4 +1,4 @@
-package com.example.buypartsonline
+package com.buypartsonline
 
 import io.flutter.embedding.android.FlutterActivity
 

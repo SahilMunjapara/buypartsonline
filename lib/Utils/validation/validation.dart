@@ -233,59 +233,31 @@ class Validator {
   }
 
   static String? orderIdValidator(String? value) {
-    if (value == null) {
-      return 'Select the Role';
-    } else {
-      return null;
-    }
+    return value == null ? 'Select the Role' : null;
   }
 
   static String? selectRoleValidator(String? value) {
-    if (value == null) {
-      return 'Select the Role';
-    } else {
-      return null;
-    }
+    return value == null ? 'Select the Role' : null;
   }
 
   static String? selectQualification(String? value) {
-    if (value == null) {
-      return 'Select the Qualification';
-    } else {
-      return null;
-    }
+    return value == null ? 'Select the Qualification' : null;
   }
 
   static String? selectCityValidator(String? value) {
-    if (value == null) {
-      return 'Select the Role';
-    } else {
-      return null;
-    }
+    return value == null ? 'Select the Role' : null;
   }
 
   static String? reasonValidator(String? value) {
-    if (value == null) {
-      return 'Reason is Required';
-    } else {
-      return null;
-    }
+    return value == null ? 'Reason is Required' : null;
   }
 
   static String? conditionValidator(String? value) {
-    if (value == null) {
-      return 'Condition is Required';
-    } else {
-      return null;
-    }
+    return value == null ? 'Condition is Required' : null;
   }
 
   static String? resolutionValidator(String? value) {
-    if (value == null) {
-      return 'Resolution is Required';
-    } else {
-      return null;
-    }
+    return value == null ? 'Resolution is Required' : null;
   }
 
   static final validCharacters = RegExp(r'^[a-zA-Z0-9 \-,\.]+$');
