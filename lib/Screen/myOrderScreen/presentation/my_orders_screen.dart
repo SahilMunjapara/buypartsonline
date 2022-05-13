@@ -11,6 +11,7 @@ import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
 import 'package:buypartsonline/Utils/app_preferences/app_preferences.dart';
 import 'package:buypartsonline/Utils/app_preferences/prefrences_key.dart';
+import 'package:buypartsonline/Utils/enums.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
@@ -66,7 +67,9 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: colorWhiteBackground,
-      drawer: const HomeScreenDrawer(),
+      drawer: const HomeScreenDrawer(
+        currentScreen: HomeScreenDrawerEnum.myOrders,
+      ),
       appBar: AppBar(
         elevation: 0,
         title: Text(

@@ -13,6 +13,7 @@ import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
 import 'package:buypartsonline/Utils/app_preferences/app_preferences.dart';
 import 'package:buypartsonline/Utils/app_preferences/prefrences_key.dart';
+import 'package:buypartsonline/Utils/enums.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/banner_carousel.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
@@ -75,7 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
         resizeToAvoidBottomInset: false,
         backgroundColor: colorWhiteBackground,
         key: _scaffoldKey,
-        drawer: const HomeScreenDrawer(),
+        drawer: const HomeScreenDrawer(
+          currentScreen: HomeScreenDrawerEnum.home,
+        ),
         appBar: AppBar(
           elevation: 0,
           title: Text(

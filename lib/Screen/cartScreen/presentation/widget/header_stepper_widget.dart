@@ -25,7 +25,7 @@ class HeaderStepperWidget extends StatelessWidget {
           Icons.shopping_cart_outlined,
           Icons.location_on_outlined,
           Icons.calendar_today_outlined,
-          Icons.credit_card,
+          // Icons.credit_card,
         ],
         curStep: currentStep,
         activeColor: colorWhite,

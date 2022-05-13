@@ -1,3 +1,4 @@
+import 'package:buypartsonline/Global/key.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
@@ -12,13 +13,17 @@ import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
 import 'package:buypartsonline/Utils/app_preferences/app_preferences.dart';
 import 'package:buypartsonline/Utils/app_preferences/prefrences_key.dart';
+import 'package:buypartsonline/Utils/enums.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
 import 'package:buypartsonline/common_widget/toast_msg.dart';
+import 'package:buypartsonline/service/exception/exception.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class CartCheckoutScreen extends StatefulWidget {
   const CartCheckoutScreen({Key? key}) : super(key: key);
@@ -29,12 +34,16 @@ class CartCheckoutScreen extends StatefulWidget {
 
 class _CartCheckoutScreenState extends State<CartCheckoutScreen> {
   CartBloc cartBloc = CartBloc();
+  // ignore: unused_field
+  static const platform = MethodChannel("razorpay_flutter");
+  late Razorpay _razorpay;
   late GlobalKey<ScaffoldState> _scaffoldKey;
   double totalAmount = 0;
   double deliveryCharge = 0;
   List<CartProductData> cartProductData = [];
   List<DefaultAddressData> defaultAddressData = [];
   bool isLoading = false;
+  bool isPaymentSucess = false;
   int courierId = 0;
   @override
   void initState() {
@@ -47,7 +56,62 @@ class _CartCheckoutScreenState extends State<CartCheckoutScreen> {
       GetDefaultAddresEvent(
           customerId: AppPreference().getStringData(PreferencesKey.userId)),
     );
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     super.initState();
+  }
+
+  void openCheckout() async {
+    var options = {
+      'key': RazorpayKey.liveKey,
+      'amount': (totalAmount + deliveryCharge) * 100,
+      'name': Strings.buyPartsLimited,
+      'description': Strings.vehicleParts,
+      'retry': {'enabled': true, 'max_count': 1},
+      'send_sms_hash': true,
+      'prefill': {
+        'contact': defaultAddressData.first.addressPhoneNo,
+        'email': '',
+      },
+    };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      debugPrint('Error: e');
+    }
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    cartBloc.add(
+      CartCallBackEvent(
+        defaultAddressId: int.parse(defaultAddressData.first.addressId!),
+        customerId:
+            int.parse(AppPreference().getStringData(PreferencesKey.userId)),
+        deliveryCharge: deliveryCharge,
+        courierId: courierId,
+        paymentType: 0,
+        razorPayId: response.paymentId,
+      ),
+    );
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    ShowToast.toastMsg(response.message!);
+    Navigator.pushNamedAndRemoveUntil(
+        context, Routes.homeScreen, (route) => false);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    ShowToast.toastMsg("EXTERNAL_WALLET: " + response.walletName!);
+  }
+
+  @override
+  void dispose() {
+    _razorpay.clear();
+    super.dispose();
   }
 
   @override
@@ -56,7 +120,9 @@ class _CartCheckoutScreenState extends State<CartCheckoutScreen> {
     return Scaffold(
       backgroundColor: colorWhiteBackground,
       key: _scaffoldKey,
-      drawer: const HomeScreenDrawer(),
+      drawer: const HomeScreenDrawer(
+        currentScreen: HomeScreenDrawerEnum.cart,
+      ),
       appBar: AppBar(
         elevation: 0,
         title: Text(
@@ -76,7 +142,6 @@ class _CartCheckoutScreenState extends State<CartCheckoutScreen> {
           if (state is CartLoadingBeginState) {
             isLoading = true;
           }
-
           if (state is CartLoadingEndState) {
             isLoading = false;
           }
@@ -90,10 +155,28 @@ class _CartCheckoutScreenState extends State<CartCheckoutScreen> {
             cartProductData =
                 state.responseModel!.cartData!.first.cartProductData!;
           }
-
+          if (state is CartCallBackState) {
+            isPaymentSucess = true;
+            ShowToast.toastMsg(state.responseModel.message!);
+            Future.delayed(
+              const Duration(seconds: 3),
+              () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, Routes.homeScreen, (route) => false);
+              },
+            );
+          }
           if (state is DefaultAddressDetailState) {
             defaultAddressData
                 .add(state.responseModel.defaultAddressData!.first);
+          }
+          if (state is CartErrorState) {
+            AppException exception = state.exception;
+            ShowToast.toastMsg(exception.message);
+            Future.delayed(const Duration(seconds: 3), () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, Routes.homeScreen, (route) => false);
+            });
           }
         },
         child: BlocBuilder(
@@ -151,24 +234,6 @@ class _CartCheckoutScreenState extends State<CartCheckoutScreen> {
                               },
                             ),
                           ),
-                    // verticalSpace(8),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                    //   child: SizedBox(
-                    //     width: SizeUtils().screenWidth,
-                    //     child: defaultAddressData.isEmpty && !isLoading
-                    //         ? const Center(
-                    //             child: Text(Strings.addressNotAvailable),
-                    //           )
-                    //         : defaultAddressData.isEmpty
-                    //             ? Container()
-                    //             : PayoutAddressCardWidget(
-                    //                 defaultAddressData:
-                    //                     defaultAddressData.first,
-                    //               ),
-                    //   ),
-                    // ),
-                    // verticalSpace(8),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Container(
@@ -244,24 +309,9 @@ class _CartCheckoutScreenState extends State<CartCheckoutScreen> {
                                       if (!isLoading) {
                                         if (cartProductData.isNotEmpty &&
                                             defaultAddressData.isNotEmpty) {
-                                          Navigator.pushReplacementNamed(
-                                            context,
-                                            Routes.cartPayoutScreen,
-                                            arguments: CartPayoutScreenParam(
-                                              courierId: courierId,
-                                              customerId: AppPreference()
-                                                  .getStringData(
-                                                      PreferencesKey.userId),
-                                              defaultAddressId:
-                                                  defaultAddressData
-                                                      .first.addressId,
-                                              deliveryCharge: deliveryCharge,
-                                              totalPrice: totalAmount,
-                                              customerPhoneNumber:
-                                                  defaultAddressData
-                                                      .first.addressPhoneNo,
-                                            ),
-                                          );
+                                          if (isPaymentSucess == false) {
+                                            openCheckout();
+                                          }
                                         } else {
                                           if (cartProductData.isNotEmpty) {
                                             ShowToast.toastMsg(ToastString

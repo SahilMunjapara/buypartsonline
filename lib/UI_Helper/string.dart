@@ -137,6 +137,7 @@ class Strings {
   static const String returnPolicy = 'Return Policy';
   static const String cancelOrder = 'Cancel Order';
   static const String trackOrder = 'Track Order';
+  static const String home = 'Home';
 }
 
 List<String> razorPayWalletList = [

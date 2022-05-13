@@ -9,6 +9,7 @@ import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
 import 'package:buypartsonline/Utils/app_preferences/app_preferences.dart';
 import 'package:buypartsonline/Utils/app_preferences/prefrences_key.dart';
+import 'package:buypartsonline/Utils/enums.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/Utils/validation/validation.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
@@ -95,7 +96,9 @@ class _CartAddressScreenState extends State<CartAddressScreen> {
     return Scaffold(
       backgroundColor: colorWhiteBackground,
       key: _scaffoldKey,
-      drawer: const HomeScreenDrawer(),
+      drawer: const HomeScreenDrawer(
+        currentScreen: HomeScreenDrawerEnum.cart,
+      ),
       appBar: AppBar(
         elevation: 0,
         title: Text(
@@ -181,7 +184,7 @@ class _CartAddressScreenState extends State<CartAddressScreen> {
                                   ),
                                   verticalSpace(15),
                                   CustomTextField(
-                                    maxLength: 100,
+                                    maxLength: 200,
                                     controller: addressController,
                                     focusNode: addressFocusNode,
                                     validator: Validator.addressValidator,

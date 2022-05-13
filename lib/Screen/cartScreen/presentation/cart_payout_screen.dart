@@ -9,6 +9,7 @@ import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
+import 'package:buypartsonline/Utils/enums.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/bottom_design.dart';
 import 'package:buypartsonline/common_widget/home_screen_drawer.dart';
@@ -123,7 +124,9 @@ class _CartPayoutScreenState extends State<CartPayoutScreen> {
     return Scaffold(
       backgroundColor: colorWhiteBackground,
       key: _scaffoldKey,
-      drawer: const HomeScreenDrawer(),
+      drawer: const HomeScreenDrawer(
+        currentScreen: HomeScreenDrawerEnum.cart,
+      ),
       appBar: AppBar(
         elevation: 0,
         title: Text(

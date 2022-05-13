@@ -217,7 +217,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                   ),
                                   verticalSpace(15),
                                   CustomTextField(
-                                    maxLength: 100,
+                                    maxLength: 200,
                                     controller: addressController,
                                     focusNode: addressFocusNode,
                                     validator: Validator.addressValidator,

@@ -4,12 +4,14 @@ import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/UI_Helper/text_style.dart';
 import 'package:buypartsonline/Utils/app_preferences/app_preferences.dart';
+import 'package:buypartsonline/Utils/enums.dart';
 import 'package:buypartsonline/Utils/size_utils/size_utils.dart';
 import 'package:buypartsonline/common_widget/space_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenDrawer extends StatefulWidget {
-  const HomeScreenDrawer({Key? key}) : super(key: key);
+  const HomeScreenDrawer({this.currentScreen, Key? key}) : super(key: key);
+  final HomeScreenDrawerEnum? currentScreen;
 
   @override
   _HomeScreenDrawerState createState() => _HomeScreenDrawerState();
@@ -82,14 +84,31 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                       //   text: Strings.searchByVIN,
                       //   ontap: () {},
                       // ),
-                      // verticalSpace(34),
+                      drawerList(
+                        image: AssetStrings.home,
+                        text: Strings.home,
+                        ontap: () {
+                          Navigator.of(context).pop();
+                          if (widget.currentScreen !=
+                              HomeScreenDrawerEnum.home) {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              Routes.homeScreen,
+                              (context) => false,
+                            );
+                          }
+                        },
+                      ),
+                      verticalSpace(34),
                       drawerList(
                         image: AssetStrings.myOrders,
                         text: Strings.myOrders,
                         ontap: () {
                           Navigator.of(context).pop();
-                          Navigator.of(context)
-                              .pushNamed(Routes.myOrdersScreen);
+                          if (widget.currentScreen !=
+                              HomeScreenDrawerEnum.myOrders) {
+                            Navigator.of(context)
+                                .pushNamed(Routes.myOrdersScreen);
+                          }
                         },
                       ),
                       verticalSpace(34),
@@ -126,7 +145,10 @@ class _HomeScreenDrawerState extends State<HomeScreenDrawer> {
                         text: Strings.cart,
                         ontap: () {
                           Navigator.pop(context);
-                          Navigator.pushNamed(context, Routes.cartScreen);
+                          if (widget.currentScreen !=
+                              HomeScreenDrawerEnum.cart) {
+                            Navigator.pushNamed(context, Routes.cartScreen);
+                          }
                         },
                       ),
                       // verticalSpace(34),

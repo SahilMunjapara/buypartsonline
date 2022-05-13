@@ -80,8 +80,8 @@ class Validator {
   static String? addressValidator(String? value) {
     if (value?.isEmpty ?? false) {
       return 'Address is required';
-    } else if (value!.length > 50) {
-      return 'Address should be 50 character';
+    } else if (value!.length > 200) {
+      return 'Address should be 200 character';
     } else {
       return null;
     }

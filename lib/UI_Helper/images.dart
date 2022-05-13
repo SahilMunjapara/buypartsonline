@@ -36,4 +36,5 @@ class AssetStrings {
   static const String onRadio = 'assets/png/onradio.png';
   static const String offRadio = 'assets/png/offradio.png';
   static const String contactUs = 'assets/png/contactus.png';
+  static const String home = 'assets/png/home.png';
 }
