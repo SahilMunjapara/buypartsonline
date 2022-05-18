@@ -41,6 +41,9 @@ const updateCustomerPasswordURL = 'updateCustomerPassword';
 const updateAddressURL = 'updateAddress';
 const deleteAddressURL = 'deleteAddress';
 const cancelOrderURL = 'cancelOrder';
+const getCartURL = 'getCart';
+const getCartTotalWithoutDeliveryChargeURL =
+    'getCartTotalWithoutDeliveryCharge';
 
 class NetworkConstants {
   static const String errorMessage4xx =

@@ -112,5 +112,29 @@ class CartBloc extends Bloc<CartScreenEvent, CartScreenState> {
       }
       yield CartLoadingEndState();
     }
+
+    if (event is GetCartProductEvent) {
+      yield CartLoadingBeginState();
+      Resource resource = await _cartReposiory.getCartProduct(event);
+      if (resource.data != null) {
+        yield GetCartProductState(resource.data);
+      } else {
+        yield CartErrorState(
+            AppException.decodeExceptionData(jsonString: resource.error ?? ''));
+      }
+      yield CartLoadingEndState();
+    }
+
+    if (event is GetCartSummaryEvent) {
+      yield CartLoadingBeginState();
+      Resource resource = await _cartReposiory.getCartSummary(event);
+      if (resource.data != null) {
+        yield GetCartSummaryState(resource.data);
+      } else {
+        yield CartErrorState(
+            AppException.decodeExceptionData(jsonString: resource.error ?? ''));
+      }
+      yield CartLoadingEndState();
+    }
   }
 }

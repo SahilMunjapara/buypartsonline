@@ -5,8 +5,10 @@ import 'package:buypartsonline/Screen/cartScreen/data/model/cart_call_back_respo
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_default_address_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_remove_response_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/cart_summary_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_update_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/default_address_detail_response_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/get_cart_product_response_model.dart';
 import 'package:buypartsonline/UI_Helper/string.dart';
 import 'package:buypartsonline/service/network/model/resource_model.dart';
 import 'package:buypartsonline/service/network/network.dart';
@@ -28,6 +30,10 @@ abstract class ICartRepository {
   Future callBackURL(CartCallBackEvent event);
 
   Future addCartAddress(AddCartAddressEvent event);
+
+  Future getCartProduct(GetCartProductEvent event);
+
+  Future getCartSummary(GetCartSummaryEvent event);
 }
 
 class CartRepository implements ICartRepository {
@@ -248,6 +254,57 @@ class CartRepository implements ICartRepository {
       resource = Resource(
         error: null,
         data: responseModel,
+      );
+    } catch (e, stackTrace) {
+      resource = Resource(
+        error: e.toString(),
+        data: null,
+      );
+      print('ERROR: $e');
+      print('STACKTRACE: $stackTrace');
+    }
+    return resource;
+  }
+
+  @override
+  Future getCartProduct(GetCartProductEvent event) async {
+    Resource? resource;
+    try {
+      var body = <String, dynamic>{};
+      body['CustomerId'] = event.customerId;
+
+      var result = await NetworkAPICall().post(getCartURL, body);
+      GetCartProductResponseModel responseData =
+          GetCartProductResponseModel.fromJson(result);
+      resource = Resource(
+        error: null,
+        data: responseData,
+      );
+    } catch (e, stackTrace) {
+      resource = Resource(
+        error: e.toString(),
+        data: null,
+      );
+      print('ERROR: $e');
+      print('STACKTRACE: $stackTrace');
+    }
+    return resource;
+  }
+
+  @override
+  Future getCartSummary(GetCartSummaryEvent event) async {
+    Resource? resource;
+    try {
+      var body = <String, dynamic>{};
+      body['CustomerId'] = event.customerId;
+
+      var result = await NetworkAPICall()
+          .post(getCartTotalWithoutDeliveryChargeURL, body);
+      CartSummaryResponseModel responseData =
+          CartSummaryResponseModel.fromJson(result);
+      resource = Resource(
+        error: null,
+        data: responseData,
       );
     } catch (e, stackTrace) {
       resource = Resource(

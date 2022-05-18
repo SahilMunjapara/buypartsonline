@@ -146,14 +146,18 @@ class _CartCheckoutScreenState extends State<CartCheckoutScreen> {
             isLoading = false;
           }
           if (state is CartTotalItemState) {
-            totalAmount = double.parse(
-                state.responseModel!.cartData!.first.subTotal!.toString());
-            deliveryCharge = double.parse(state
-                .responseModel!.cartData!.first.deliverycharge!
-                .toString());
-            courierId = state.responseModel!.cartData!.first.courierId!;
-            cartProductData =
-                state.responseModel!.cartData!.first.cartProductData!;
+            if (state.responseModel!.cartData!.isEmpty) {
+              ShowToast.toastMsg(state.responseModel!.message!);
+            } else {
+              totalAmount = double.parse(
+                  state.responseModel!.cartData!.first.subTotal!.toString());
+              deliveryCharge = double.parse(state
+                  .responseModel!.cartData!.first.deliverycharge!
+                  .toString());
+              courierId = state.responseModel!.cartData!.first.courierId!;
+              cartProductData =
+                  state.responseModel!.cartData!.first.cartProductData!;
+            }
           }
           if (state is CartCallBackState) {
             isPaymentSucess = true;

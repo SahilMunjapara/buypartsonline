@@ -122,3 +122,21 @@ class PlaceOrderEvent extends CartScreenEvent {
   @override
   List<Object?> get props => [addressId, customerId, orderPaymentMethod];
 }
+
+class GetCartProductEvent extends CartScreenEvent {
+  final String? customerId;
+
+  GetCartProductEvent({this.customerId});
+
+  @override
+  List<Object?> get props => [customerId];
+}
+
+class GetCartSummaryEvent extends CartScreenEvent {
+  final String? customerId;
+
+  GetCartSummaryEvent({this.customerId});
+
+  @override
+  List<Object?> get props => [customerId];
+}

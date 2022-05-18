@@ -3,6 +3,7 @@ import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_event.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/get_cart_product_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/widget/cart_item_card_widget.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/widget/header_stepper_widget.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/presentation/model_view_screen.dart';
@@ -35,6 +36,7 @@ class _CartScreenState extends State<CartScreen> {
   double totalAmount = 0;
   double totalSaving = 0;
   List<CartProductData> cartProductData = [];
+  List<GetCartProductData> getCartProductData = [];
   bool isLoading = false;
   String? currentPartId;
 
@@ -45,12 +47,20 @@ class _CartScreenState extends State<CartScreen> {
       CartAddressEvent(
           customerId: AppPreference().getStringData(PreferencesKey.userId)),
     );
-    cartBloc.add(
-      CartTotalItemEvent(
-        userId: AppPreference().getStringData(PreferencesKey.userId),
-      ),
-    );
+    refreshCartData();
+    // cartBloc.add(
+    //   CartTotalItemEvent(
+    //     userId: AppPreference().getStringData(PreferencesKey.userId),
+    //   ),
+    // );
     super.initState();
+  }
+
+  void refreshCartData() {
+    cartBloc.add(GetCartProductEvent(
+        customerId: AppPreference().getStringData(PreferencesKey.userId)));
+    cartBloc.add(GetCartSummaryEvent(
+        customerId: AppPreference().getStringData(PreferencesKey.userId)));
   }
 
   @override
@@ -153,6 +163,15 @@ class _CartScreenState extends State<CartScreen> {
             cartProductData =
                 state.responseModel!.cartData!.first.cartProductData!;
           }
+          if (state is GetCartSummaryState) {
+            totalAmount = double.parse(
+                state.responseModel.data!.first.subTotal!.toString());
+            totalSaving =
+                double.parse(state.responseModel.data!.first.save.toString());
+          }
+          if (state is GetCartProductState) {
+            getCartProductData = state.responseModel.data!;
+          }
           if (state is CartErrorState) {
             AppException exception = state.exception;
             ShowToast.toastMsg(exception.message);
@@ -167,7 +186,7 @@ class _CartScreenState extends State<CartScreen> {
                 Column(
                   children: [
                     const HeaderStepperWidget(currentStep: 2),
-                    cartProductData.isEmpty && !isLoading
+                    getCartProductData.isEmpty && !isLoading
                         ? const Expanded(
                             child: Center(
                               child: Text(Strings.emptyCartMSG),
@@ -175,33 +194,35 @@ class _CartScreenState extends State<CartScreen> {
                           )
                         : Expanded(
                             child: ListView.builder(
-                              itemCount: cartProductData.length,
+                              itemCount: getCartProductData.length,
                               itemBuilder: (context, index) {
-                                int cartQty = int.parse(
-                                    cartProductData[index].cartQuantity!);
+                                int cartQty =
+                                    getCartProductData[index].cartQuantity!;
                                 return CartItemCard(
-                                  cartProductData: cartProductData[index],
+                                  getCartProductData: getCartProductData[index],
                                   cartTotal: cartQty,
                                   onDeleteTap: () {
                                     if (!isLoading) {
                                       currentPartId =
-                                          cartProductData[index].partId;
+                                          getCartProductData[index].partId;
                                       cartBloc.add(
                                         CartItemRemoveEvent(
-                                          cartId: cartProductData[index].cartId,
+                                          cartId:
+                                              getCartProductData[index].cartId,
                                         ),
                                       );
-                                      cartBloc.add(
-                                        CartTotalItemEvent(
-                                          userId: AppPreference().getStringData(
-                                              PreferencesKey.userId),
-                                        ),
-                                      );
+                                      refreshCartData();
+                                      // cartBloc.add(
+                                      //   CartTotalItemEvent(
+                                      //     userId: AppPreference().getStringData(
+                                      //         PreferencesKey.userId),
+                                      //   ),
+                                      // );
                                     }
                                   },
                                   onPlusTap: () {
                                     if (!isLoading) {
-                                      if (int.parse(cartProductData[index]
+                                      if (int.parse(getCartProductData[index]
                                               .partQty!) ==
                                           cartQty) {
                                         ShowToast.toastMsg(quantityErrorMsg(
@@ -210,32 +231,36 @@ class _CartScreenState extends State<CartScreen> {
                                       }
                                       cartBloc.add(
                                         CartItemUpdateQtyEvent(
-                                          cartId: cartProductData[index].cartId,
+                                          cartId:
+                                              getCartProductData[index].cartId,
                                           cartQuantity: (++cartQty).toString(),
                                         ),
                                       );
-                                      cartBloc.add(
-                                        CartTotalItemEvent(
-                                          userId: AppPreference().getStringData(
-                                              PreferencesKey.userId),
-                                        ),
-                                      );
+                                      refreshCartData();
+                                      // cartBloc.add(
+                                      //   CartTotalItemEvent(
+                                      //     userId: AppPreference().getStringData(
+                                      //         PreferencesKey.userId),
+                                      //   ),
+                                      // );
                                     }
                                   },
                                   onMinusTap: () {
                                     if (!isLoading && cartQty != 1) {
                                       cartBloc.add(
                                         CartItemUpdateQtyEvent(
-                                          cartId: cartProductData[index].cartId,
+                                          cartId:
+                                              getCartProductData[index].cartId,
                                           cartQuantity: (--cartQty).toString(),
                                         ),
                                       );
-                                      cartBloc.add(
-                                        CartTotalItemEvent(
-                                          userId: AppPreference().getStringData(
-                                              PreferencesKey.userId),
-                                        ),
-                                      );
+                                      refreshCartData();
+                                      // cartBloc.add(
+                                      //   CartTotalItemEvent(
+                                      //     userId: AppPreference().getStringData(
+                                      //         PreferencesKey.userId),
+                                      //   ),
+                                      // );
                                     }
                                   },
                                 );
@@ -243,7 +268,7 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ),
                     Visibility(
-                      visible: cartProductData.isNotEmpty || isLoading,
+                      visible: getCartProductData.isNotEmpty || isLoading,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: Container(

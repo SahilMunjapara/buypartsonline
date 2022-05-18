@@ -3,6 +3,8 @@ import 'package:buypartsonline/Screen/cartScreen/data/model/cart_address_respons
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_call_back_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_default_address_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/cart_summary_response_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/get_cart_product_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_remove_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_update_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/default_address_detail_response_model.dart';
@@ -58,6 +60,16 @@ class DefaultAddressDetailState extends CartScreenState {
 class CartCallBackState extends CartScreenState {
   CallBackResponseModel responseModel;
   CartCallBackState(this.responseModel);
+}
+
+class GetCartProductState extends CartScreenState {
+  GetCartProductResponseModel responseModel;
+  GetCartProductState(this.responseModel);
+}
+
+class GetCartSummaryState extends CartScreenState {
+  CartSummaryResponseModel responseModel;
+  GetCartSummaryState(this.responseModel);
 }
 
 class CartErrorState extends CartScreenState {

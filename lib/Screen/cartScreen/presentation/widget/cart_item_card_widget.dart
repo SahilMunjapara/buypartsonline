@@ -1,4 +1,4 @@
-import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
+import 'package:buypartsonline/Screen/cartScreen/data/model/get_cart_product_response_model.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';
 import 'package:buypartsonline/UI_Helper/images.dart';
 import 'package:buypartsonline/UI_Helper/math_helper.dart';
@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard(
-      {this.cartProductData,
+      {this.getCartProductData,
       this.cartTotal,
       this.onDeleteTap,
       this.onPlusTap,
       this.onMinusTap,
       Key? key})
       : super(key: key);
-  final CartProductData? cartProductData;
+  final GetCartProductData? getCartProductData;
   final int? cartTotal;
   final VoidCallback? onMinusTap;
   final VoidCallback? onPlusTap;
@@ -27,22 +27,22 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double totalPrice = getTotalPrice(
-      int.parse(cartProductData!.partMrp!),
-      cartTotal! < int.parse(cartProductData!.partMoq!)
-          ? int.parse(cartProductData!.partLessMoqDiscount!)
-          : int.parse(cartProductData!.partMoreMoqDiscount!),
+      int.parse(getCartProductData!.partMrp!),
+      cartTotal! < getCartProductData!.partMoq!
+          ? int.parse(getCartProductData!.partLessMoqDiscount!)
+          : int.parse(getCartProductData!.partMoreMoqDiscount!),
       cartTotal!,
     );
     double partPrice = getPriceWithDiscount(
-      int.parse(cartProductData!.partMrp!),
-      cartTotal! < int.parse(cartProductData!.partMoq!)
-          ? int.parse(cartProductData!.partLessMoqDiscount!)
-          : int.parse(cartProductData!.partMoreMoqDiscount!),
+      int.parse(getCartProductData!.partMrp!),
+      cartTotal! < getCartProductData!.partMoq!
+          ? int.parse(getCartProductData!.partLessMoqDiscount!)
+          : int.parse(getCartProductData!.partMoreMoqDiscount!),
     );
     String getDiscountOffer = getQtyOfferString(
       cartTotal!,
-      int.parse(cartProductData!.partMoq!),
-      int.parse(cartProductData!.partMoreMoqDiscount!),
+      getCartProductData!.partMoq!,
+      int.parse(getCartProductData!.partMoreMoqDiscount!),
     );
 
     return Padding(
@@ -60,7 +60,7 @@ class CartItemCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: SizeUtils().hp(12),
+                    height: SizeUtils().hp(13),
                     width: SizeUtils().wp(24),
                     decoration: BoxDecoration(
                       color: colorWhiteBackground,
@@ -69,26 +69,26 @@ class CartItemCard extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        imageURL + cartProductData!.partImages!,
+                        imageURL + getCartProductData!.partImages!,
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
                   horizontalSpace(10),
                   SizedBox(
-                    height: SizeUtils().hp(12),
+                    height: SizeUtils().hp(13),
                     width: SizeUtils().wp(50),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          cartProductData!.partName!,
+                          getCartProductData!.partName!,
                           style: size14PNregular(),
                           maxLines: 2,
                         ),
                         Text(
-                          cartProductData!.brandName!,
+                          getCartProductData!.brandName!,
                           style: size12PNregular(
                             textColor: colorGreyText,
                           ),
@@ -113,11 +113,12 @@ class CartItemCard extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 1),
                                 child: Text(
-                                  cartTotal! >=
-                                          int.parse(cartProductData!.partMoq!)
-                                      ? cartProductData!.partMoreMoqDiscount! +
+                                  cartTotal! >= getCartProductData!.partMoq!
+                                      ? getCartProductData!
+                                              .partMoreMoqDiscount! +
                                           '% off'
-                                      : cartProductData!.partLessMoqDiscount! +
+                                      : getCartProductData!
+                                              .partLessMoqDiscount! +
                                           '% off',
                                   style:
                                       size09PNsemibold(textColor: primaryColor),
@@ -150,7 +151,7 @@ class CartItemCard extends StatelessWidget {
                     text: Strings.partNumber + ' :- ',
                     style: size12PNregular(textColor: colorTextGrey)),
                 TextSpan(
-                    text: cartProductData!.partNumber!,
+                    text: getCartProductData!.partNumber!,
                     style: size12PNregular(textColor: primaryColor)),
               ])),
               verticalSpace(8),
@@ -191,7 +192,7 @@ class CartItemCard extends StatelessWidget {
                     ],
                   ),
                   horizontalSpace(20),
-                  cartTotal! < int.parse(cartProductData!.partMoq!)
+                  cartTotal! < getCartProductData!.partMoq!
                       ? Expanded(
                           child: Text(
                             getDiscountOffer,
