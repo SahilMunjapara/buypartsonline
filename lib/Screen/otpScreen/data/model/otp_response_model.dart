@@ -7,7 +7,7 @@ class OtpResponseModel {
 
   bool? isSuccess;
   String? message;
-  List<int>? otpData;
+  List<dynamic>? otpData;
 
   factory OtpResponseModel.fromJson(Map<String, dynamic> json) =>
       OtpResponseModel(

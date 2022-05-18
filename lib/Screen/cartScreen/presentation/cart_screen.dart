@@ -89,7 +89,53 @@ class _CartScreenState extends State<CartScreen> {
           }
           if (state is CartAddressState) {
             if (state.responseModel!.cartAddressData!.isEmpty) {
-              ShowToast.toastMsg(state.responseModel!.message!);
+              showDialog(
+                context: context,
+                builder: (context) => Dialog(
+                  insetPadding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          state.responseModel!.message!,
+                          textAlign: TextAlign.center,
+                          style: size16PNregular(),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, Routes.addressScreen);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          height: SizeUtils().hp(7),
+                          width: SizeUtils().wp(50),
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Text(
+                              Strings.addNewAddress,
+                              style: size16PNregular(textColor: colorWhite),
+                            ),
+                          ),
+                        ),
+                      ),
+                      verticalSpace(15),
+                    ],
+                  ),
+                ),
+              );
+              // ShowToast.toastMsg(state.responseModel!.message!);
             }
           }
           if (state is CartItemRemoveState) {

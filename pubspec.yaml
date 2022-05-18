@@ -23,6 +23,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   razorpay_flutter: ^1.2.9
   webview_flutter: ^3.0.1
+  flutter_html: ^3.0.0-alpha.3
 
 dev_dependencies:
   flutter_test:

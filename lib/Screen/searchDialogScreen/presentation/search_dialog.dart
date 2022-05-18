@@ -97,7 +97,10 @@ class _SearchDialogBoxState extends State<SearchDialogBox> {
         if (state is ModelYearState) {
           state.responseModel.modelYearModificationData!.map((e) {
             yearList!.add(
-              SearchData(id: e.modelId, name: e.modificationStartYear),
+              SearchData(
+                id: e.modelId,
+                name: '${e.modificationStartYear}-${e.modificationEndYear}',
+              ),
             );
           }).toList();
         }
