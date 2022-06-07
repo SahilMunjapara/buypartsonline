@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter.bloc.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_bloc.dart';
 import 'package:buypartsonline/Navigation/route_generator.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/UI_Helper/colors.dart';

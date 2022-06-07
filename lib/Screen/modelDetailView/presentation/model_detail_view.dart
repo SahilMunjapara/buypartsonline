@@ -1,5 +1,5 @@
 import 'package:badges/badges.dart';
-import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter.bloc.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_bloc.dart';
 import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_event.dart';
 import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_state.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';

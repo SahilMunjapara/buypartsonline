@@ -1,4 +1,4 @@
-import 'package:buypartsonline/Screen/forgotScreen/data/model/otp_for_forgot_password_repository.dart';
+import 'package:buypartsonline/Screen/forgotScreen/data/model/otp_for_forgot_password_model.dart';
 import 'package:buypartsonline/Screen/forgotScreen/data/model/update_password_response_model.dart';
 import 'package:buypartsonline/service/exception/exception.dart';
 

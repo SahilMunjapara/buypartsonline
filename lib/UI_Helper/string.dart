@@ -61,6 +61,7 @@ class Strings {
   static const String updateProfile = 'Update Profile';
   static const String notification = 'Notification';
   static const String noPartsAvailable = 'No Parts Available';
+  static const String modificationNotAvailable = 'No Modification Available';
   static const String model = 'Model';
   static const String perOff = '% off';
   static const String addToCart = 'Add To Cart';
@@ -138,6 +139,11 @@ class Strings {
   static const String cancelOrder = 'Cancel Order';
   static const String trackOrder = 'Track Order';
   static const String home = 'Home';
+  static const String engineType = 'Engine Type : ';
+  static const String powerHp = 'Power(hp) : ';
+  static const String powerKw = 'Power(kw) : ';
+  static const String engineCode = 'Engine code : ';
+  static const String choose = 'Choose';
 }
 
 List<String> razorPayWalletList = [
@@ -181,6 +187,8 @@ class ToastString {
   static const String pleaseSelectDefaultAddress =
       'Please Select One Default Address';
   static const String pressBackAgainToExit = 'Press back again to exit';
+  static const String checkOutDataNotAvailable =
+      'CheckOut Data Not Available !!!';
 }
 
 class ValidatorStrings {

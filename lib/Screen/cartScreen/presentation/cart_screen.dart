@@ -1,4 +1,4 @@
-import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter.bloc.dart';
+import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_bloc.dart';
 import 'package:buypartsonline/Global/CartCounter/Bloc/cart_counter_event.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
@@ -43,10 +43,10 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     _scaffoldKey = GlobalKey<ScaffoldState>();
-    cartBloc.add(
-      CartAddressEvent(
-          customerId: AppPreference().getStringData(PreferencesKey.userId)),
-    );
+    // cartBloc.add(
+    //   CartAddressEvent(
+    //       customerId: AppPreference().getStringData(PreferencesKey.userId)),
+    // );
     refreshCartData();
     // cartBloc.add(
     //   CartTotalItemEvent(
@@ -96,57 +96,6 @@ class _CartScreenState extends State<CartScreen> {
               customerId: AppPreference().getStringData(PreferencesKey.userId),
             ));
             isLoading = false;
-          }
-          if (state is CartAddressState) {
-            if (state.responseModel!.cartAddressData!.isEmpty) {
-              showDialog(
-                context: context,
-                builder: (context) => Dialog(
-                  insetPadding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Text(
-                          state.responseModel!.message!,
-                          textAlign: TextAlign.center,
-                          style: size16PNregular(),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, Routes.addressScreen);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(left: 8, right: 8),
-                          height: SizeUtils().hp(7),
-                          width: SizeUtils().wp(50),
-                          decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                            child: Text(
-                              Strings.addNewAddress,
-                              style: size16PNregular(textColor: colorWhite),
-                            ),
-                          ),
-                        ),
-                      ),
-                      verticalSpace(15),
-                    ],
-                  ),
-                ),
-              );
-              // ShowToast.toastMsg(state.responseModel!.message!);
-            }
           }
           if (state is CartItemRemoveState) {
             for (var item in modelPartList) {
@@ -367,3 +316,55 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 }
+
+// if (state is CartAddressState) {
+//   if (state.responseModel!.cartAddressData!.isEmpty) {
+//     showDialog(
+//       context: context,
+//       builder: (context) => Dialog(
+//         insetPadding:
+//             const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+//         shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.circular(10),
+//         ),
+//         child: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             Padding(
+//               padding: const EdgeInsets.all(16.0),
+//               child: Text(
+//                 state.responseModel!.message!,
+//                 textAlign: TextAlign.center,
+//                 style: size16PNregular(),
+//               ),
+//             ),
+//             GestureDetector(
+//               onTap: () {
+//                 Navigator.pop(context);
+//                 Navigator.pop(context);
+//                 Navigator.pushNamed(context, Routes.addressScreen);
+//               },
+//               child: Container(
+//                 padding: const EdgeInsets.only(left: 8, right: 8),
+//                 height: SizeUtils().hp(7),
+//                 width: SizeUtils().wp(50),
+//                 decoration: BoxDecoration(
+//                   color: primaryColor,
+//                   borderRadius: BorderRadius.circular(10),
+//                 ),
+//                 child: Center(
+//                   child: Text(
+//                     Strings.addNewAddress,
+//                     style: size16PNregular(textColor: colorWhite),
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             verticalSpace(15),
+//           ],
+//         ),
+//       ),
+//     );
+//     // ShowToast.toastMsg(state.responseModel!.message!);
+//   }
+// }

@@ -2,7 +2,6 @@ import 'package:buypartsonline/Global/key.dart';
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/cartScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/cart_detail_response_model.dart';
-import 'package:buypartsonline/Screen/cartScreen/data/model/cart_payout_screen_param.dart';
 import 'package:buypartsonline/Screen/cartScreen/data/model/default_address_detail_response_model.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/widget/header_stepper_widget.dart';
 import 'package:buypartsonline/Screen/cartScreen/presentation/widget/payout_address_card_widget.dart';
@@ -318,12 +317,16 @@ class _CartCheckoutScreenState extends State<CartCheckoutScreen> {
                                           }
                                         } else {
                                           if (cartProductData.isNotEmpty) {
+                                            // ShowToast.toastMsg(ToastString
+                                            //     .pleaseSelectOneProductForCheckout);
                                             ShowToast.toastMsg(ToastString
-                                                .pleaseSelectOneProductForCheckout);
+                                                .checkOutDataNotAvailable);
                                           }
                                           if (defaultAddressData.isNotEmpty) {
+                                            // ShowToast.toastMsg(ToastString
+                                            //     .pleaseSelectDefaultAddress);
                                             ShowToast.toastMsg(ToastString
-                                                .pleaseSelectDefaultAddress);
+                                                .checkOutDataNotAvailable);
                                           }
                                         }
                                       }

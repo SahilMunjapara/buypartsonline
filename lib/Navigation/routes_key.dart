@@ -21,4 +21,5 @@ class Routes {
   static const String legalAndOtherScreen = "/legalAndOtherScreen";
   static const String returnPolicyScreen = "/returnPolicyScreen";
   static const String trackOrderScreen = "/trackOrderScreen";
+  static const String modificationScreen = "/modificationScreen";
 }

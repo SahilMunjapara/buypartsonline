@@ -15,6 +15,8 @@ import 'package:buypartsonline/Screen/modelDetailView/presentation/model_detail_
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_response_model.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_screen_param.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/presentation/model_view_screen.dart';
+import 'package:buypartsonline/Screen/modificationScreen/data/model/modification_screen_param.dart';
+import 'package:buypartsonline/Screen/modificationScreen/presentation/modification_screen.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/presentation/my_orders_part_detail_screen.dart';
 import 'package:buypartsonline/Screen/myOrderScreen/presentation/my_orders_screen.dart';
 import 'package:buypartsonline/Screen/notificationScreen/presentation/notification_screen.dart';
@@ -117,6 +119,11 @@ class RouteGenerator {
       case Routes.trackOrderScreen:
         return MaterialPageRoute(
           builder: (context) => TrackOrderScreen(trackOrderUrl: args as String),
+        );
+      case Routes.modificationScreen:
+        return MaterialPageRoute(
+          builder: (context) => ModificationScreen(
+              modificationScreenParam: args as ModificationScreenParam),
         );
       default:
         return _errorRoute();

@@ -1,8 +1,8 @@
-const String baseURL = 'http://buypartsonline.in/AdminSide/Admin/Ajax/';
+const String baseURL = 'https://buypartsonline.in/AdminSide/Admin/Ajax/';
 const String imageURL = 'https://buypartsonline.in/AdminSide/resources/images/';
-const String aboutUsPageURL = 'http://buypartsonline.in/#/about';
-const String privacyPolicyURL = 'http://buypartsonline.in/#/privacypolicy';
-const String returnPolicyURL = 'http://buypartsonline.in/#/return-policy';
+const String aboutUsPageURL = 'https://buypartsonline.in/#/about';
+const String privacyPolicyURL = 'https://buypartsonline.in/#/privacypolicy';
+const String returnPolicyURL = 'https://buypartsonline.in/#/return-policy';
 
 const loginURL = 'login_api';
 const signupURL = 'RegisterCustomer';

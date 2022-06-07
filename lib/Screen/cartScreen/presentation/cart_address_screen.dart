@@ -266,7 +266,7 @@ class _CartAddressScreenState extends State<CartAddressScreen> {
                                                 context,
                                                 Routes.cartCheckoutScreen);
                                           } else {
-                                            ShowToast.toastMsg('');
+                                            ShowToast.toastMsg('Add Address First');
                                           }
                                         }
                                       },
