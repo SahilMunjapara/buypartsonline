@@ -84,8 +84,9 @@ class SearchDialogRepository implements ISearchDialogRepository {
     Resource? resource;
     try {
       var body = <String, dynamic>{};
-      var result =
-          await NetworkAPICall().post(getModelURL + event.modelId, body);
+      body['MakersId'] = event.modelId;
+      var result = await NetworkAPICall().post(getModelURL, body);
+      // await NetworkAPICall().post(getModelURL + event.modelId, body);
       ModelLineResponseModel responseData =
           ModelLineResponseModel.fromJson(result);
       resource = Resource(

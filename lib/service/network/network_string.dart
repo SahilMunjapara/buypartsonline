@@ -12,7 +12,8 @@ const getCategoryData = 'CategoryPriority/all';
 const getSearchVehicleURL = 'get_all_data_api_final/makerstype';
 const getVehicleMakerURL =
     'get_a_data_join_parent_api_final/makers/makerstype/';
-const getModelURL = 'get_a_data_join_parent_api_final/model/makers/';
+const getModelURL =
+    'getModelDataByMakerIdWithAvailablePartData'; //'get_a_data_join_parent_api_final/model/makers/';
 const getModelModificationURL =
     'get_a_data_join_parent_api_final/modification/model/';
 const getModelYearURL = 'getModificationYearByModelId/';

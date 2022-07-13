@@ -1,5 +1,6 @@
 import 'package:buypartsonline/Navigation/routes_key.dart';
 import 'package:buypartsonline/Screen/modelViewScreen/data/model/model_view_screen_param.dart';
+import 'package:buypartsonline/Screen/modelViewScreen/presentation/model_view_screen.dart';
 import 'package:buypartsonline/Screen/modificationScreen/data/model/modification_screen_param.dart';
 import 'package:buypartsonline/Screen/searchDialogScreen/bloc/bloc.dart';
 import 'package:buypartsonline/Screen/searchDialogScreen/data/model/model_year_and_modification_response_model.dart';
@@ -53,6 +54,8 @@ class _SearchDialogBoxState extends State<SearchDialogBox> {
   @override
   void initState() {
     searchDialogBloc.add(SearchByVehicleEvent());
+    modelPartList.clear();
+    modelPartList = [];
     super.initState();
   }
 
@@ -97,7 +100,8 @@ class _SearchDialogBoxState extends State<SearchDialogBox> {
               SearchData(id: e.modificationId, name: e.modificationName),
             );
           }).toList();
-          modelModificationList = state.responseModel.modelYearModificationData!;
+          modelModificationList =
+              state.responseModel.modelYearModificationData!;
         }
         if (state is ModelYearState) {
           state.responseModel.modelYearModificationData!.map((e) {
