@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.buypartsonline">
+    package="com.buy.parts.online">
    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="Buy Parts Online"
